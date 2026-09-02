@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+  
+  
+  <head>
+  
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1017">
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Enforcing Transaction Simulation Integrity: Pectra Edition | Bitfinding</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Enforcing Transaction Simulation Integrity: Pectra Edition" />
+<meta name="author" content="Bitfinding Team" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Transaction simulations can be misleading due to ‘state divergence’ - critical on-chain conditions changing post-simulation. This post explores how to enforce simulation integrity by embedding ‘state constraints’ within transactions, leveraging EIP-7702 and ERC-4337, to ensure your intended outcomes are what you actually get on-chain." />
+<meta property="og:description" content="Transaction simulations can be misleading due to ‘state divergence’ - critical on-chain conditions changing post-simulation. This post explores how to enforce simulation integrity by embedding ‘state constraints’ within transactions, leveraging EIP-7702 and ERC-4337, to ensure your intended outcomes are what you actually get on-chain." />
+<link rel="canonical" href="https://bitfinding.com/blog/enforcing-transaction-simulation" />
+<meta property="og:url" content="https://bitfinding.com/blog/enforcing-transaction-simulation" />
+<meta property="og:site_name" content="Bitfinding" />
+<meta property="og:image" content="https://bitfinding.com/assets/blog/enforcing-transaction-simulation/og.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-05-29T00:00:00-03:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://bitfinding.com/assets/blog/enforcing-transaction-simulation/og.png" />
+<meta property="twitter:title" content="Enforcing Transaction Simulation Integrity: Pectra Edition" />
+<meta name="twitter:site" content="@bitfinding" />
+<meta name="twitter:creator" content="@Bitfinding Team" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Bitfinding Team"},"dateModified":"2025-05-29T00:00:00-03:00","datePublished":"2025-05-29T00:00:00-03:00","description":"Transaction simulations can be misleading due to ‘state divergence’ - critical on-chain conditions changing post-simulation. This post explores how to enforce simulation integrity by embedding ‘state constraints’ within transactions, leveraging EIP-7702 and ERC-4337, to ensure your intended outcomes are what you actually get on-chain.","headline":"Enforcing Transaction Simulation Integrity: Pectra Edition","image":"https://bitfinding.com/assets/blog/enforcing-transaction-simulation/og.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://bitfinding.com/blog/enforcing-transaction-simulation"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://bitfinding.com/assets/images/logo.svg"},"name":"Bitfinding Team"},"url":"https://bitfinding.com/blog/enforcing-transaction-simulation"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <link type="application/atom+xml" rel="alternate" href="https://bitfinding.com/rss.xml" title="Bitfinding" />
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/css/style.css?v=">
+</head>
+
+  <body class="layout-post section-blog">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    
+
+<nav class="site-nav" aria-label="Primary navigation">
+  <div class="nav-inner">
+    <a class="brand" href="/" aria-label="Bitfinding home">
+      <img src="/assets/images/logo.svg" alt="Bitfinding">
+    </a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-menu">
+      <img class="menu-open-icon" src="/assets/images/hamburguer.svg" alt="">
+      <img class="menu-close-icon" src="/assets/images/close.svg" alt="">
+      <span class="sr-only">Toggle navigation</span>
+    </button>
+
+    <ul class="nav-links" id="primary-menu">
+      <li><a  href="/">Home</a></li>
+      <li><a class="active" aria-current="page" href="/blog">Blog</a></li>
+      <li><a href="/#contact">Contact us</a></li>
+    </ul>
+  </div>
+</nav>
+
+    <main id="main-content">
+      <article class="post">
+  <header class="post-header content-shell article-shell">
+    <div class="post-header-glow" aria-hidden="true"></div>
+    <h1>Enforcing Transaction Simulation Integrity: Pectra Edition</h1>
+    <div class="post-meta post-meta-large">
+      <time datetime="2025-05-29T00:00:00-03:00">May 29, 2025</time>
+      <span aria-hidden="true">|</span>
+      <span>Bitfinding Team</span>
+    </div>
+  </header>
+
+  <div class="post-content content-shell article-shell">
+    
+    <p>Imagine you’re about to swap a significant amount of ETH for USDT on a decentralized exchange (DEX). You use your wallet’s simulation feature, and it shows you’ll receive 1000 USDT, a good rate! You sign and send. But by the time your transaction hits the chain, a large trade has shifted the pool’s reserves, and your transaction either reverts or nets you only 950 USDT. This frustrating (and potentially costly) scenario highlights a critical flaw: <strong>simulations offer a snapshot, but the blockchain is a moving target</strong>.</p>
+
+<p><img src="/assets/blog/enforcing-transaction-simulation/maybe_simulation.svg" alt="" /></p>
+
+<p>The security of your blockchain interactions increasingly depends on validating these simulation outcomes. However, the core issue is their inability to enforce <strong><em>state consistency between the simulation and the actual execution</em></strong>. This gap can lead to vulnerabilities, especially when key contract states, like proxy implementations or DEX reserves, change unexpectedly.</p>
+
+<p>This problem only gets worse now that Pectra has enabled multiple batch of calls in a single transaction making simulations far more complex.</p>
+
+<h2 id="core-problem-state-divergence">Core Problem: State Divergence</h2>
+
+<p>The central challenge is <strong>state divergence</strong>: critical smart contract states can change organically or adversarially between the time you simulate your transaction and when it’s actually mined on the blockchain.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s0 = (calldata, contracts, state0)
+s1 = (calldata, contracts, state1)
+exec(s0) != exec(s1)
+</code></pre></div></div>
+
+<p>Several scenarios illustrate this risk:</p>
+
+<ol>
+  <li><strong>Proxy Upgrade:</strong> Imagine you’re interacting with an NFT marketplace that uses a proxy contract (allowing logic upgrades). You simulate listing an NFT. Between simulation and execution, if the marketplace upgrades its implementation contract, new logic might interpret your data differently or change fees, leading to unexpected outcomes like lost funds or incorrect listings.</li>
+  <li><strong>DEX Reserve Shift:</strong> You simulate swapping 1 ETH for USDT on Uniswap, expecting 3000 USDT based on current reserves. If a large trade occurs just before your transaction, shifting pool reserves, your 1 ETH might yield only 2950 USDT, or the transaction could revert due to slippage.</li>
+  <li><strong>Oracle Value Update:</strong> Many DeFi protocols use oracles for price feeds (e.g., ETH/USD). You simulate borrowing against collateral, and the oracle price at simulation time is favorable. If the oracle updates with a lower price for your collateral right before execution, due to market volatility or manipulation, your transaction might fail or put you at immediate risk of liquidation.</li>
+</ol>
+
+<h2 id="attacking-simulation-reliance">Attacking Simulation Reliance</h2>
+
+<p>Wallets and security tools are increasingly relying on transaction simulations to protect users. By previewing the outcome of complex smart contract interactions, simulations aim to prevent users from signing malicious transactions. However, this reliance introduces its own set of challenges and potential vulnerabilities.</p>
+
+<p><img src="/assets/blog/enforcing-transaction-simulation/state_divergence.jpg" alt="TODO" /></p>
+
+<p>A <a href="https://zengo.com/wp-content/uploads/Web3-Transaction-Simulation-White-Paper-Final.pdf">white paper by Zengo funded by the Ethereum Foundation</a> highlights critical limitations. While simulation is a valuable tool, it’s not foolproof. Attackers can exploit both theoretical constraints and practical implementation issues. One notable vulnerability is the “Red Pill Attack,” where a malicious contract detects it’s running in a simulated environment. It behaves benignly during the simulation, lulling the user into a false sense of security, but then executes its malicious payload once on the actual blockchain. This deception can lead users to approve harmful transactions they believe are safe.</p>
+
+<p>This underscores that while simulations enhance security, they can also create a deceptive safety net if their limitations are not understood and addressed. <strong>The integrity of the simulation environment itself becomes a target for sophisticated attackers</strong>.</p>
+
+<h2 id="enter-state-constraints">Enter State Constraints</h2>
+
+<p>To bridge this simulation-to-execution gap more robustly, we propose that transactions carry not just their execution data (the “what to do”) but also a compact set of <strong>state constraints</strong> (the “under these conditions”). These constraints act as on-chain guards: the transaction asserts them before proceeding, reverting early if the underlying assumptions from your simulation no longer hold.</p>
+
+<p>These constraints can be written using a Domain Specific Language (DSL) designed to be expressive yet simple:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Constraint</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TokenAddress.balanceOf($AccountAddress) &gt;= 10000</code></td>
+      <td>checks an expected token balance.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ProxyAddress.implementation() == $ExpectedImplementationAddress</code></td>
+      <td>verifies a proxy’s logic hasn’t changed.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">block.timestamp &lt; 1720000000</code></td>
+      <td>acts as a soft deadline for time-sensitive transactions.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">storageSlot($ContractAddress, $StorageSlot) == $ExpectedValue</code></td>
+      <td>ensures a specific storage slot remains unchanged, more on this later!</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>At runtime, these constraint checks are performed first. <strong>If all pass, the main transaction logic proceeds. If any fails, the entire transaction reverts, preventing unintended outcomes</strong>.</p>
+
+<h2 id="step-by-step-from-simulation-to-trusted-execution">Step by Step: From Simulation to Trusted Execution</h2>
+
+<p>Let’s walk through how this works, using our DEX trade and proxy upgrade examples.</p>
+
+<p><strong>1. Transaction Simulation &amp; Intent Representation</strong></p>
+
+<p>When you initiate a transaction, your wallet software performs a simulation. Crucially, the tooling also identifies key blockchain state your transaction <em>depends on</em> like <strong>storages, environment, balances, nonces, etc</strong>. These are translated into conditions using a DSL.</p>
+
+<ul>
+  <li><em>DeFi Trade Example:</em> Swap 1 ETH for at least 2950 USDT. Simulation shows 3000 USDT based on current reserves.</li>
+  <li><em>Proxy Upgrade Example:</em> List an NFT for 5 ETH. Simulation uses marketplace implementation <code class="language-plaintext highlighter-rouge">$GOOD_CONTRACT_V1</code>.</li>
+</ul>
+
+<p><img src="/assets/blog/enforcing-transaction-simulation/diagram.svg" alt="TODO" /></p>
+
+<p><strong>2. Extracting the State Constraints</strong></p>
+
+<p>The simulation engine analyzes relied-upon state and extracts these as explicit constraints.</p>
+
+<ul>
+  <li><em>DeFi Trade Example DSL:</em></li>
+</ul>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Preconditions: Ensure DEX pool state is as expected
+900 &lt; WETH.balanceOf($PairAddress) &lt; 1100
+2,900,000 &lt; USDT.balanceOf($PairAddress) &lt; 3,100,000
+// Postcondition: Ensure user receives minimum USDT
+USDT.balanceOf($UserAddress) &gt;= $oldBalanceOfUSDT + 3000
+</code></pre></div></div>
+
+<ul>
+  <li><em>Proxy Upgrade Example Constraint:</em></li>
+</ul>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Preconditions: Ensure proxy implementation matches the simulation
+MarketProxyAddress.implementation() == $GOOD_CONTRACT_V1
+</code></pre></div></div>
+
+<p><strong>3. Transaction Packaging</strong></p>
+
+<p>The final transaction, with constraints, is packaged using a multicall provided by the users’ wallet (ERC-4337 UserOperation) or delegating to a contract (EIP-7702). This effectively structures the transaction as:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Constraint Pre-checks] -&gt; [Original Transaction Logic] -&gt; [Constraint Post-checks (optional)]
+</code></pre></div></div>
+
+<p><strong>4. Signing the Enhanced Transaction</strong></p>
+
+<p>The user can now simulate the transaction in different settings. The outcome will either stay true to user expectations or revert if the on-chain conditions no longer match the simulation. The user sees a simulation outcome, similar to what wallets show, but this one can be trusted because the constraints are bundled with the transaction. This entire package, including the constraints, is presented for review before the user signs.</p>
+
+<p><strong>5. Constraint Enforcement On-Chain</strong></p>
+
+<p>When executed: pre-checks compare current on-chain state against your constraints. For example, if DEX reserves shifted too much or the proxy changed, a constraint fails. If any violation occurs, the transaction reverts <em>before</em> main logic runs. If all pass, main logic executes, followed by post-condition checks.</p>
+
+<h2 id="why-this-works-better-now">Why This Works (Better Now)</h2>
+
+<p>This approach of embedding state constraints becomes particularly powerful and user-friendly due to recent Ethereum improvements, offering several key advantages:</p>
+
+<ul>
+  <li>
+    <p><strong>Atomicity and Improved User Experience:</strong> The Pectra upgrade, through EIP-7702, <strong>makes Smart Account functionalities accessible to EOAs</strong> through delegation. This allows bundling multiple calls (constraint checks <em>and</em> main actions) into one atomic transaction, ensuring all-or-nothing execution with a single signature.</p>
+  </li>
+  <li>
+    <p><strong>Backward Compatibility:</strong> This system works with existing smart contracts. The constraint checking logic lives in a separate contract that only requires an extra call with the constraints to check.</p>
+  </li>
+  <li>
+    <p><strong>Cost Efficiency:</strong> Reading storage or calling <code class="language-plaintext highlighter-rouge">view</code> functions multiple times within the same transaction is relatively cheap. The gas for these checks is often a small price for significantly enhanced security.</p>
+  </li>
+  <li>
+    <p><strong>Granular Control:</strong> You can enforce exact matches for critical state (like a proxy’s implementation) and acceptable ranges for volatile state (like DEX reserves within slippage tolerance).</p>
+  </li>
+</ul>
+
+<h2 id="the-dream-low-level-storage-checks">The Dream: Low-Level Storage Checks</h2>
+
+<p>Currently, state checks often rely on public <code class="language-plaintext highlighter-rouge">getter</code> functions. This is limited because the contract must expose the state via a truthful getter, and cross-contract calls can be gas-intensive. For example, if a proxy doesn’t expose the implementation() function, we can’t check it!</p>
+
+<p>For truly robust, universal, and gas-efficient enforcement, direct, low-level access to read raw storage from other contracts is needed: The concept of an <strong>EXTSLOAD</strong> opcode <a href="https://eips.ethereum.org/EIPS/eip-2330">as previously discussed in this EIP</a> would tackle all these challenges.</p>
+
+<p>Alternatively, standardized interfaces like <strong><code class="language-plaintext highlighter-rouge">IExtsload</code></strong> (e.g., in UniswapX/Uniswap v4 research) also offer gas-efficient batch state reads:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">interface</span> <span class="n">IExtsload</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="n">extsload</span><span class="p">(</span><span class="kt">bytes32</span> <span class="n">slot</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bytes32</span> <span class="n">value</span><span class="p">);</span>
+    <span class="k">function</span> <span class="n">extsload</span><span class="p">(</span><span class="kt">bytes32</span> <span class="n">startSlot</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">nSlots</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bytes32</span><span class="p">[]</span> <span class="k">memory</span> <span class="n">values</span><span class="p">);</span>
+    <span class="k">function</span> <span class="n">extsload</span><span class="p">(</span><span class="kt">bytes32</span><span class="p">[]</span> <span class="k">calldata</span> <span class="n">slots</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bytes32</span><span class="p">[]</span> <span class="k">memory</span> <span class="n">values</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>While still a contract call, standardization would improve efficiency. Native EVM support would be the ultimate goal.</p>
+
+<h2 id="takeaways--whats-next">Takeaways &amp; What’s Next</h2>
+
+<p>Enforcing transaction simulation integrity is crucial for user safety in the dynamic world of blockchain.</p>
+
+<ul>
+  <li>State divergence between simulation and execution is critical.</li>
+  <li>Attaching explicit state constraints to transactions acts as an on-chain safeguard, ensuring assumptions hold.</li>
+  <li>EIP-7702, ERC-4337 and EIP-5792 provide the ideal framework for bundling constraint checks with main transaction logic atomically and with good UX.</li>
+  <li>This method is backward-compatible and can be gas-efficient, making it practical for widespread adoption.</li>
+  <li>Future EVM improvements for direct external state reads will make this approach even more powerful and affordable.</li>
+</ul>
+
+<p>At Bitfinding, we are <strong>experts in low-level EVM execution for security and optimization</strong>. We are prototyping these state constraint principles with our <a href="/blog/semantic-second-factor">simulation engine</a>. We are actively working on moving the EVM ecosystem forward to prevent hacks through research and innovative services.</p>
+
+<p><strong>If you’re interested in integrating this solution to protect yourself or your users, or want to discuss how to make your dApp interactions safer, we’d love your feedback or to explore collaboration.</strong></p>
+
+  </div>
+</article>
+
+<section class="contact section-glow" id="contact" aria-labelledby="contact-title">
+  <div class="content-shell narrow-section">
+    <h2 class="section-title" id="contact-title">Contact <span>Us</span></h2>
+    <a class="contact-card" href="mailto:info@bitfinding.com">
+      <img src="/assets/images/email.svg" alt="">
+      <strong>Drop us an email</strong>
+      <span>info@bitfinding.com</span>
+    </a>
+  </div>
+</section>
+
+<section class="stay-connected" aria-labelledby="connected-title">
+  <div class="content-shell narrow-section">
+    <h2 class="section-title" id="connected-title">Stay <span>Connected</span></h2>
+    <div class="social-links">
+      <a href="https://x.com/bitfinding" target="_blank" rel="noopener noreferrer">
+        <span>Follow us on</span>
+        <span class="social-icon"><img src="/assets/images/x.svg" alt="X"></span>
+      </a>
+      <a href="https://github.com/BitFinding" target="_blank" rel="noopener noreferrer">
+        <span>Check our GitHub</span>
+        <span class="social-icon"><img src="/assets/images/github.svg" alt="GitHub"></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+    </main>
+    <footer class="site-footer">
+  <div class="footer-inner">
+    <span>Bitfinding &copy; 2026.</span>
+    <a href="/" aria-label="Bitfinding home">
+      <img src="/assets/images/logo.svg" alt="Bitfinding">
+    </a>
+  </div>
+</footer>
+
+    <script src="/assets/js/site.js?v=" defer></script>
+  </body>
+</html>

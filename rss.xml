@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://bitfinding.com/rss.xml" rel="self" type="application/atom+xml" /><link href="https://bitfinding.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-09-02T18:54:26-03:00</updated><id>https://bitfinding.com/rss.xml</id><title type="html">Bitfinding</title><subtitle>Bitfinding builds advanced security for decentralized systems with a focus on integrity, resilience, and trust.</subtitle><entry><title type="html">$1M Intercepted from the Balancer Hack</title><link href="https://bitfinding.com/blog/balancer-exploit-interception" rel="alternate" type="text/html" title="$1M Intercepted from the Balancer Hack" /><published>2025-11-11T00:00:00-03:00</published><updated>2025-11-11T00:00:00-03:00</updated><id>https://bitfinding.com/blog/balancer-exploit-interception</id><content type="html" xml:base="https://bitfinding.com/blog/balancer-exploit-interception"><![CDATA[<p>On Monday, November 3rd, 2025, Bitfinding’s Exploit Interception Agent deployed countermeasures in less than 12 seconds, detecting and intercepting part of the exploits targeting Balancer’s V2 pools on the Ethereum chain. Our whitehat bot successfully secured over $975,000 in assets, preventing further losses in one of the year’s most sophisticated DeFi attacks. Notably, our initial intervention landed in the very next block after the attacker’s first exploit, highlighting the lightning-fast response of our system.</p>
+
+<h2 id="the-attack-unfolds">The Attack Unfolds</h2>
+
+<p>The Balancer exploit originated from a subtle rounding error in the protocol’s upscale function during EXACT_OUT swaps within Composable Stable Pools, allowing attackers to drain tokens like WETH, osETH, and wstETH from pools on Ethereum, Arbitrum, Base, and other networks.</p>
+
+<p>For a detailed technical breakdown, see the explanations from <a href="https://blog.unvariant.io/balancer-hack-explained/">Unvariant</a> and <a href="https://www.coinspect.com/blog/balancer-rate-manipulation-exploit/">Coinspect</a>.</p>
+
+<p>According to <a href="https://x.com/Balancer/status/1986104426667401241?s=20">Balancer’s preliminary postmortem</a>, the incident affected Composable Stable Pools across multiple networks, with immediate responses including pausing pools, freezing assets, and whitehat recoveries reducing the net impact. The root cause involved deferred settlement in batch swaps allowing extreme low-liquidity states, combined with the rounding flaw. Final losses were estimated around $98 million after mitigations, though initial exploits exceeded $128 million.</p>
+
+<p>The vulnerability, undetected despite multiple audits, enabled attackers to artificially suppress pool token (BPT) values and arbitrage the discrepancies.</p>
+
+<p><img src="/assets/blog/balancer-exploit-interception/funds_returned.png" alt="Unblind clear signing explanation" /></p>
+
+<h2 id="timeline">Timeline</h2>
+
+<table class="timeline-table">
+  <thead>
+    <tr>
+      <th>UTC timestamp</th>
+      <th>Event</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2025-11-03 07:46:47</code></td>
+      <td>Attacker executes initial exploit. Tokens Lost: 6,587.44 WETH , 6,851.12 osETH and 4,259.84 wstETH.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2025-11-03 07:46:59</code></td>
+      <td>12 seconds later, Bitfinding’s Agent identifies, reconstructs the attack. Tokens Recovered: 135.856 WETH, 10.956 wstETH and 105.21 osETH.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2025-11-03 08:33:47</code></td>
+      <td>Further interceptions. Tokens Recovered: 6.225 rETH, and 6.616 weETH.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2025-11-03 11:19:00</code></td>
+      <td>Informed SEAL about the exploit, discussed with pcaversaccio, and got in touch with the Balancer team.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2025-11-04 02:32:00</code></td>
+      <td>Send all the recovered funds to the Balancer DAO</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2025-11-07 13:36:00</code></td>
+      <td>Balancer team informed us about additional stuck funds in the contract.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2025-11-08 20:04:35</code></td>
+      <td>The remaining osETH are extracted and also sent to the Balancer DAO.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A special shoutout to <a href="https://x.com/pcaversaccio">@pcaversaccio</a> for always being helpful and to the Balancer team (Danko, Fabio, Juani, and Daniel) for their collaboration throughout the return process.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>We’re grateful to have helped return funds to a core DeFi protocol. Our interception agent runs as a public good: it watches the chain in real time, models likely exploits, and when a pattern is confirmed it rebuilds the attacker’s path and tries to land a preemptive whitehat transaction first to move assets to safety. In this case it acted one block after the first exploit and secured about $1M.</p>
+
+<p>Unblind applies the same concept to user signatures, protecting them from drainers, scams and mistakes. It explains transactions in plain language, flags unexpected behavior, and empowers users and platforms with the knowledge required to operate in hostile blockchain environments. If you run a wallet, custody platform, or DAO treasury and want this by default, Unblind easily integrates via API. Please <a href="#contact">get in touch below</a>.</p>]]></content><author><name>Bitfinding Team</name></author><summary type="html"><![CDATA[On November 3rd, Bitfinding's Exploit Interception Agent secured over $975,000 from the Balancer exploit, deploying countermeasures in less than 12 seconds after the attacker's first move and preventing further losses in one of the year's most sophisticated DeFi attacks.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://bitfinding.com/assets/blog/balancer-exploit-interception/og.png" /><media:content medium="image" url="https://bitfinding.com/assets/blog/balancer-exploit-interception/og.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Unblind your Safe Dashboard</title><link href="https://bitfinding.com/blog/unblind-safe-dashboard" rel="alternate" type="text/html" title="Unblind your Safe Dashboard" /><published>2025-10-16T00:00:00-03:00</published><updated>2025-10-16T00:00:00-03:00</updated><id>https://bitfinding.com/blog/unblind-safe-dashboard</id><content type="html" xml:base="https://bitfinding.com/blog/unblind-safe-dashboard"><![CDATA[<p>We’re launching <a href="https://unblind.app/safe-dashboard">Unblind Safe Dashboard</a>, a simple utility to verify your pending Safe transactions. It uses <a href="https://unblind.app/">Unblind API</a> to translate cryptic data into plain English, ensuring you never have to sign blind again.</p>
+
+<h2 id="the-easiest-security-upgrade-youll-ever-make">The Easiest Security Upgrade You’ll Ever Make</h2>
+
+<p>We know that cumbersome security tools are often ignored. That’s why we designed the Unblind Dashboard with extreme simplicity in mind.</p>
+
+<ul>
+  <li>
+    <p>If your Safe URL looks like this: <code class="language-plaintext highlighter-rouge">https://app.safe.global/transactions/queue?safe=arb1:0x...</code></p>
+  </li>
+  <li>
+    <p>Just add a <strong>“u”</strong> to the domain to access our dashboard: <code class="language-plaintext highlighter-rouge">https://app.usafe.global/transactions/queue?safe=arb1:0x...</code></p>
+  </li>
+</ul>
+
+<p>That’s it. No installation, no setup. Just one letter separates you from confusion to clarity. Review the human-readable explanations, and once you’re confident, proceed to sign in the <a href="https://app.safe.global">official Safe app</a>.</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 2em 0"><iframe src="https://drive.google.com/file/d/1ygNOU_2MrkgzxgFtYAKTnUDCJKV_2b3_/preview" title="Unblind Safe Dashboard Demo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+<h2 id="the-multisig-paradox-secure-keys-blind-signatures">The Multisig Paradox: Secure Keys, Blind Signatures</h2>
+
+<p>Even the best security practices, like using hardware wallet and a Safe multisig, have a critical flaw: you can’t always trust what you see on the screen. The infamous Bybit hack proved that a compromised or malicious UI can show you a harmless transaction while tricking you into signing a malicious one. Your multisig security means nothing if all signers are looking at the same deceptive interface.</p>
+
+<p>These are the gold standard for asset protection. But even with a multisig, a fundamental problem remains: <strong><em>how can you trust that what you see on your screen is what you’re actually signing?</em></strong></p>
+
+<p>Every time that wallet notification pops up asking for a signature, a moment of anxiety follows. <strong><em>Are we really approving a simple token swap, or are we accidentally giving away the keys to our digital kingdom?</em></strong></p>
+
+<p>This is the exact problem we built Unblind to solve. Our engine goes beyond just decoding data; it simulates transactions, analyzes on-chain history, and pulls from multiple sources to translate a transaction’s true intent into plain English. The difference is night and day: an action like <strong><em>“Send 5 USDT to bill.eth”</em></strong> should look alarmingly different from <strong><em>“You are about to send 100,000 USDT to an unknown address”</em></strong>, and with Unblind, it does. If the explanation feels wrong, you cancel. It’s that simple.</p>
+
+<p><img src="/assets/blog/unblind-safe-dashboard/unblind.png" alt="Unblind clear signing explanation" /></p>
+
+<h2 id="introducing-the-unblind-safe-dashboard-your-independent-verification-layer">Introducing the Unblind Safe Dashboard: Your Independent Verification Layer</h2>
+
+<p>To showcase Unblind’s power and provide a ready to use security tool for the community, we created the <strong>Unblind Safe Dashboard</strong>. It’s a read-only, alternative interface that translates your pending Safe transactions into plain English, so you know exactly what you’re signing.</p>
+
+<p><img src="/assets/blog/unblind-safe-dashboard/bybit.png" alt="Unblind Safe Dashboard interface" /></p>
+
+<h2 id="what-makes-it-secure">What makes it secure?</h2>
+
+<ul>
+  <li>
+    <p><strong>Independent Data Source:</strong> The dashboard pulls transaction data directly from the official Safe API. This means even if the primary app.safe.global interface were compromised or manipulated, our dashboard would show you the transaction’s true intent. This security model relies on the integrity of the Safe API itself, providing a crucial check against frontend-specific attacks.</p>
+  </li>
+  <li>
+    <p><strong>Out-of-Band Verification:</strong> For maximum security, you should view this dashboard on a separate device like your phone or tablet. If your main computer is compromised, this “out-of-band” check acts as an independent lifeline, allowing you to see the real details before you or your team approve a malicious transaction.</p>
+  </li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Standard Safe UI</th>
+      <th>Unblind Safe Dashboard</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="/assets/blog/unblind-safe-dashboard/safe-dashboard.png" alt="Standard Safe UI" /></td>
+      <td><img src="/assets/blog/unblind-safe-dashboard/unblind-dashboard.png" alt="Unblind Safe Dashboard" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="this-is-just-the-beginning">This is Just the Beginning</h2>
+
+<p>The <a href="https://unblind.app/safe-dashboard">Unblind Safe Dashboard</a> is more than just a tool for <a href="https://app.safe.global">Safe</a> users; it’s a demonstration of a future where no one has to sign a transaction blindly. This same Unblind engine can be integrated into any wallet, dApp, or platform to provide users with the clarity they need to navigate Web3 safely.</p>
+
+<p><strong>We want to hear from you!</strong></p>
+
+<ul>
+  <li><strong>Try it out:</strong> If you use a Safe, give our dashboard a try and let us know what you think.</li>
+  <li><strong>Feedback &amp; Suggestions:</strong> How can we improve the dashboard? What other information would be useful?</li>
+  <li><strong>Builders &amp; Wallets:</strong> If you’re building a product and want to eliminate user anxiety and enhance security, contact us to learn more about integrating Unblind.</li>
+</ul>
+
+<p>It’s time to replace signing anxiety with signing confidence.</p>]]></content><author><name>Bitfinding Team</name></author><summary type="html"><![CDATA[We're launching the Unblind Safe Dashboard, a simple utility to verify your pending Safe transactions. It uses Unblind API to translate cryptic data into plain English, ensuring you never have to sign blind again.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://bitfinding.com/assets/blog/unblind-safe-dashboard/og.png" /><media:content medium="image" url="https://bitfinding.com/assets/blog/unblind-safe-dashboard/og.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Unblind Second Factor is now available</title><link href="https://bitfinding.com/blog/unblind-second-factor-snap" rel="alternate" type="text/html" title="Unblind Second Factor is now available" /><published>2025-10-02T00:00:00-03:00</published><updated>2025-10-02T00:00:00-03:00</updated><id>https://bitfinding.com/blog/unblind-second-factor-snap</id><content type="html" xml:base="https://bitfinding.com/blog/unblind-second-factor-snap"><![CDATA[<p>Crypto users face a constant threat: sophisticated phishing attacks and wallet drainers that trick them into signing away their assets. The core of this problem is the cryptic nature of signing requests, which even experienced users can misinterpret. To combat this, we built <strong>Unblind: an engine that explains any signing requests in plain English.</strong> This time we are releasing our <a href="https://snaps.metamask.io/snap/npm/bitfinding/unblind-second-factor-snap/">Metamask Snap</a> that delivers this human-readable summary via a secure, out-of-band Telegram message, arming you with the knowledge to approve or reject a transaction.</p>
+
+<p>We previously discussed this in our <a href="/blog/semantic-second-factor">previous blog post</a>.</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 2em 0"><iframe src="https://drive.google.com/file/d/1VsbKTh_fUoD5dlZhmTxacc8TRV-cK9xA/preview" title="Unblind Second Factor Snap: How to install and use" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+<p>You can install the Unblind Snap by visiting the <a href="https://snaps.metamask.io/snap/npm/bitfinding/unblind-second-factor-snap/">official MetaMask Snaps Directory</a>.</p>
+
+<h2 id="why-translation-is-the-foundation-of-transaction-security">Why Translation is the Foundation of Transaction Security</h2>
+
+<p>The typical security approach relies on blocklists, issuing generic warnings like “High-Risk Contract.” While these alerts can provide a useful signal, they are a fundamentally incomplete solution that often leads to alert fatigue.</p>
+
+<ul>
+  <li><strong>False Positives:</strong> A brand-new, legitimate DeFi protocol might be flagged simply because it’s unknown, causing you to miss opportunities.</li>
+  <li><strong>False Negatives:</strong> A novel phishing scam might be marked as “safe” because it hasn’t been blocklisted yet, giving you a false sense of security.</li>
+</ul>
+
+<p>Reputation-based alerts create uncertainty. Our approach adds a foundational layer: <strong>clarity through high-fidelity translation.</strong></p>
+
+<p>Unblind runs a powerful context extraction and simulation of the transactions and messages <strong>before you sign it</strong>. We don’t just show you data; we show you what that data is designed to do in a way that’s relevant to you. This simulation provides the core context that is missing from today’s signing experience, and it’s a layer upon which other signals, like reputation data, can be added for even greater security.</p>
+
+<p>For example, when all the other alert systems failed at the time to warn about the Bybit hack, this is what our tool would have shown:</p>
+
+<blockquote>
+  <p>“You will update the master copy of your Safe Wallet to 0xbdd077f651ebe7f7b3ce16fe5f2b025be2969516. This is an administrative action.”</p>
+</blockquote>
+
+<p>This shifts the power back to you. With a clear understanding of the transaction’s consequences, your decision to approve or reject becomes confident and informed.</p>
+
+<h2 id="why-a-second-factor">Why a Second Factor</h2>
+
+<p>Our primary goal is to protect you from approving malicious requests. A key security principle of Unblind is its function as an out-of-band verification channel.</p>
+
+<p>If your browser, operating system, or even your software wallet is compromised, an attacker can display a fake transaction on your screen while submitting a malicious one in the background. Unblind defeats this vector. You will either receive no notification on your secondary device (Telegram), or you will receive a notification that accurately describes the <strong>actual malicious action</strong>.</p>
+
+<p><strong>This discrepancy is your most critical alert.</strong> The absence of a matching message is an unambiguous signal to reject the signature request immediately. This protects you even when your primary device cannot be trusted.</p>
+
+<h2 id="privacy-posture">Privacy Posture</h2>
+
+<p>We respect user privacy and only store the minimal information needed to deliver these alerts to your Telegram.</p>
+
+<p>However, for those who wish to avoid linking a Telegram account at all, Unblind offers a fully air-gapped verification method. This flow ensures your addresses and account information remain entirely separate.</p>
+
+<p>The workflow is simple:</p>
+
+<ol>
+  <li>When prompted to sign, select the “QR Code” option within the Unblind snap.</li>
+  <li>On a separate device (like a phone), open a web browser and navigate to <a href="https://unblind.app">https://unblind.app</a>.</li>
+  <li>Use this second device to scan the QR code displayed on your primary machine.</li>
+  <li>The human-readable translation will appear directly on your second device for verification, with no account or connection to your identity required.</li>
+</ol>
+
+<h2 id="our-mission-a-new-standard-for-digital-ownership">Our Mission: A New Standard for Digital Ownership</h2>
+
+<p>The Unblind Snap for Metamask is just the beginning. Our mission is to protect <strong>every single user</strong> signing a transaction on any chain. We believe that human-readable, verifiable intent should not be an optional plugin, but a native, fundamental part of the digital ownership experience. True security should be invisible and universal.</p>
+
+<p>For this to become a reality, we need to work together.</p>
+
+<p><strong>For Our Users</strong></p>
+
+<p>Your feedback on the current Snap is invaluable. Every suggestion helps us refine the core engine that will power this broader mission. Please continue to share your experiences with us. Join the <a href="https://t.me/+FdfFoJqOoJ4yYTYx">telegram group</a> or go to the <a href="https://forms.gle/1qJjTN9m4YKA4C2z8">anonymous form</a></p>
+
+<p><strong>A Call to Builders: Partner with Us</strong></p>
+
+<p>We are calling on wallet developers, dApps, and exchanges who share our vision. To make human-readable security a universal standard, we need to work together.</p>
+
+<p>Unblind’s translation engine is not just a standalone tool; it’s a foundational security layer designed for integration. We offer a simple and powerful API that allows you to embed transaction simulations directly into your product.</p>
+
+<p>By partnering with us, you can:</p>
+
+<ul>
+  <li><strong>Enhance User Trust:</strong> Give your users the clarity to transact confidently.</li>
+  <li><strong>Reduce Support Overhead:</strong> Prevent security incidents caused by user error and phishing.</li>
+  <li><strong>Strengthen Your Brand:</strong> Signal that you prioritize user safety above all else.</li>
+</ul>
+
+<p>We are establishing an early partner program to make integration seamless. If you are building a product that involves signing requests, <a href="#contact">contact us</a>.</p>
+
+<p>Let’s make fearless signing the default experience across the web3 ecosystem.</p>]]></content><author><name>Bitfinding Team</name></author><summary type="html"><![CDATA[Crypto users face a constant threat: sophisticated phishing attacks and wallet drainers that trick them into signing away their assets. The core of this problem is the cryptic nature of signing requests, which even experienced users can misinterpret. To combat this, we built Unblind: an engine that explains any signing requests in plain English. This time we are releasing our Metamask Snap that delivers this human-readable summary via a secure, out-of-band Telegram message, arming you with the knowledge to approve or reject a transaction.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://bitfinding.com/assets/blog/unblind-second-factor/og-new.png" /><media:content medium="image" url="https://bitfinding.com/assets/blog/unblind-second-factor/og-new.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Enforcing Transaction Simulation Integrity: Pectra Edition</title><link href="https://bitfinding.com/blog/enforcing-transaction-simulation" rel="alternate" type="text/html" title="Enforcing Transaction Simulation Integrity: Pectra Edition" /><published>2025-05-29T00:00:00-03:00</published><updated>2025-05-29T00:00:00-03:00</updated><id>https://bitfinding.com/blog/enforcing-transaction-simulation</id><content type="html" xml:base="https://bitfinding.com/blog/enforcing-transaction-simulation"><![CDATA[<p>Imagine you’re about to swap a significant amount of ETH for USDT on a decentralized exchange (DEX). You use your wallet’s simulation feature, and it shows you’ll receive 1000 USDT, a good rate! You sign and send. But by the time your transaction hits the chain, a large trade has shifted the pool’s reserves, and your transaction either reverts or nets you only 950 USDT. This frustrating (and potentially costly) scenario highlights a critical flaw: <strong>simulations offer a snapshot, but the blockchain is a moving target</strong>.</p>
+
+<p><img src="/assets/blog/enforcing-transaction-simulation/maybe_simulation.svg" alt="" /></p>
+
+<p>The security of your blockchain interactions increasingly depends on validating these simulation outcomes. However, the core issue is their inability to enforce <strong><em>state consistency between the simulation and the actual execution</em></strong>. This gap can lead to vulnerabilities, especially when key contract states, like proxy implementations or DEX reserves, change unexpectedly.</p>
+
+<p>This problem only gets worse now that Pectra has enabled multiple batch of calls in a single transaction making simulations far more complex.</p>
+
+<h2 id="core-problem-state-divergence">Core Problem: State Divergence</h2>
+
+<p>The central challenge is <strong>state divergence</strong>: critical smart contract states can change organically or adversarially between the time you simulate your transaction and when it’s actually mined on the blockchain.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s0 = (calldata, contracts, state0)
+s1 = (calldata, contracts, state1)
+exec(s0) != exec(s1)
+</code></pre></div></div>
+
+<p>Several scenarios illustrate this risk:</p>
+
+<ol>
+  <li><strong>Proxy Upgrade:</strong> Imagine you’re interacting with an NFT marketplace that uses a proxy contract (allowing logic upgrades). You simulate listing an NFT. Between simulation and execution, if the marketplace upgrades its implementation contract, new logic might interpret your data differently or change fees, leading to unexpected outcomes like lost funds or incorrect listings.</li>
+  <li><strong>DEX Reserve Shift:</strong> You simulate swapping 1 ETH for USDT on Uniswap, expecting 3000 USDT based on current reserves. If a large trade occurs just before your transaction, shifting pool reserves, your 1 ETH might yield only 2950 USDT, or the transaction could revert due to slippage.</li>
+  <li><strong>Oracle Value Update:</strong> Many DeFi protocols use oracles for price feeds (e.g., ETH/USD). You simulate borrowing against collateral, and the oracle price at simulation time is favorable. If the oracle updates with a lower price for your collateral right before execution, due to market volatility or manipulation, your transaction might fail or put you at immediate risk of liquidation.</li>
+</ol>
+
+<h2 id="attacking-simulation-reliance">Attacking Simulation Reliance</h2>
+
+<p>Wallets and security tools are increasingly relying on transaction simulations to protect users. By previewing the outcome of complex smart contract interactions, simulations aim to prevent users from signing malicious transactions. However, this reliance introduces its own set of challenges and potential vulnerabilities.</p>
+
+<p><img src="/assets/blog/enforcing-transaction-simulation/state_divergence.jpg" alt="TODO" /></p>
+
+<p>A <a href="https://zengo.com/wp-content/uploads/Web3-Transaction-Simulation-White-Paper-Final.pdf">white paper by Zengo funded by the Ethereum Foundation</a> highlights critical limitations. While simulation is a valuable tool, it’s not foolproof. Attackers can exploit both theoretical constraints and practical implementation issues. One notable vulnerability is the “Red Pill Attack,” where a malicious contract detects it’s running in a simulated environment. It behaves benignly during the simulation, lulling the user into a false sense of security, but then executes its malicious payload once on the actual blockchain. This deception can lead users to approve harmful transactions they believe are safe.</p>
+
+<p>This underscores that while simulations enhance security, they can also create a deceptive safety net if their limitations are not understood and addressed. <strong>The integrity of the simulation environment itself becomes a target for sophisticated attackers</strong>.</p>
+
+<h2 id="enter-state-constraints">Enter State Constraints</h2>
+
+<p>To bridge this simulation-to-execution gap more robustly, we propose that transactions carry not just their execution data (the “what to do”) but also a compact set of <strong>state constraints</strong> (the “under these conditions”). These constraints act as on-chain guards: the transaction asserts them before proceeding, reverting early if the underlying assumptions from your simulation no longer hold.</p>
+
+<p>These constraints can be written using a Domain Specific Language (DSL) designed to be expressive yet simple:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Constraint</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TokenAddress.balanceOf($AccountAddress) &gt;= 10000</code></td>
+      <td>checks an expected token balance.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ProxyAddress.implementation() == $ExpectedImplementationAddress</code></td>
+      <td>verifies a proxy’s logic hasn’t changed.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">block.timestamp &lt; 1720000000</code></td>
+      <td>acts as a soft deadline for time-sensitive transactions.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">storageSlot($ContractAddress, $StorageSlot) == $ExpectedValue</code></td>
+      <td>ensures a specific storage slot remains unchanged, more on this later!</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>At runtime, these constraint checks are performed first. <strong>If all pass, the main transaction logic proceeds. If any fails, the entire transaction reverts, preventing unintended outcomes</strong>.</p>
+
+<h2 id="step-by-step-from-simulation-to-trusted-execution">Step by Step: From Simulation to Trusted Execution</h2>
+
+<p>Let’s walk through how this works, using our DEX trade and proxy upgrade examples.</p>
+
+<p><strong>1. Transaction Simulation &amp; Intent Representation</strong></p>
+
+<p>When you initiate a transaction, your wallet software performs a simulation. Crucially, the tooling also identifies key blockchain state your transaction <em>depends on</em> like <strong>storages, environment, balances, nonces, etc</strong>. These are translated into conditions using a DSL.</p>
+
+<ul>
+  <li><em>DeFi Trade Example:</em> Swap 1 ETH for at least 2950 USDT. Simulation shows 3000 USDT based on current reserves.</li>
+  <li><em>Proxy Upgrade Example:</em> List an NFT for 5 ETH. Simulation uses marketplace implementation <code class="language-plaintext highlighter-rouge">$GOOD_CONTRACT_V1</code>.</li>
+</ul>
+
+<p><img src="/assets/blog/enforcing-transaction-simulation/diagram.svg" alt="TODO" /></p>
+
+<p><strong>2. Extracting the State Constraints</strong></p>
+
+<p>The simulation engine analyzes relied-upon state and extracts these as explicit constraints.</p>
+
+<ul>
+  <li><em>DeFi Trade Example DSL:</em></li>
+</ul>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Preconditions: Ensure DEX pool state is as expected
+900 &lt; WETH.balanceOf($PairAddress) &lt; 1100
+2,900,000 &lt; USDT.balanceOf($PairAddress) &lt; 3,100,000
+// Postcondition: Ensure user receives minimum USDT
+USDT.balanceOf($UserAddress) &gt;= $oldBalanceOfUSDT + 3000
+</code></pre></div></div>
+
+<ul>
+  <li><em>Proxy Upgrade Example Constraint:</em></li>
+</ul>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Preconditions: Ensure proxy implementation matches the simulation
+MarketProxyAddress.implementation() == $GOOD_CONTRACT_V1
+</code></pre></div></div>
+
+<p><strong>3. Transaction Packaging</strong></p>
+
+<p>The final transaction, with constraints, is packaged using a multicall provided by the users’ wallet (ERC-4337 UserOperation) or delegating to a contract (EIP-7702). This effectively structures the transaction as:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Constraint Pre-checks] -&gt; [Original Transaction Logic] -&gt; [Constraint Post-checks (optional)]
+</code></pre></div></div>
+
+<p><strong>4. Signing the Enhanced Transaction</strong></p>
+
+<p>The user can now simulate the transaction in different settings. The outcome will either stay true to user expectations or revert if the on-chain conditions no longer match the simulation. The user sees a simulation outcome, similar to what wallets show, but this one can be trusted because the constraints are bundled with the transaction. This entire package, including the constraints, is presented for review before the user signs.</p>
+
+<p><strong>5. Constraint Enforcement On-Chain</strong></p>
+
+<p>When executed: pre-checks compare current on-chain state against your constraints. For example, if DEX reserves shifted too much or the proxy changed, a constraint fails. If any violation occurs, the transaction reverts <em>before</em> main logic runs. If all pass, main logic executes, followed by post-condition checks.</p>
+
+<h2 id="why-this-works-better-now">Why This Works (Better Now)</h2>
+
+<p>This approach of embedding state constraints becomes particularly powerful and user-friendly due to recent Ethereum improvements, offering several key advantages:</p>
+
+<ul>
+  <li>
+    <p><strong>Atomicity and Improved User Experience:</strong> The Pectra upgrade, through EIP-7702, <strong>makes Smart Account functionalities accessible to EOAs</strong> through delegation. This allows bundling multiple calls (constraint checks <em>and</em> main actions) into one atomic transaction, ensuring all-or-nothing execution with a single signature.</p>
+  </li>
+  <li>
+    <p><strong>Backward Compatibility:</strong> This system works with existing smart contracts. The constraint checking logic lives in a separate contract that only requires an extra call with the constraints to check.</p>
+  </li>
+  <li>
+    <p><strong>Cost Efficiency:</strong> Reading storage or calling <code class="language-plaintext highlighter-rouge">view</code> functions multiple times within the same transaction is relatively cheap. The gas for these checks is often a small price for significantly enhanced security.</p>
+  </li>
+  <li>
+    <p><strong>Granular Control:</strong> You can enforce exact matches for critical state (like a proxy’s implementation) and acceptable ranges for volatile state (like DEX reserves within slippage tolerance).</p>
+  </li>
+</ul>
+
+<h2 id="the-dream-low-level-storage-checks">The Dream: Low-Level Storage Checks</h2>
+
+<p>Currently, state checks often rely on public <code class="language-plaintext highlighter-rouge">getter</code> functions. This is limited because the contract must expose the state via a truthful getter, and cross-contract calls can be gas-intensive. For example, if a proxy doesn’t expose the implementation() function, we can’t check it!</p>
+
+<p>For truly robust, universal, and gas-efficient enforcement, direct, low-level access to read raw storage from other contracts is needed: The concept of an <strong>EXTSLOAD</strong> opcode <a href="https://eips.ethereum.org/EIPS/eip-2330">as previously discussed in this EIP</a> would tackle all these challenges.</p>
+
+<p>Alternatively, standardized interfaces like <strong><code class="language-plaintext highlighter-rouge">IExtsload</code></strong> (e.g., in UniswapX/Uniswap v4 research) also offer gas-efficient batch state reads:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">interface</span> <span class="n">IExtsload</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="n">extsload</span><span class="p">(</span><span class="kt">bytes32</span> <span class="n">slot</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bytes32</span> <span class="n">value</span><span class="p">);</span>
+    <span class="k">function</span> <span class="n">extsload</span><span class="p">(</span><span class="kt">bytes32</span> <span class="n">startSlot</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">nSlots</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bytes32</span><span class="p">[]</span> <span class="k">memory</span> <span class="n">values</span><span class="p">);</span>
+    <span class="k">function</span> <span class="n">extsload</span><span class="p">(</span><span class="kt">bytes32</span><span class="p">[]</span> <span class="k">calldata</span> <span class="n">slots</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bytes32</span><span class="p">[]</span> <span class="k">memory</span> <span class="n">values</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>While still a contract call, standardization would improve efficiency. Native EVM support would be the ultimate goal.</p>
+
+<h2 id="takeaways--whats-next">Takeaways &amp; What’s Next</h2>
+
+<p>Enforcing transaction simulation integrity is crucial for user safety in the dynamic world of blockchain.</p>
+
+<ul>
+  <li>State divergence between simulation and execution is critical.</li>
+  <li>Attaching explicit state constraints to transactions acts as an on-chain safeguard, ensuring assumptions hold.</li>
+  <li>EIP-7702, ERC-4337 and EIP-5792 provide the ideal framework for bundling constraint checks with main transaction logic atomically and with good UX.</li>
+  <li>This method is backward-compatible and can be gas-efficient, making it practical for widespread adoption.</li>
+  <li>Future EVM improvements for direct external state reads will make this approach even more powerful and affordable.</li>
+</ul>
+
+<p>At Bitfinding, we are <strong>experts in low-level EVM execution for security and optimization</strong>. We are prototyping these state constraint principles with our <a href="/blog/semantic-second-factor">simulation engine</a>. We are actively working on moving the EVM ecosystem forward to prevent hacks through research and innovative services.</p>
+
+<p><strong>If you’re interested in integrating this solution to protect yourself or your users, or want to discuss how to make your dApp interactions safer, we’d love your feedback or to explore collaboration.</strong></p>]]></content><author><name>Bitfinding Team</name></author><summary type="html"><![CDATA[Transaction simulations can be misleading due to 'state divergence' - critical on-chain conditions changing post-simulation. This post explores how to enforce simulation integrity by embedding 'state constraints' within transactions, leveraging EIP-7702 and ERC-4337, to ensure your intended outcomes are what you actually get on-chain.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://bitfinding.com/assets/blog/enforcing-transaction-simulation/og.png" /><media:content medium="image" url="https://bitfinding.com/assets/blog/enforcing-transaction-simulation/og.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Open Sourcing our MEV Launchpad: Multiplexer</title><link href="https://bitfinding.com/blog/open-sourcing-multiplexer" rel="alternate" type="text/html" title="Open Sourcing our MEV Launchpad: Multiplexer" /><published>2025-04-25T00:00:00-03:00</published><updated>2025-04-25T00:00:00-03:00</updated><id>https://bitfinding.com/blog/open-sourcing-multiplexer</id><content type="html" xml:base="https://bitfinding.com/blog/open-sourcing-multiplexer"><![CDATA[<p>Trying to nail that perfect arbitrage, execute a complex multi-step DeFi strategy, or even simulate a frontrunning attack often means wrestling with multiple transactions, timing risks, and callback hell.</p>
+
+<p>We faced these challenges constantly while intercepting attacks at Bitfinding. That’s why we created Multiplexer, our internal engine for crafting powerful, precise, atomic Ethereum operations. Today, we’re proud to open source it for everyone.</p>
+
+<p>👉 <a href="https://github.com/Bitfinding/multiplexer">github.com/Bitfinding/multiplexer</a></p>
+
+<h2 id="what-does-multiplexer-actually-do">What does Multiplexer actually do?</h2>
+
+<p>Think of Multiplexer as <strong>multicall on steroids</strong>. It’s a smart contract that acts like a mini virtual machine executing a list of instructions you provide. You can pack an incredible amount into one transaction:</p>
+
+<p>🔗 <strong>Batch calls (<code class="language-plaintext highlighter-rouge">CALL</code>, <code class="language-plaintext highlighter-rouge">DELEGATECALL</code>)</strong> to interact with any contract.</p>
+
+<p>🚀 <strong>Deploy new contracts (<code class="language-plaintext highlighter-rouge">CREATE</code>)</strong> that can be used in the same transaction.</p>
+
+<p>⚡ <strong>Handle Flash Loans</strong> from providers like Morpho and Aave, including managing the required callbacks seamlessly.</p>
+
+<h2 id="lets-see-it-flash-loan-arbitrage-example">Let’s See It: Flash Loan Arbitrage Example</h2>
+
+<p>Imagine you want to perform a flash loan arbitrage using Morpho. With Multiplexer and our Rust <code class="language-plaintext highlighter-rouge">FlowBuilder</code> tool, the setup becomes much clearer:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Simplified FlowBuilder example</span>
+
+<span class="c1">// Define the steps inside the flash loan callback</span>
+<span class="k">let</span> <span class="n">inner_arbitrage_flow</span> <span class="o">=</span> <span class="nn">FlowBuilder</span><span class="p">::</span><span class="nf">empty</span><span class="p">()</span>
+    <span class="c1">// 1. Swap Token A for Token B on DEX 1</span>
+    <span class="c1">// 2. Swap Token B for Token A on DEX 2</span>
+    <span class="nf">.optimize</span><span class="p">()</span><span class="nf">.build_raw</span><span class="p">();</span>
+
+<span class="c1">// Prepare the main flash loan call, embedding the arbitrage logic</span>
+<span class="k">let</span> <span class="n">flashloan_calldata</span> <span class="o">=</span> <span class="nn">IMorpho</span><span class="p">::</span><span class="n">flashLoanCall</span> <span class="p">{</span>
+    <span class="n">token</span><span class="p">:</span> <span class="n">WETH9</span><span class="p">,</span> <span class="n">assets</span><span class="p">:</span> <span class="n">LOAN_AMOUNT</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">inner_arbitrage_flow</span><span class="nf">.into</span><span class="p">(),</span>
+<span class="p">}</span><span class="nf">.abi_encode</span><span class="p">();</span>
+
+<span class="c1">// Build the main transaction flow</span>
+<span class="k">let</span> <span class="n">main_flow</span> <span class="o">=</span> <span class="nn">FlowBuilder</span><span class="p">::</span><span class="nf">empty</span><span class="p">()</span>
+    <span class="nf">.set_fail</span><span class="p">()</span> <span class="c1">// Ensure atomicity</span>
+    <span class="nf">.set_callback</span><span class="p">(</span><span class="n">MORPHO</span><span class="p">)</span> <span class="c1">// Specify expected callback sender</span>
+    <span class="c1">// Optional: Approve necessary tokens first if needed</span>
+    <span class="nf">.call</span><span class="p">(</span><span class="n">WETH9</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">approve_calldata</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+    <span class="c1">// Trigger the flash loan; Morpho executes inner_arbitrage_flow on callback</span>
+    <span class="nf">.call</span><span class="p">(</span><span class="n">MORPHO</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">flashloan_calldata</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+    <span class="nf">.optimize</span><span class="p">()</span><span class="nf">.build</span><span class="p">();</span>
+
+<span class="c1">// Send transaction with `main_flow` calldata to the Multiplexer contract.</span>
+</code></pre></div></div>
+
+<p>Notice how Multiplexer handles the callback routing? You define the logic (<code class="language-plaintext highlighter-rouge">inner_arbitrage_flow</code>) and tell Multiplexer to expect Morpho’s call. No custom callback handler needed in your main execution flow.</p>
+
+<p>For the full example, check the README of the crate <a href="https://github.com/bitfinding/multiplexer">here</a>.</p>
+
+<h2 id="what-else-can-you-build-with-it">What Else Can You Build With It?</h2>
+
+<p>Multiplexer is incredibly versatile:</p>
+
+<p>🤖 <strong>Efficient Automation:</strong> Batch ERC-4337 UserOperations or fulfill complex Intents.</p>
+
+<p>🔬 <strong>MEV &amp; Security Research:</strong> Model sophisticated interactions or potential exploits.</p>
+
+<p>🧩 <strong>Complex DeFi Strategies:</strong> Execute multi-step yield farming, collateral swaps, or liquidity migrations atomically.</p>
+
+<p>🛡️ <strong>Battle-tested:</strong> Used internally at Bitfinding for intercepting exploits and executing complex rescue operations.</p>
+
+<h2 id="get-started-now">Get Started Now</h2>
+
+<p>Ready to build more powerful transactions? Don’t forget to brace for EIP-7702!</p>
+
+<p>🐙 <strong>Main Repo:</strong> <a href="https://github.com/Bitfinding/multiplexer">github.com/Bitfinding/multiplexer</a></p>
+
+<p>📦 <strong>Rust Crate:</strong> <a href="https://crates.io/crates/multiplexer-evm">crates.io/crates/multiplexer-evm</a></p>
+
+<p><strong>Contains:</strong></p>
+
+<ul>
+  <li>
+    <p>Solidity contract</p>
+  </li>
+  <li>
+    <p>Flow-builder for easy transaction construction</p>
+  </li>
+  <li>
+    <p>Examples and tests using Morpho, Aave, Uniswap.</p>
+  </li>
+</ul>
+
+<p>Multiplexer has been a game-changer for our internal operations, giving us speed and precision. We’re open-sourcing it because we believe these capabilities should be accessible to all builders pushing the boundaries of DeFi and MEV. We also think this is the right timing for teams tackling the challenges that enable the upcoming EIP-7702.</p>
+
+<p>We can’t wait to see what you create. Share your projects, ask questions, or contribute! Find us on <a href="https://x.com/bitfinding">Twitter</a>.</p>]]></content><author><name>Bitfinding Team</name></author><summary type="html"><![CDATA[Trying to nail that perfect arbitrage, execute a complex multi-step DeFi strategy, or even simulate a frontrunning attack often means wrestling with multiple transactions, timing risks, and callback hell. We faced these challenges constantly while intercepting attacks at Bitfinding. That's why we created Multiplexer, our internal engine for crafting powerful, precise, atomic Ethereum operations. Today, we're proud to open source it for everyone.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://bitfinding.com/assets/blog/multiplexer/og.png" /><media:content medium="image" url="https://bitfinding.com/assets/blog/multiplexer/og.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Stop blind signing: Introducing Web3 Semantic Second Factor</title><link href="https://bitfinding.com/blog/semantic-second-factor" rel="alternate" type="text/html" title="Stop blind signing: Introducing Web3 Semantic Second Factor" /><published>2025-02-25T00:00:00-03:00</published><updated>2025-02-25T00:00:00-03:00</updated><id>https://bitfinding.com/blog/semantic-second-factor</id><content type="html" xml:base="https://bitfinding.com/blog/semantic-second-factor"><![CDATA[<p>In the last year we had a number of high profile hacks (WazirX, Radiant Capital and <strong>ByBit</strong>) totaling $1.7B of stolen funds due to the combination of compromised devices, and HSMs not being able to attest that the user intentions didn’t match the spoofed message. What happened?</p>
+
+<p><strong>All these users were tricked into signing messages they did not want:</strong></p>
+
+<ol>
+  <li>The user accesses a seemingly legitimate dApp on a compromised computer.</li>
+  <li>The user interface decodes the intended transaction or message (e.g., sending a specific amount to a particular address)</li>
+  <li>Malware intercepts and modifies the actual data sent to the hardware wallet.</li>
+  <li>Due to UI limitations, the hardware wallet shows bytes and hashes, making it challenging to verify the altered parameters accurately.</li>
+  <li>The malicious message is signed, and funds are stolen.</li>
+</ol>
+
+<p><img src="/assets/blog/semantic-second-factor/1.svg" alt="Compromised device" /></p>
+
+<h2 id="whats-wrong-with-the-hardware-wallet-threat-model">What’s wrong with the hardware wallet threat model</h2>
+
+<p>Hardware wallets excel at safeguarding users’ seed phrases, making mnemonic exfiltration nearly impossible while allowing users to sign transactions and messages. However, they were primarily designed for simpler protocols, like Bitcoin, which did not require users to verify the parameters of more complex transactions. <strong>Blackhats know this</strong>.</p>
+
+<p>These wallets cannot verify whether the signing request aligns with the user’s true intent. While they attempt to decode the data and present the parameters for user attestation, this is inadequate. Humans are not good at processing long hexadecimal numbers and often fail at it. Moreover, an attacker controlling the user’s computer can intercept and forge the signing request, replacing legitimate interactions, addresses, and target contracts with malicious ones—even generating fake emulation results. Thus, the hardware wallet alone provides insufficient context for confirming a transaction’s legitimacy.</p>
+
+<p><img src="/assets/blog/semantic-second-factor/6.jpg" alt="Blind Signing" /></p>
+
+<p>Emulating transactions on a computer isn’t a silver bullet either. <strong>Any attestation or verification mechanism running on a compromised device is fundamentally untrustworthy</strong>. Attackers can emulate hardware wallet interactions, mask UI elements, and even display fraudulent confirmations to trick users into signing dangerous transactions. It creates an “interactive movie” scenario where everything seen and interacted with is controlled by the attacker, leading users to sign fraudulent messages.</p>
+
+<h2 id="clear-signing-alone-isnt-enough">Clear signing alone isn’t enough</h2>
+
+<p>To address this issue, hardware wallets have started implementing more advanced decoding of messages and calldata during the signing process, often referred to as clear signing. These are baby steps in the right direction, allowing users to better understand what they are signing.</p>
+
+<p>Here’s a sneak peek of some of the challenges and why clear signing alone is insufficient:</p>
+
+<ul>
+  <li><strong>Addresses as Identifiers</strong>: Addresses are poor identifiers for humans. Users can’t easily memorize all the contracts they interact with, and they must also guard against address poisoning and spoofing. The reputation of an address is important and varies from user to user. <a href="https://x.com/etherscan/status/1788550675993174409">Etherscan provides great insights on this</a>.</li>
+</ul>
+
+<p><img src="/assets/blog/semantic-second-factor/2.png" alt="Poisoned addresses" /></p>
+
+<ul>
+  <li><strong>Complex Calldata: Calldata can become very complex</strong>. For example, a simple swap on 1inch might involve multiple hops that could be meaningless to the user, especially with abstract instructions seen in smart accounts. The decoder should be adept at handling userOperations, executeTransaction commands, and other increasingly popular functions.</li>
+</ul>
+
+<p><img src="/assets/blog/semantic-second-factor/3.png" alt="1inch calldata" /></p>
+
+<ul>
+  <li>
+    <p><strong>Changing Signing Requests</strong>: In today’s era of intents and smart accounts, custom decoders are necessary and must be tailored to the target contract where these are executed.</p>
+  </li>
+  <li>
+    <p><strong>State Manipulation</strong>: Transaction results can vary depending on multiple factors, with calldata being just one of them. Blockchain state elements, such as balance values, contract code, nonces, and storage variables, can impact execution outcomes. Sandwich attacks are a prime example of how state manipulation affects transactions.</p>
+  </li>
+</ul>
+
+<p><img src="/assets/blog/semantic-second-factor/4.svg" alt="Different states, different execution" /></p>
+
+<h2 id="not-everything-is-bad-current-industry-recommendation">Not everything is bad: current industry recommendation</h2>
+
+<p>SEAL provides an extensive list of measures users can take to protect themselves against sophisticated attacks <a href="https://www.securityalliance.org/news/2025-02-dprk-advisory">here</a>.</p>
+
+<p>In summary:</p>
+
+<ul>
+  <li>Ensure the device used for wallet operations is updated, isolated, and regularly factory reset</li>
+  <li>Use Antivirus and Endpoint Detection and Response software</li>
+  <li>Conduct regular Red Teaming exercises</li>
+  <li>Utilize Hardware Wallets with clear signing support</li>
+</ul>
+
+<p>The community, also created tools like <a href="https://github.com/pcaversaccio/safe-tx-hashes-util">safe-tx-hashes-util</a> for decoding transactions that gets us closer to understanding what we are signing.</p>
+
+<p>However, this doesn’t account for the scenario where this is run in the same device that could be compromised. <strong>We need something else</strong>.</p>
+
+<h2 id="enter-web3-semantic-second-factor">Enter Web3 Semantic Second Factor</h2>
+
+<p>To mitigate the risks of compromised devices and blind signing, we propose a second-factor semantic attestation system using an independent device. This helps ensure the integrity of both transactions and messages.</p>
+
+<p><strong>Here’s how it works:</strong></p>
+
+<ol>
+  <li>Users interact with dApps to construct the signing request.</li>
+  <li>A wallet with Semantic Second Factor (SSF) enabled displays a QR code containing the complete unsigned message or transaction.</li>
+  <li>The SSF provider emulates and tests it, provides insights, and displays its hash.</li>
+  <li>Users must ensure that the hashes match on both the hardware wallet and the SSF device.</li>
+</ol>
+
+<p><img src="/assets/blog/semantic-second-factor/5.svg" alt="Second factor flow" /></p>
+
+<p><strong>Intent Verification Through Emulation</strong></p>
+
+<p>This layer ensures that both transaction and message actions perform as expected:</p>
+
+<ul>
+  <li><strong>Transaction Emulation</strong>: The system emulates the transaction execution to predict outcomes and effects.</li>
+  <li><strong>Structured Data Analysis</strong>: In case the messages match standards like EIP-712, which are used for smart accounts like Safe and ERC-4337, they are emulated to extract their intent.</li>
+  <li><strong>Natural Language Summary</strong>: It provides a clear, user-friendly explanation of balance changes and any significant on-chain effects.</li>
+  <li><strong>Statistical Analysis</strong>: Conducts a statistical analysis of the involved addresses to estimate risk.</li>
+  <li><strong>Adversarial Scenario Testing</strong>: Providers could test the transaction outcomes over synthetic adversarial blockchain scenarios.</li>
+</ul>
+
+<p>This significantly increases the attacker’s difficulty, as compromising a single device is no longer sufficient. The approach can be extended to additional devices or even decentralized networks, establishing a more robust security model, <strong>much like how 2FA became the industry standard for password security</strong>.</p>
+
+<blockquote>
+  <p><em>One of the key advantages of this security model is its seamless integration into existing security workflows. Since both wallets and hardware wallets already support the necessary features, this approach enhances protection without expanding the attack surface of the systems.</em></p>
+</blockquote>
+
+<h2 id="seriously-stop-blind-signing">Seriously, Stop Blind Signing</h2>
+
+<p>We believe that combining hardware wallets, robust security operations, and second-factor semantic verification can enhance the security of the signing workflow. At BitFinding, we’ve been working on a comprehensive solution that not only strengthens the current security model but also enhances transaction emulation outcomes using smart account modules.</p>
+
+<p>If you’re interested in boosting your security model and want to test our prototype, <strong>contact us now using the form below</strong>.</p>]]></content><author><name>Bitfinding Team</name></author><summary type="html"><![CDATA[In response to high-profile hacks exploiting blind signing, we introduced a semantic second-factor system using independent device verification and transaction emulation to enhance Web3 security and protect users from spoofed transactions on compromised devices.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://bitfinding.com/assets/blog/semantic-second-factor/og.png" /><media:content medium="image" url="https://bitfinding.com/assets/blog/semantic-second-factor/og.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">🛡️ Spot. Stop. Secure. Repeat. - Paribus Case</title><link href="https://bitfinding.com/blog/paribus-hack-interception" rel="alternate" type="text/html" title="🛡️ Spot. Stop. Secure. Repeat. - Paribus Case" /><published>2025-01-24T00:00:00-03:00</published><updated>2025-01-24T00:00:00-03:00</updated><id>https://bitfinding.com/blog/paribus-hack-interception</id><content type="html" xml:base="https://bitfinding.com/blog/paribus-hack-interception"><![CDATA[<p>On Saturday, January 18th, Bitfinding’s Exploit Interception Agent deployed counter measures in just 3.2 seconds, detecting, halting, and intercepting an exploit targeting <a href="https://paribus.io">Paribus.io</a> on Arbitrum.</p>
+
+<h2 id="the-attack-unfolds">The Attack Unfolds</h2>
+
+<p>Our systems detected unusual activity on the Arbitrum network. An attacker was attempting to exploit a vulnerability in Paribus’s lending platform, leveraging price manipulation and a bug to siphon funds. The initial target was <strong>~$60K in assets</strong>, including <strong>ETH, USDT, and ARB tokens</strong>.</p>
+
+<p>We also identified additional funds at risk on <strong>Ethereum Mainnet</strong>, bringing the total potential loss to <strong>~$86K USD</strong>.</p>
+
+<h2 id="cross-chain-risks-averted">Cross-Chain Risks Averted</h2>
+
+<p>This incident highlights the growing threat of <strong>cross-chain exploits</strong>, where attackers target multiple networks simultaneously. Our ability to monitor and respond across chains was critical in mitigating the damage.</p>
+
+<p>By collaborating with the Paribus team and leveraging our real-time monitoring tools, we ensured that no further funds were lost.</p>
+
+<p>💡 <strong>Pro Tip:</strong></p>
+
+<p>Prevent firefights by investing in <strong>security audits</strong> and <strong>real-time monitoring solutions</strong>. Hardening your defenses today can save you from costly exploits tomorrow.</p>
+
+<h2 id="timeline">Timeline</h2>
+
+<p>Our Exploit Interception Agent deployed a counter measure in just <strong>3.2 seconds</strong>. UTC Timeline.</p>
+
+<table class="timeline-table">
+  <thead>
+    <tr>
+      <th>UTC timestamp</th>
+      <th>Event</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2025-01-18 11:44:58</code></td>
+      <td>Attacker deploys an exploit contract</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2025-01-18 11:45:01</code></td>
+      <td>Interception Agent identifies and reconstructs the attack</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2025-01-18 11:45:05</code></td>
+      <td>The rescue transaction lands in the blockchain</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2025-01-18 14:39:00</code></td>
+      <td>SEAL ticket opened after failing to get in touch with Paribus</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2025-01-18 16:18:00</code></td>
+      <td>Paribus security contact reached (thanks @pcaversaccio)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2025-01-18 16:53:00</code></td>
+      <td>Vulnerable contracts in Ethereum are paused</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2025-01-19 16:29:30</code></td>
+      <td>100% of rescued funds are returned to the Paribus team</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>At Bitfinding, we’re proud to have turned another potential disaster into a success story. This incident underscores our commitment to protecting our partners and their users, no matter the scale or complexity of the threat</p>
+
+<p>If you’re a DeFi project or crypto user, don’t wait for an attack to happen. Reach out to us today to learn how we can help you secure your assets.</p>]]></content><author><name>Bitfinding Team</name></author><summary type="html"><![CDATA[On Saturday, January 18th, Bitfinding's Exploit Interception Agent deployed counter measures in just 3.2 seconds, detecting, halting, and intercepting an exploit targeting Paribus.io on Arbitrum.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://bitfinding.com/assets/blog/paribus-hack-interception/og.png" /><media:content medium="image" url="https://bitfinding.com/assets/blog/paribus-hack-interception/og.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Spot an exploit, stop the attacker, secure the assets. TL;DR: It works!</title><link href="https://bitfinding.com/blog/54k-rescue-on-arbitrum-network" rel="alternate" type="text/html" title="Spot an exploit, stop the attacker, secure the assets. TL;DR: It works!" /><published>2024-09-24T00:00:00-03:00</published><updated>2024-09-24T00:00:00-03:00</updated><id>https://bitfinding.com/blog/54k-rescue-on-arbitrum-network</id><content type="html" xml:base="https://bitfinding.com/blog/54k-rescue-on-arbitrum-network"><![CDATA[<p>About a month ago, we deployed 0x5af00b07, our experimental exploit-detecting bot on Arbitrum. It is designed to monitor potential exploits and intervene before any real damage could be done.</p>
+
+<p><img src="/assets/blog/54k-rescue-on-arbitrum-network/1.png" alt="Hi bro, do you have any tools to open source?" /></p>
+
+<p>This system recently proved its value in a real-world scenario. Our bot successfully recovered 54k that would otherwise have been stolen from [redacted]. While it may seem like a small victory, this is a huge validation of our approach and fills us with optimism to expand the solution to other networks.</p>
+
+<p>Failed attack:</p>
+
+<p><img src="/assets/blog/54k-rescue-on-arbitrum-network/2.png" alt="Arbiscan transaction" /></p>
+
+<p>In this case, the bot was able to frontrun the attacker and secure the assets for safekeeping. After following the procedures defined in the Safe Harbor Agreement and the protocol was secured, the funds were returned to the rightful owners.</p>
+
+<p>This successful recovery highlights how crucial it is to have this last line of active defense. We’re excited to expand our bot’s coverage to other networks and continue refining the detection and prevention algorithms. Our ultimate goal is to reduce the number of successful exploits on EVM blockchains and make decentralized ecosystems safer for everyone.</p>]]></content><author><name>Bitfinding Team</name></author><summary type="html"><![CDATA[We successfully rescued $54k on the Arbitrum network, frontrunning an attacker and securing vulnerable assets, validating our approach to real-time DeFi exploit prevention.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://bitfinding.com/assets/blog/54k-rescue-on-arbitrum-network/og.png" /><media:content medium="image" url="https://bitfinding.com/assets/blog/54k-rescue-on-arbitrum-network/og.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
