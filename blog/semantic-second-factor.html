@@ -35,7 +35,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/css/style.css?v=">
+  <link rel="stylesheet" href="/assets/css/style.css?v=dd3f29c9cc9b9c0a45ca4f557066488f1a6b689f">
 </head>
 
   <body class="layout-post section-blog">
@@ -88,7 +88,7 @@
   <li>The malicious message is signed, and funds are stolen.</li>
 </ol>
 
-<p><img src="/assets/blog/semantic-second-factor/1.svg" alt="Compromised device" /></p>
+<p><img src="https://bitfinding.com/assets/blog/semantic-second-factor/1.svg" alt="Compromised device" /></p>
 
 <h2 id="whats-wrong-with-the-hardware-wallet-threat-model">What’s wrong with the hardware wallet threat model</h2>
 
@@ -96,7 +96,7 @@
 
 <p>These wallets cannot verify whether the signing request aligns with the user’s true intent. While they attempt to decode the data and present the parameters for user attestation, this is inadequate. Humans are not good at processing long hexadecimal numbers and often fail at it. Moreover, an attacker controlling the user’s computer can intercept and forge the signing request, replacing legitimate interactions, addresses, and target contracts with malicious ones—even generating fake emulation results. Thus, the hardware wallet alone provides insufficient context for confirming a transaction’s legitimacy.</p>
 
-<p><img src="/assets/blog/semantic-second-factor/6.jpg" alt="Blind Signing" /></p>
+<p><img src="https://bitfinding.com/assets/blog/semantic-second-factor/6.jpg" alt="Blind Signing" /></p>
 
 <p>Emulating transactions on a computer isn’t a silver bullet either. <strong>Any attestation or verification mechanism running on a compromised device is fundamentally untrustworthy</strong>. Attackers can emulate hardware wallet interactions, mask UI elements, and even display fraudulent confirmations to trick users into signing dangerous transactions. It creates an “interactive movie” scenario where everything seen and interacted with is controlled by the attacker, leading users to sign fraudulent messages.</p>
 
@@ -110,13 +110,13 @@
   <li><strong>Addresses as Identifiers</strong>: Addresses are poor identifiers for humans. Users can’t easily memorize all the contracts they interact with, and they must also guard against address poisoning and spoofing. The reputation of an address is important and varies from user to user. <a href="https://x.com/etherscan/status/1788550675993174409">Etherscan provides great insights on this</a>.</li>
 </ul>
 
-<p><img src="/assets/blog/semantic-second-factor/2.png" alt="Poisoned addresses" /></p>
+<p><img src="https://bitfinding.com/assets/blog/semantic-second-factor/2.png" alt="Poisoned addresses" /></p>
 
 <ul>
   <li><strong>Complex Calldata: Calldata can become very complex</strong>. For example, a simple swap on 1inch might involve multiple hops that could be meaningless to the user, especially with abstract instructions seen in smart accounts. The decoder should be adept at handling userOperations, executeTransaction commands, and other increasingly popular functions.</li>
 </ul>
 
-<p><img src="/assets/blog/semantic-second-factor/3.png" alt="1inch calldata" /></p>
+<p><img src="https://bitfinding.com/assets/blog/semantic-second-factor/3.png" alt="1inch calldata" /></p>
 
 <ul>
   <li>
@@ -127,7 +127,7 @@
   </li>
 </ul>
 
-<p><img src="/assets/blog/semantic-second-factor/4.svg" alt="Different states, different execution" /></p>
+<p><img src="https://bitfinding.com/assets/blog/semantic-second-factor/4.svg" alt="Different states, different execution" /></p>
 
 <h2 id="not-everything-is-bad-current-industry-recommendation">Not everything is bad: current industry recommendation</h2>
 
@@ -159,7 +159,7 @@
   <li>Users must ensure that the hashes match on both the hardware wallet and the SSF device.</li>
 </ol>
 
-<p><img src="/assets/blog/semantic-second-factor/5.svg" alt="Second factor flow" /></p>
+<p><img src="https://bitfinding.com/assets/blog/semantic-second-factor/5.svg" alt="Second factor flow" /></p>
 
 <p><strong>Intent Verification Through Emulation</strong></p>
 
@@ -226,6 +226,6 @@
   </div>
 </footer>
 
-    <script src="/assets/js/site.js?v=" defer></script>
+    <script src="/assets/js/site.js?v=dd3f29c9cc9b9c0a45ca4f557066488f1a6b689f" defer></script>
   </body>
 </html>
