@@ -161,7 +161,7 @@ textarea {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -171,17 +171,24 @@ textarea {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 104px;
-  padding: 9px 19px;
+  min-width: 112px;
+  min-height: 44px;
+  padding: 10px 20px;
   color: #fff;
   font-weight: 500;
   text-decoration: none;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+  border: 1px solid rgba(75, 88, 110, 0.4);
+  border-radius: 4px;
+  background: rgba(17, 25, 37, 0.62);
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease, transform 160ms ease;
 }
 
-.nav-links a:hover,
+.nav-links a:hover {
+  color: #fff;
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
 .nav-links a.active {
   color: var(--primary);
   border-color: var(--primary);
@@ -861,7 +868,8 @@ textarea {
   }
 
   .nav-links a {
-    min-width: 150px;
+    min-width: 220px;
+    min-height: 54px;
     font-size: 20px;
   }
 
