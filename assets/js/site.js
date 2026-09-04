@@ -7,6 +7,7 @@
   const navLinks = menu.querySelectorAll('a');
   const defaultActiveLink = menu.querySelector('a.active');
   const connectLink = menu.querySelector('[data-nav="connect"]');
+  const desktopNavigation = window.matchMedia('(min-width: 768px)');
 
   const syncActiveNavigation = () => {
     navLinks.forEach((link) => {
@@ -35,6 +36,9 @@
   });
 
   menu.addEventListener('click', closeMenu);
+  desktopNavigation.addEventListener('change', (event) => {
+    if (event.matches) closeMenu();
+  });
   window.addEventListener('hashchange', syncActiveNavigation);
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closeMenu();

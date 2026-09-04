@@ -1,0 +1,928 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   aria-roledescription="sequence"
+   role="graphics-document document"
+   viewBox="-50 -10 1325.1078 1048.7386"
+   width="1325.1078"
+   id="export-svg"
+   version="1.1"
+   height="1048.7386"
+   sodipodi:docname="diagram.svg"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.78761282"
+     inkscape:cx="662.7622"
+     inkscape:cy="524.36932"
+     inkscape:window-width="1920"
+     inkscape:window-height="1029"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="export-svg" />
+  <xhtml:style>@import url(&quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css&quot;); p {margin: 0;}</xhtml:style>
+  <rect
+     style="fill:#ffffff"
+     id="rect14"
+     width="1325.1078"
+     height="1048.7386"
+     x="-50"
+     y="-10" />
+  <rect
+     class="rect"
+     height="381"
+     width="819.5"
+     fill="#ebffeb"
+     y="550.31531"
+     x="350.28104"
+     id="rect1" />
+  <rect
+     class="rect"
+     height="169"
+     width="470"
+     fill="#fff5eb"
+     y="371.31534"
+     x="-49.718948"
+     id="rect2" />
+  <rect
+     class="rect"
+     height="240"
+     width="510"
+     fill="#ebf5ff"
+     y="121.31532"
+     x="150.28105"
+     id="rect3" />
+  <rect
+     filter="url(#drop-shadow)"
+     data-look="neo"
+     class="actor actor-bottom"
+     ry="6"
+     rx="6"
+     name="StateConstraints"
+     height="65"
+     width="236"
+     stroke="#666"
+     fill="#eaeaea"
+     y="951.31531"
+     x="1016.7811"
+     id="rect4" />
+  <text
+     class="actor actor-box"
+     alignment-baseline="central"
+     dominant-baseline="central"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle"
+     y="983.81531"
+     x="1134.781"
+     id="text4"><tspan
+       dy="0"
+       x="1134.781"
+       id="tspan4"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">State Constraints Contract</tspan></text>
+  <rect
+     filter="url(#drop-shadow)"
+     data-look="neo"
+     class="actor actor-bottom"
+     ry="6"
+     rx="6"
+     name="SmartAccount"
+     height="65"
+     width="150"
+     stroke="#666"
+     fill="#eaeaea"
+     y="951.31531"
+     x="756.78107"
+     id="rect5" />
+  <text
+     class="actor actor-box"
+     alignment-baseline="central"
+     dominant-baseline="central"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle"
+     y="983.81531"
+     x="831.78107"
+     id="text5"><tspan
+       dy="0"
+       x="831.78107"
+       id="tspan5"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">SmartAccount</tspan></text>
+  <rect
+     filter="url(#drop-shadow)"
+     data-look="neo"
+     class="actor actor-bottom"
+     ry="6"
+     rx="6"
+     name="SimSSTEngine"
+     height="65"
+     width="163"
+     stroke="#666"
+     fill="#eaeaea"
+     y="951.31531"
+     x="543.78107"
+     id="rect6" />
+  <text
+     class="actor actor-box"
+     alignment-baseline="central"
+     dominant-baseline="central"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle"
+     y="983.81531"
+     x="625.28107"
+     id="text6"><tspan
+       dy="0"
+       x="625.28107"
+       id="tspan6"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Simulation Engine</tspan></text>
+  <rect
+     filter="url(#drop-shadow)"
+     data-look="neo"
+     class="actor actor-bottom"
+     ry="6"
+     rx="6"
+     name="Wallet"
+     height="65"
+     width="150"
+     stroke="#666"
+     fill="#eaeaea"
+     y="951.31531"
+     x="310.28104"
+     id="rect7" />
+  <text
+     class="actor actor-box"
+     alignment-baseline="central"
+     dominant-baseline="central"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle"
+     y="983.81531"
+     x="385.28104"
+     id="text7"><tspan
+       dy="0"
+       x="385.28104"
+       id="tspan7"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Wallet</tspan></text>
+  <rect
+     filter="url(#drop-shadow)"
+     data-look="neo"
+     class="actor actor-bottom"
+     ry="6"
+     rx="6"
+     name="Dapp"
+     height="65"
+     width="150"
+     stroke="#666"
+     fill="#eaeaea"
+     y="951.31531"
+     x="110.28105"
+     id="rect8" />
+  <text
+     class="actor actor-box"
+     alignment-baseline="central"
+     dominant-baseline="central"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle"
+     y="983.81531"
+     x="185.28105"
+     id="text8"><tspan
+       dy="0"
+       x="185.28105"
+       id="tspan8"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Dapp</tspan></text>
+  <line
+     data-id="StateConstraints"
+     data-et="life-line"
+     name="StateConstraints"
+     stroke="#999"
+     stroke-width="0.5px"
+     class="actor-line 200"
+     y2="951.31531"
+     x2="1134.781"
+     y1="63.315327"
+     x1="1134.781"
+     id="actor1275" />
+  <rect
+     filter="url(#drop-shadow)"
+     data-look="neo"
+     class="actor actor-top"
+     ry="6"
+     rx="6"
+     name="StateConstraints"
+     height="65"
+     width="236"
+     stroke="#666"
+     fill="#eaeaea"
+     y="-1.6846734"
+     x="1016.7811"
+     id="rect9" />
+  <text
+     class="actor actor-box"
+     alignment-baseline="central"
+     dominant-baseline="central"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle"
+     y="30.815327"
+     x="1134.781"
+     id="text9"><tspan
+       dy="0"
+       x="1134.781"
+       id="tspan9"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">State Constraints Contract</tspan></text>
+  <line
+     data-id="SmartAccount"
+     data-et="life-line"
+     name="SmartAccount"
+     stroke="#999"
+     stroke-width="0.5px"
+     class="actor-line 200"
+     y2="951.31531"
+     x2="831.78107"
+     y1="63.315327"
+     x1="831.78107"
+     id="actor1274" />
+  <rect
+     filter="url(#drop-shadow)"
+     data-look="neo"
+     class="actor actor-top"
+     ry="6"
+     rx="6"
+     name="SmartAccount"
+     height="65"
+     width="150"
+     stroke="#666"
+     fill="#eaeaea"
+     y="-1.6846734"
+     x="756.78107"
+     id="rect10" />
+  <text
+     class="actor actor-box"
+     alignment-baseline="central"
+     dominant-baseline="central"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle"
+     y="30.815327"
+     x="831.78107"
+     id="text10"><tspan
+       dy="0"
+       x="831.78107"
+       id="tspan10"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">SmartAccount</tspan></text>
+  <line
+     data-id="SimSSTEngine"
+     data-et="life-line"
+     name="SimSSTEngine"
+     stroke="#999"
+     stroke-width="0.5px"
+     class="actor-line 200"
+     y2="951.31531"
+     x2="625.28107"
+     y1="63.315327"
+     x1="625.28107"
+     id="actor1273" />
+  <rect
+     filter="url(#drop-shadow)"
+     data-look="neo"
+     class="actor actor-top"
+     ry="6"
+     rx="6"
+     name="SimSSTEngine"
+     height="65"
+     width="163"
+     stroke="#666"
+     fill="#eaeaea"
+     y="-1.6846734"
+     x="543.78107"
+     id="rect11" />
+  <text
+     class="actor actor-box"
+     alignment-baseline="central"
+     dominant-baseline="central"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle"
+     y="30.815327"
+     x="625.28107"
+     id="text11"><tspan
+       dy="0"
+       x="625.28107"
+       id="tspan11"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Simulation Engine</tspan></text>
+  <line
+     data-id="Wallet"
+     data-et="life-line"
+     name="Wallet"
+     stroke="#999"
+     stroke-width="0.5px"
+     class="actor-line 200"
+     y2="951.31531"
+     x2="385.28104"
+     y1="63.315327"
+     x1="385.28104"
+     id="actor1272" />
+  <rect
+     filter="url(#drop-shadow)"
+     data-look="neo"
+     class="actor actor-top"
+     ry="6"
+     rx="6"
+     name="Wallet"
+     height="65"
+     width="150"
+     stroke="#666"
+     fill="#eaeaea"
+     y="-1.6846734"
+     x="310.28104"
+     id="rect12" />
+  <text
+     class="actor actor-box"
+     alignment-baseline="central"
+     dominant-baseline="central"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle"
+     y="30.815327"
+     x="385.28104"
+     id="text12"><tspan
+       dy="0"
+       x="385.28104"
+       id="tspan12"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Wallet</tspan></text>
+  <line
+     data-id="Dapp"
+     data-et="life-line"
+     name="Dapp"
+     stroke="#999"
+     stroke-width="0.5px"
+     class="actor-line 200"
+     y2="951.31531"
+     x2="185.28105"
+     y1="63.315327"
+     x1="185.28105"
+     id="actor1271" />
+  <rect
+     filter="url(#drop-shadow)"
+     data-look="neo"
+     class="actor actor-top"
+     ry="6"
+     rx="6"
+     name="Dapp"
+     height="65"
+     width="150"
+     stroke="#666"
+     fill="#eaeaea"
+     y="-1.6846734"
+     x="110.28105"
+     id="rect13" />
+  <text
+     class="actor actor-box"
+     alignment-baseline="central"
+     dominant-baseline="central"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle"
+     y="30.815327"
+     x="185.28105"
+     id="text13"><tspan
+       dy="0"
+       x="185.28105"
+       id="tspan13"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Dapp</tspan></text>
+  <line
+     data-id="User"
+     data-et="life-line"
+     name="User"
+     stroke="#999"
+     stroke-width="0.5px"
+     class="actor-line 200"
+     y2="951.31531"
+     x2="-14.718947"
+     y1="78.315323"
+     x1="-14.718947"
+     id="actor1270" />
+  <style
+     id="style15">#export-svg{font-family:arial,sans-serif;font-size:14px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#export-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#export-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#export-svg .error-icon{fill:#ffffff;}#export-svg .error-text{fill:#000000;stroke:#000000;}#export-svg .edge-thickness-normal{stroke-width:2px;}#export-svg .edge-thickness-thick{stroke-width:3.5px;}#export-svg .edge-pattern-solid{stroke-dasharray:0;}#export-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#export-svg .edge-pattern-dashed{stroke-dasharray:3;}#export-svg .edge-pattern-dotted{stroke-dasharray:2;}#export-svg .marker{fill:#000000;stroke:#000000;}#export-svg .marker.cross{stroke:#000000;}#export-svg svg{font-family:arial,sans-serif;font-size:14px;}#export-svg p{margin:0;}#export-svg .actor{stroke:hsl(0, 0%, 70%);fill:#ffffff;stroke-width:2;}#export-svg rect.actor.outer-path[data-look=&quot;neo&quot;]{filter:drop-shadow( 0px 1px 2px rgba(0, 0, 0, 0.25));}#export-svg rect.note[data-look=&quot;neo&quot;]{stroke:hsl(52.6829268293, 60%, 73.9215686275%);fill:#fff5ad;filter:drop-shadow( 0px 1px 2px rgba(0, 0, 0, 0.25));stroke-width:2;}#export-svg text.actor&gt;tspan{fill:#333;stroke:none;}#export-svg .actor-line{stroke:hsl(0, 0%, 70%);}#export-svg .messageLine0{stroke-width:2;stroke-dasharray:none;stroke:#333;}#export-svg .messageLine1{stroke-width:2;stroke-dasharray:2,2;stroke:#333;}#export-svg #arrowhead path{fill:#333;stroke:#333;}#export-svg .sequenceNumber{fill:#ffffff;}#export-svg #sequencenumber{fill:#333;}#export-svg #crosshead path{fill:#333;stroke:#333;}#export-svg .messageText{fill:#333;stroke:none;}#export-svg .labelBox{stroke:hsl(0, 0%, 70%);fill:#ffffff;filter:drop-shadow( 0px 1px 2px rgba(0, 0, 0, 0.25));}#export-svg .labelText,#export-svg .labelText&gt;tspan{fill:#333;stroke:none;}#export-svg .loopText,#export-svg .loopText&gt;tspan{fill:#333;stroke:none;}#export-svg .loopLine{stroke-width:2px;stroke-dasharray:2,2;stroke:hsl(0, 0%, 70%);fill:hsl(0, 0%, 70%);}#export-svg .note{stroke:hsl(52.6829268293, 60%, 73.9215686275%);fill:#fff5ad;}#export-svg .noteText,#export-svg .noteText&gt;tspan{fill:#333;stroke:none;}#export-svg .activation0{fill:hsl(-120, 0%, 80%);stroke:hsl(-120, 0%, 70%);}#export-svg .activation1{fill:hsl(-120, 0%, 80%);stroke:hsl(-120, 0%, 70%);}#export-svg .activation2{fill:hsl(-120, 0%, 80%);stroke:hsl(-120, 0%, 70%);}#export-svg .actorPopupMenu{position:absolute;}#export-svg .actorPopupMenuPanel{position:absolute;fill:#ffffff;box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2);filter:drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));}#export-svg .actor-man circle,#export-svg line{fill:#ffffff;stroke-width:2px;}#export-svg g rect.rect{filter:drop-shadow( 0px 1px 2px rgba(0, 0, 0, 0.25));stroke:#000000;stroke-width:2;}#export-svg .node .neo-node{stroke:#000000;}#export-svg [data-look=&quot;neo&quot;].node rect,#export-svg [data-look=&quot;neo&quot;].cluster rect,#export-svg [data-look=&quot;neo&quot;].node polygon{stroke:url(#export-svg-gradient);filter:drop-shadow( 0px 1px 2px rgba(0, 0, 0, 0.25));}#export-svg [data-look=&quot;neo&quot;].node path{stroke:url(#export-svg-gradient);stroke-width:2;}#export-svg [data-look=&quot;neo&quot;].node .outer-path{filter:drop-shadow( 0px 1px 2px rgba(0, 0, 0, 0.25));}#export-svg [data-look=&quot;neo&quot;].node .neo-line path{stroke:#000000;filter:none;}#export-svg [data-look=&quot;neo&quot;].node circle{stroke:url(#export-svg-gradient);filter:drop-shadow( 0px 1px 2px rgba(0, 0, 0, 0.25));}#export-svg [data-look=&quot;neo&quot;].node circle .state-start{fill:#000000;}#export-svg [data-look=&quot;neo&quot;].statediagram-cluster rect{fill:#ffffff;stroke:url(#export-svg-gradient);stroke-width:2;}#export-svg [data-look=&quot;neo&quot;].icon-shape .icon{fill:url(#export-svg-gradient);filter:drop-shadow( 0px 1px 2px rgba(0, 0, 0, 0.25));}#export-svg [data-look=&quot;neo&quot;].icon-shape .icon-neo path{stroke:url(#export-svg-gradient);filter:drop-shadow( 0px 1px 2px rgba(0, 0, 0, 0.25));}#export-svg :root{--mermaid-font-family:&quot;trebuchet ms&quot;,verdana,arial,sans-serif;}</style>
+  <defs
+     id="defs16" />
+  <defs
+     id="defs17" />
+  <defs
+     id="defs18" />
+  <defs
+     id="defs19">
+    <marker
+       orient="auto-start-reverse"
+       markerHeight="12"
+       markerWidth="12"
+       markerUnits="userSpaceOnUse"
+       refY="5"
+       refX="7.9000001"
+       id="arrowhead">
+      <path
+         d="M -1,0 10,5 0,10 Z"
+         id="path19" />
+    </marker>
+  </defs>
+  <defs
+     id="defs20" />
+  <defs
+     id="defs21" />
+  <defs
+     id="defs22" />
+  <rect
+     data-look="neo"
+     class="note"
+     height="39"
+     width="490"
+     stroke="#666"
+     fill="#EDF2AE"
+     y="141.31532"
+     x="160.28105"
+     id="rect22" />
+  <text
+     dy="12"
+     class="noteText"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+     alignment-baseline="middle"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     y="146.31532"
+     x="405.28104"
+     id="text22"><tspan
+       x="405.28104"
+       id="tspan22"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Simulation</tspan></text>
+  <rect
+     data-look="neo"
+     class="activation0"
+     height="67"
+     width="10"
+     stroke="#666"
+     fill="#EDF2AE"
+     y="284.31534"
+     x="620.28107"
+     id="rect23" />
+  <rect
+     data-look="neo"
+     class="note"
+     height="39"
+     width="450"
+     stroke="#666"
+     fill="#EDF2AE"
+     y="391.31534"
+     x="-39.718948"
+     id="rect24" />
+  <text
+     dy="12"
+     class="noteText"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+     alignment-baseline="middle"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     y="396.31534"
+     x="185.28105"
+     id="text24"><tspan
+       x="185.28105"
+       id="tspan24"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">User Interaction</tspan></text>
+  <rect
+     data-look="neo"
+     class="note"
+     height="39"
+     width="799.5"
+     stroke="#666"
+     fill="#EDF2AE"
+     y="570.31531"
+     x="360.28104"
+     id="rect25" />
+  <text
+     dy="12"
+     class="noteText"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+     alignment-baseline="middle"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     y="575.31531"
+     x="760.28107"
+     id="text25"><tspan
+       x="760.28107"
+       id="tspan25"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">On chain</tspan></text>
+  <rect
+     data-look="neo"
+     class="note"
+     height="58"
+     width="173"
+     stroke="#666"
+     fill="#EDF2AE"
+     y="767.31531"
+     x="745.28107"
+     id="rect26" />
+  <text
+     dy="12"
+     class="noteText"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+     alignment-baseline="middle"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     y="772.31531"
+     x="832.28107"
+     id="text26"><tspan
+       x="832.28107"
+       id="tspan26"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Continue execution</tspan></text>
+  <text
+     dy="12"
+     class="noteText"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+     alignment-baseline="middle"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     y="791.31531"
+     x="832.28107"
+     id="text27"><tspan
+       x="832.28107"
+       id="tspan27"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">...</tspan></text>
+  <g
+     style="stroke:#b3b3b3"
+     data-id="User"
+     data-et="participant"
+     name="User"
+     class="actor-man actor-top"
+     id="g28"
+     transform="translate(-89.718948,-1.6846734)">
+    <line
+       y2="37.5"
+       x2="75"
+       y1="27.5"
+       x1="75"
+       id="actor-man-torso1270" />
+    <line
+       y2="31.5"
+       x2="84"
+       y1="31.5"
+       x1="66"
+       id="actor-man-arms1270" />
+    <line
+       y2="37.5"
+       x2="75"
+       y1="45"
+       x1="66"
+       id="line27" />
+    <line
+       y2="45"
+       x2="83"
+       y1="37.5"
+       x1="75"
+       id="line28" />
+    <circle
+       height="32.5"
+       width="75"
+       r="7.5"
+       cy="20"
+       cx="75"
+       id="circle28" />
+    <text
+       class="actor actor-man"
+       alignment-baseline="central"
+       dominant-baseline="central"
+       style="font-weight:400;font-size:16px;text-anchor:middle"
+       y="55"
+       x="75"
+       id="text28"><tspan
+         dy="0"
+         x="75"
+         id="tspan28">User</tspan></text>
+  </g>
+  <text
+     dy="20"
+     class="messageText"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+     alignment-baseline="middle"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     y="78.315323"
+     x="82.281052"
+     id="text29">Initiate action</text>
+  <line
+     marker-end="url(#arrowhead)"
+     style="fill:none"
+     stroke="none"
+     stroke-width="2"
+     data-to="Dapp"
+     data-from="User"
+     data-id="i0"
+     data-et="message"
+     class="messageLine0"
+     y2="111.31532"
+     x2="178.28105"
+     y1="111.31532"
+     x1="-13.718947"
+     id="line29" />
+  <text
+     dy="20"
+     class="messageText"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+     alignment-baseline="middle"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     y="195.31532"
+     x="282.28104"
+     id="text30">Signing request</text>
+  <line
+     marker-end="url(#arrowhead)"
+     style="fill:none"
+     stroke="none"
+     stroke-width="2"
+     data-to="Wallet"
+     data-from="Dapp"
+     data-id="i3"
+     data-et="message"
+     class="messageLine0"
+     y2="232.31532"
+     x2="378.28104"
+     y1="232.31532"
+     x1="186.28105"
+     id="line30" />
+  <text
+     dy="20"
+     class="messageText"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+     alignment-baseline="middle"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     y="247.31532"
+     x="502.28104"
+     id="text31">Simulate tx/message</text>
+  <line
+     marker-end="url(#arrowhead)"
+     style="fill:none"
+     stroke="none"
+     stroke-width="2"
+     data-to="SimSSTEngine"
+     data-from="Wallet"
+     data-id="i4"
+     data-et="message"
+     class="messageLine0"
+     y2="284.31534"
+     x2="618.28107"
+     y1="284.31534"
+     x1="386.28104"
+     id="line31" />
+  <text
+     dy="20"
+     class="messageText"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+     alignment-baseline="middle"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     y="299.31534"
+     x="506.28104"
+     id="text32">Simulation result &amp;</text>
+  <text
+     dy="20"
+     class="messageText"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+     alignment-baseline="middle"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     y="318.31534"
+     x="506.28104"
+     id="text33">state constraints</text>
+  <line
+     marker-end="url(#arrowhead)"
+     stroke="none"
+     stroke-width="2"
+     data-to="Wallet"
+     data-from="SimSSTEngine"
+     data-id="i6"
+     data-et="message"
+     class="messageLine1"
+     style="fill:none;stroke-dasharray:3px, 3px"
+     y2="351.31534"
+     x2="392.28104"
+     y1="351.31534"
+     x1="620.28107"
+     id="line33" />
+  <text
+     dy="20"
+     class="messageText"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+     alignment-baseline="middle"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     y="445.31534"
+     x="188.28105"
+     id="text34">Display simulation results</text>
+  <line
+     marker-end="url(#arrowhead)"
+     style="fill:none"
+     stroke="none"
+     stroke-width="2"
+     data-to="User"
+     data-from="Wallet"
+     data-id="i11"
+     data-et="message"
+     class="messageLine0"
+     y2="478.31534"
+     x2="-7.7189479"
+     y1="478.31534"
+     x1="384.28104"
+     id="line34" />
+  <text
+     dy="20"
+     class="messageText"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+     alignment-baseline="middle"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     y="493.31534"
+     x="182.28105"
+     id="text35">Sign the message with state constraints</text>
+  <line
+     marker-end="url(#arrowhead)"
+     style="fill:none"
+     stroke="none"
+     stroke-width="2"
+     data-to="Wallet"
+     data-from="User"
+     data-id="i12"
+     data-et="message"
+     class="messageLine0"
+     y2="530.31531"
+     x2="378.28104"
+     y1="530.31531"
+     x1="-13.718947"
+     id="line35" />
+  <text
+     dy="20"
+     class="messageText"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+     alignment-baseline="middle"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     y="624.31531"
+     x="605.28107"
+     id="text36">Broadcast message with state constraints</text>
+  <line
+     marker-end="url(#arrowhead)"
+     style="fill:none"
+     stroke="none"
+     stroke-width="2"
+     data-to="SmartAccount"
+     data-from="Wallet"
+     data-id="i16"
+     data-et="message"
+     class="messageLine0"
+     y2="661.31531"
+     x2="824.78107"
+     y1="661.31531"
+     x1="386.28104"
+     id="line36" />
+  <text
+     dy="20"
+     class="messageText"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+     alignment-baseline="middle"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     y="676.31531"
+     x="980.28107"
+     id="text37">Check pre-state constraints</text>
+  <line
+     marker-end="url(#arrowhead)"
+     style="fill:none"
+     stroke="none"
+     stroke-width="2"
+     data-to="StateConstraints"
+     data-from="SmartAccount"
+     data-id="i17"
+     data-et="message"
+     class="messageLine0"
+     y2="709.31531"
+     x2="1127.781"
+     y1="709.31531"
+     x1="832.78107"
+     id="line37" />
+  <text
+     dy="20"
+     class="messageText"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+     alignment-baseline="middle"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     y="724.31531"
+     x="986.28107"
+     id="text38">Reverts on violation</text>
+  <line
+     marker-end="url(#arrowhead)"
+     stroke="none"
+     stroke-width="2"
+     data-to="SmartAccount"
+     data-from="StateConstraints"
+     data-id="i18"
+     data-et="message"
+     class="messageLine1"
+     style="fill:none;stroke-dasharray:3px, 3px"
+     y2="757.31531"
+     x2="838.78107"
+     y1="757.31531"
+     x1="1133.781"
+     id="line38" />
+  <text
+     dy="20"
+     class="messageText"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+     alignment-baseline="middle"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     y="840.31531"
+     x="980.28107"
+     id="text39">Check post-state constraints</text>
+  <line
+     marker-end="url(#arrowhead)"
+     style="fill:none"
+     stroke="none"
+     stroke-width="2"
+     data-to="StateConstraints"
+     data-from="SmartAccount"
+     data-id="i20"
+     data-et="message"
+     class="messageLine0"
+     y2="873.31531"
+     x2="1127.781"
+     y1="873.31531"
+     x1="832.78107"
+     id="line39" />
+  <text
+     dy="20"
+     class="messageText"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:arial, sans-serif;-inkscape-font-specification:'arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+     alignment-baseline="middle"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     y="888.31531"
+     x="986.28107"
+     id="text40">Reverts on violation</text>
+  <line
+     marker-end="url(#arrowhead)"
+     stroke="none"
+     stroke-width="2"
+     data-to="SmartAccount"
+     data-from="StateConstraints"
+     data-id="i21"
+     data-et="message"
+     class="messageLine1"
+     style="fill:none;stroke-dasharray:3px, 3px"
+     y2="921.31531"
+     x2="838.78107"
+     y1="921.31531"
+     x1="1133.781"
+     id="line40" />
+  <g
+     style="stroke:#b3b3b3"
+     name="User"
+     class="actor-man actor-bottom"
+     id="g42"
+     transform="translate(-89.718948,-1.6846734)">
+    <line
+       y2="990.5"
+       x2="75"
+       y1="980.5"
+       x1="75"
+       id="actor-man-torso1275" />
+    <line
+       y2="984.5"
+       x2="84"
+       y1="984.5"
+       x1="66"
+       id="actor-man-arms1275" />
+    <line
+       y2="990.5"
+       x2="75"
+       y1="998"
+       x1="66"
+       id="line41" />
+    <line
+       y2="998"
+       x2="83"
+       y1="990.5"
+       x1="75"
+       id="line42" />
+    <circle
+       height="16.25"
+       width="75"
+       r="7.5"
+       cy="973"
+       cx="75"
+       id="circle42" />
+    <text
+       class="actor actor-man"
+       alignment-baseline="central"
+       dominant-baseline="central"
+       style="font-weight:400;font-size:16px;text-anchor:middle"
+       y="1008"
+       x="75"
+       id="text42"><tspan
+         dy="0"
+         x="75"
+         id="tspan42">User</tspan></text>
+  </g>
+</svg>
