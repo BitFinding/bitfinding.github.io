@@ -371,6 +371,8 @@ textarea {
 }
 
 .interception-copy {
+  min-width: 0;
+  max-width: 100%;
   padding: 96px 16px;
 }
 
@@ -385,13 +387,14 @@ textarea {
 }
 
 .interception p {
-  width: 314px;
+  width: 36ch;
   max-width: 100%;
-  margin: 16px 0 32px;
+  margin: 16px 0 0;
   color: var(--body);
   font-size: 20px;
   font-weight: 300;
   line-height: 28px;
+  text-wrap: balance;
 }
 
 .blog-section {
@@ -706,7 +709,6 @@ textarea {
 
 .post-content p > img:only-child {
   display: block;
-  width: auto;
   max-width: 100%;
   height: auto;
   max-height: 780px;
@@ -716,6 +718,10 @@ textarea {
 
 .post-content p:has(> img:only-child) {
   margin-top: 32px;
+}
+
+.post-content p > img:only-child:not(.sized-image) {
+  width: auto;
 }
 
 .post-content table img {
@@ -850,6 +856,23 @@ textarea {
   padding: 0;
   color: var(--body);
   background: transparent;
+}
+
+/* Plain-text examples are explanatory callouts, distinct from source code. */
+.post-content .language-text pre {
+  margin-block: 24px;
+  padding: 20px 24px;
+  border: 1px solid var(--border);
+  border-inline-start: 3px solid var(--secondary-blue);
+  border-radius: 0 8px 8px 0;
+  background: linear-gradient(110deg, rgba(36, 162, 238, 0.1), rgba(21, 30, 43, 0.5));
+  line-height: 1.8;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.post-content .language-text pre code {
+  color: #c5e2f5;
 }
 
 .post-content table {
@@ -1092,7 +1115,6 @@ textarea {
   }
 
   .interception p {
-    width: 288px;
     margin-inline: auto;
   }
 
@@ -1175,7 +1197,6 @@ textarea {
   }
 
   .interception p {
-    width: 288px;
     margin-top: 16px;
     margin-inline: auto;
     font-size: 18px;
