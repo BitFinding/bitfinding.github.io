@@ -1,0 +1,210 @@
+{
+  "schema": "ledger-clear-signing-context-snapshot/v1",
+  "protocol": "Morpho Bundler3",
+  "selector": "0x374f435d",
+  "captured_at_utc": "2026-08-28T01:00:01.886259+00:00",
+  "provenance": {
+    "capture_source": "https://crypto-assets-service.api.ledger.com/v1/dapps",
+    "capture_query": {
+      "chain_id": 1,
+      "output": "descriptors_calldata",
+      "ref": "branch:main"
+    },
+    "archive_sha256": "bb93536eaec12af6bbdf43424bab1817d505282bbf5d4bad22f9acc1639450ee",
+    "descriptor_source": "https://github.com/LedgerHQ/internal-erc7730-registry/blob/d4f9e454067b6cd897d4ec68908bdd1836369cf3/registry/morpho/calldata-MorphoBundlerV3.json"
+  },
+  "context": {
+    "address": "0x6566194141eefa99af43bb5aa71460ca2dc90245",
+    "chain_id": 1,
+    "enums": {},
+    "fields": [
+      {
+        "descriptor": "0001010106416374696f6e020109036e0001010121000101010107031900010101020000030002030101010300010200010300040104022200010101010502011403170001010102000003000203010101030001020000040103052200010101010102012003170001010102000003000203010101030001020002040103",
+        "name": "Action",
+        "param": {
+          "amount": {
+            "abi_path": {
+              "absolute": true,
+              "elements": [
+                {
+                  "identifier": "bundle",
+                  "type": "field"
+                },
+                {
+                  "type": "array"
+                },
+                {
+                  "identifier": "value",
+                  "type": "field"
+                }
+              ],
+              "type": "data"
+            },
+            "binary_path": {
+              "elements": [
+                {
+                  "offset": 0,
+                  "type": "TUPLE"
+                },
+                {
+                  "type": "REF"
+                },
+                {
+                  "type": "ARRAY",
+                  "weight": 1
+                },
+                {
+                  "type": "REF"
+                },
+                {
+                  "offset": 2,
+                  "type": "TUPLE"
+                },
+                {
+                  "leaf_type": "STATIC_LEAF",
+                  "type": "LEAF"
+                }
+              ],
+              "type": "DATA",
+              "version": 1
+            },
+            "type": "path",
+            "type_family": "UINT",
+            "type_size": 32,
+            "version": 1
+          },
+          "callee": {
+            "abi_path": {
+              "absolute": true,
+              "elements": [
+                {
+                  "identifier": "bundle",
+                  "type": "field"
+                },
+                {
+                  "type": "array"
+                },
+                {
+                  "identifier": "to",
+                  "type": "field"
+                }
+              ],
+              "type": "data"
+            },
+            "binary_path": {
+              "elements": [
+                {
+                  "offset": 0,
+                  "type": "TUPLE"
+                },
+                {
+                  "type": "REF"
+                },
+                {
+                  "type": "ARRAY",
+                  "weight": 1
+                },
+                {
+                  "type": "REF"
+                },
+                {
+                  "offset": 0,
+                  "type": "TUPLE"
+                },
+                {
+                  "leaf_type": "STATIC_LEAF",
+                  "type": "LEAF"
+                }
+              ],
+              "type": "DATA",
+              "version": 1
+            },
+            "type": "path",
+            "type_family": "ADDRESS",
+            "type_size": 20,
+            "version": 1
+          },
+          "type": "CALLDATA",
+          "value": {
+            "abi_path": {
+              "absolute": true,
+              "elements": [
+                {
+                  "identifier": "bundle",
+                  "type": "field"
+                },
+                {
+                  "type": "array"
+                },
+                {
+                  "identifier": "data",
+                  "type": "field"
+                }
+              ],
+              "type": "data"
+            },
+            "binary_path": {
+              "elements": [
+                {
+                  "offset": 0,
+                  "type": "TUPLE"
+                },
+                {
+                  "type": "REF"
+                },
+                {
+                  "type": "ARRAY",
+                  "weight": 1
+                },
+                {
+                  "type": "REF"
+                },
+                {
+                  "offset": 1,
+                  "type": "TUPLE"
+                },
+                {
+                  "type": "REF"
+                },
+                {
+                  "leaf_type": "DYNAMIC_LEAF",
+                  "type": "LEAF"
+                }
+              ],
+              "type": "DATA",
+              "version": 1
+            },
+            "type": "path",
+            "type_family": "BYTES",
+            "version": 1
+          },
+          "version": 1
+        },
+        "version": 1
+      }
+    ],
+    "network": "ethereum",
+    "selector": "0x374f435d",
+    "source": "https://github.com/LedgerHQ/internal-erc7730-registry/blob/d4f9e454067b6cd897d4ec68908bdd1836369cf3/registry/morpho/calldata-MorphoBundlerV3.json",
+    "transaction_info": {
+      "address": "0x6566194141eefa99af43bb5aa71460ca2dc90245",
+      "chain_id": 1,
+      "creator_legal_name": "Morpho DAO",
+      "creator_name": "Morpho DAO",
+      "creator_url": "https://morpho.org",
+      "descriptor": {
+        "data": "0001010108000000000000000102146566194141eefa99af43bb5aa71460ca2dc902450304374f435d0420651258e189e7bfe474886ecc6b11112a5440645c3425ba54d80df6c611df9154051242756e646c657233204d756c746963616c6c060a4d6f7270686f2044414f070a4d6f7270686f2044414f081268747470733a2f2f6d6f7270686f2e6f7267",
+        "signatures": {
+          "prod": "3044022005595295e97c7ef3dbbc771663416400d3c37bbe1307ba5a781999f2eb266bb202204d1740234386d7f62c89cde38bf6e91c28e09e4f02984c48910bf33e00bae9cb",
+          "test": "3045022100d426f917490e0a2aa93defb39ecfad61d21123d8460890d4dc31ce88a003e27102201d6fad5269a0b5b1b6adb79a8d5649698a9cb2011729057b69e6d634dd510438"
+        }
+      },
+      "hash": "651258e189e7bfe474886ecc6b11112a5440645c3425ba54d80df6c611df9154",
+      "operation_type": "Bundler3 Multicall",
+      "selector": "0x374f435d",
+      "version": 1
+    },
+    "type": "calldata",
+    "version": "v1"
+  }
+}

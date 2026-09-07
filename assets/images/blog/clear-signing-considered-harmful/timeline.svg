@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">LEDGER_CLEAR_SIGNING_BYPASS remediation timeline</title>
+  <desc id="desc">The issue was reported March 28. Early-September publication was coordinated May 4. The source fix became public May 5, the 1.22.2 tag omitted it, and fixed Ethereum app 1.22.3 became available through Ledger's normal application catalog.</desc>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#dedbd2" stroke-width="1" opacity="0.45"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="900" fill="#f5f3ed"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <style>
+    .sans { font-family: "Helvetica Neue", Helvetica, sans-serif; fill: #171a18; }
+    .mono { font-family: Menlo, Monaco, "Courier New", monospace; fill: #171a18; }
+    .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 2.2px; }
+    .title { font-size: 58px; font-weight: 700; letter-spacing: -1.8px; }
+    .date { font-size: 18px; font-weight: 700; }
+    .event { font-size: 18px; font-weight: 700; }
+    .detail { font-size: 15px; }
+    .muted { fill: #747873; }
+    .red { fill: #c94138; }
+    .green { fill: #177d4a; }
+    .amber { fill: #b87018; }
+    .white { fill: #fffdf8; }
+  </style>
+
+  <text x="70" y="45" class="mono eyebrow">LEDGER CLEAR SIGNING BYPASS / REMEDIATION</text>
+  <text x="1530" y="45" text-anchor="end" class="mono eyebrow green">FIXED IN ETHEREUM APP 1.22.3</text>
+  <line x1="70" y1="64" x2="1530" y2="64" stroke="#bbb8b0"/>
+
+  <text x="70" y="145" class="sans title">The source was fixed in May.</text>
+  <text x="70" y="212" class="sans title">Users received the fix in August.</text>
+  <text x="70" y="258" class="sans" font-size="22" fill="#676b67">Source correction and installable remediation were separate milestones.</text>
+
+  <line x1="110" y1="448" x2="1490" y2="448" stroke="#bbb8b0" stroke-width="5"/>
+  <line x1="690" y1="448" x2="1460" y2="448" stroke="#c94138" stroke-width="5" stroke-dasharray="14 12"/>
+
+  <g class="mono">
+    <g transform="translate(110 448)">
+      <circle r="17" fill="#177d4a"/>
+      <text x="0" y="-52" text-anchor="middle" class="date green">MAR 28</text>
+      <text x="0" y="66" text-anchor="middle" class="event">REPORT</text>
+      <text x="0" y="96" text-anchor="middle" class="detail muted">email + PoC</text>
+    </g>
+    <g transform="translate(390 448)">
+      <circle r="17" fill="#177d4a"/>
+      <text x="0" y="-52" text-anchor="middle" class="date green">MAY 04</text>
+      <text x="0" y="66" text-anchor="middle" class="event">PUBLICATION WINDOW</text>
+      <text x="0" y="96" text-anchor="middle" class="detail muted">early September</text>
+    </g>
+    <g transform="translate(690 448)">
+      <circle r="17" fill="#e5b15e" stroke="#b87018"/>
+      <text x="0" y="-52" text-anchor="middle" class="date amber">MAY 05</text>
+      <text x="0" y="66" text-anchor="middle" class="event">FIX MERGED</text>
+      <text x="0" y="96" text-anchor="middle" class="detail muted">public develop</text>
+    </g>
+    <g transform="translate(1035 448)">
+      <circle r="17" fill="#c94138"/>
+      <text x="0" y="-52" text-anchor="middle" class="date red">AUG 13</text>
+      <text x="0" y="66" text-anchor="middle" class="event">1.22.2 TAG</text>
+      <text x="0" y="96" text-anchor="middle" class="detail red">fix absent</text>
+    </g>
+    <g transform="translate(1490 448)">
+      <circle r="17" fill="#177d4a"/>
+      <text x="0" y="-52" text-anchor="end" class="date green">AUG 25</text>
+      <text x="0" y="66" text-anchor="end" class="event">1.22.3 RELEASE</text>
+      <text x="0" y="96" text-anchor="end" class="detail green">installable app</text>
+    </g>
+  </g>
+
+  <rect x="70" y="642" width="1460" height="122" rx="8" fill="#fffdf8" stroke="#bbb8b0"/>
+  <rect x="70" y="642" width="12" height="122" rx="6" fill="#c94138"/>
+  <text x="110" y="690" class="mono" font-size="16" font-weight="700" letter-spacing="1.2">SOURCE / DISTRIBUTION GAP</text>
+  <text x="110" y="733" class="sans" font-size="28" font-weight="700">Fix merged May 5. Fixed release published August 25.</text>
+  <text x="1530" y="865" text-anchor="end" class="mono detail muted">BITFINDING SECURITY RESEARCH</text>
+</svg>

@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1017">
+  
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Clear Signing Considered Harmful | Bitfinding</title>
+<meta name="generator" content="Jekyll v3.10.0">
+<meta property="og:title" content="Clear Signing Considered Harmful">
+<meta name="author" content="Bitfinding Research Team">
+<meta property="og:locale" content="en">
+<meta name="description" content="A Ledger Clear Signing parser bug let an affected device display one action while signing 257. We examine the Safe, Aave, and Morpho attack paths, practical exploitation, and the architectural implications.">
+<meta property="og:description" content="A Ledger Clear Signing parser bug let an affected device display one action while signing 257. We examine the Safe, Aave, and Morpho attack paths, practical exploitation, and the architectural implications.">
+<link rel="canonical" href="https://bitfinding.com/blog/clear-signing-considered-harmful/">
+<meta property="og:url" content="https://bitfinding.com/blog/clear-signing-considered-harmful/">
+<meta property="og:site_name" content="Bitfinding">
+<meta property="og:image" content="https://bitfinding.com/assets/images/blog/clear-signing-considered-harmful/social.png">
+<meta property="og:image:height" content="630">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:alt" content="Clear Signing Considered Harmful: one call displayed and 257 calls signed">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-09-07T00:00:00-03:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://bitfinding.com/assets/images/blog/clear-signing-considered-harmful/social.png">
+<meta name="twitter:image:alt" content="Clear Signing Considered Harmful: one call displayed and 257 calls signed">
+<meta property="twitter:title" content="Clear Signing Considered Harmful">
+<meta name="twitter:site" content="@bitfinding">
+<meta name="twitter:creator" content="@bitfinding">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Bitfinding Research Team"},"dateModified":"2026-09-07T00:00:00-03:00","datePublished":"2026-09-07T00:00:00-03:00","description":"A Ledger Clear Signing parser bug let an affected device display one action while signing 257. We examine the Safe, Aave, and Morpho attack paths, practical exploitation, and the architectural implications.","headline":"Clear Signing Considered Harmful","image":{"width":1200,"height":630,"alt":"Clear Signing Considered Harmful: one call displayed and 257 calls signed","url":"https://bitfinding.com/assets/images/blog/clear-signing-considered-harmful/social.png","@type":"imageObject"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://bitfinding.com/blog/clear-signing-considered-harmful/"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://bitfinding.com/assets/images/logo.svg"},"name":"Bitfinding Research Team"},"url":"https://bitfinding.com/blog/clear-signing-considered-harmful/"}</script>
+<!-- End Jekyll SEO tag -->
+
+  
+  <link type="application/atom+xml" rel="alternate" href="https://bitfinding.com/rss.xml" title="Bitfinding">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/css/style.css?v=1788795711">
+</head>
+
+  <body class="layout-post section-blog">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    
+
+<nav class="site-nav" aria-label="Primary navigation">
+  <div class="nav-inner">
+    <a class="brand" href="/" aria-label="Bitfinding home">
+      <img src="/assets/images/logo.svg" alt="Bitfinding">
+    </a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-menu">
+      <img class="menu-open-icon" src="/assets/images/hamburguer.svg" alt="">
+      <img class="menu-close-icon" src="/assets/images/close.svg" alt="">
+      <span class="sr-only">Toggle navigation</span>
+    </button>
+
+    <ul class="nav-links" id="primary-menu">
+      <li><a data-nav="home" href="/">Home</a></li>
+      <li><a data-nav="blog" class="active" aria-current="page" href="/blog/">Blog</a></li>
+      <li><a data-nav="connect" href="/#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+    <main id="main-content">
+      <article class="post post-narrow">
+  
+  
+  <header class="post-header content-shell article-shell">
+    <div class="post-header-glow" aria-hidden="true"></div>
+    <h1>Clear Signing Considered Harmful</h1>
+    <div class="post-meta post-meta-large">
+      <time datetime="2026-09-07T00:00:00-03:00">Sep 7, 2026</time>
+      <span aria-hidden="true">|</span>
+      <span>Bitfinding Research Team</span>
+    </div>
+  </header>
+
+  <div class="post-content content-shell article-shell">
+    
+    <p>A Ledger Clear Signing bug let an affected device display one action while
+its signature authorized 257. A signer could approve what looked like a routine
+transaction without seeing the other actions covered by the signature.</p>
+
+<p>We tested Safe, Aave, and Morpho Clear Signing flows. This essay examines the
+finding and its implications for hardware-wallet trust. The
+<a href="https://github.com/BitFinding/publications/blob/main/LEDGER_CLEAR_SIGNING_BYPASS.md">security advisory</a>
+documents affected versions, mitigations, and coordinated disclosure.</p>
+
+<blockquote>
+  <p><strong>Remediation status:</strong> Ledger Ethereum app <code class="language-plaintext highlighter-rouge">1.22.3</code> rejects the demonstrated
+flows. Users should update the Ethereum app separately from their device
+firmware. See the advisory for the affected-version matrix and verification
+guidance.</p>
+</blockquote>
+
+<p><img src="/assets/images/blog/clear-signing-considered-harmful/hero.png" alt="LEDGER_CLEAR_SIGNING_BYPASS: one call displayed, 257 calls signed" width="1600" height="900" loading="lazy" decoding="async"></p>
+
+<nav class="post-toc" aria-label="Contents"><p class="post-toc-title">Contents</p>
+<ul>
+<li><a href="#0x00---the-threat-model">0x00 - The Threat Model</a></li>
+<li><a href="#0x01---the-parser-bug">0x01 - The Parser Bug</a></li>
+<li><a href="#0x02---signed-metadata">0x02 - Signed Metadata</a></li>
+<li><a href="#0x03---safe">0x03 - Safe</a></li>
+<li><a href="#0x04---aave">0x04 - Aave</a></li>
+<li><a href="#0x05---morpho">0x05 - Morpho</a></li>
+<li><a href="#0x06---making-257-calls-fit">0x06 - Making 257 Calls Fit</a></li>
+<li><a href="#0x07---research-evidence">0x07 - Research Evidence</a></li>
+<li><a href="#0x08---fix-and-release">0x08 - Fix and Release</a></li>
+<li><a href="#conclusion-one-thing-well">Conclusion: One Thing Well</a></li>
+<li><a href="#appendix-disclosure-record">Appendix: Disclosure Record</a></li>
+</ul></nav><h2 id="0x00---the-threat-model">0x00 - The Threat Model</h2>
+
+<p>Ledger’s security premise is sound: the computer and transaction interface may
+be compromised. Its
+<a href="https://donjon.ledger.com/threat-model/device-secure-display-and-inputs/">secure-display threat model</a>
+therefore requires the device to preserve <strong>What You See Is What You Sign</strong>
+even when the host cannot be trusted.</p>
+
+<p>For institutional Safe users, Ledger applies the same principle directly. Its
+<a href="https://www.ledger.com/blog-enterprise-beyond-the-quorum">Beyond the Quorum</a>
+article identifies a compromised frontend as the threat and presents Clear
+Signing as an independent view of a transaction’s true intent.</p>
+
+<p><a href="/assets/images/blog/clear-signing-considered-harmful/ledger-enterprise-multisig-clear-signing.png"><img src="/assets/images/blog/clear-signing-considered-harmful/ledger-enterprise-multisig-clear-signing-framed.png" alt="Ledger Enterprise Multisig presents Clear Signing as the point where blind signing stops" width="1600" height="600" loading="lazy" decoding="async"></a></p>
+
+<p><em>Ledger Enterprise Multisig at
+<a href="https://app.multisig.ledger.com/"><code class="language-plaintext highlighter-rouge">app.multisig.ledger.com</code></a>, captured on
+2026-08-26. The product presents Clear Signing as the point where “blind
+signing stops” for Safe transactions.</em></p>
+
+<p>Clear Signing therefore sits at the final security boundary. When browser
+JavaScript is compromised, the device must independently describe the
+authorization it is about to sign.</p>
+
+<p>The February 2025 Bybit theft made the compromised-frontend threat concrete.
+<a href="https://www.sygnia.co/blog/sygnia-investigation-bybit-hack/">Sygnia’s public findings</a>
+describe malicious JavaScript injected into resources served from Safe’s AWS
+S3 bucket. The code manipulated the transaction initiated through Safe.
+<a href="https://www.ledger.com/blog-learning-from-the-bybit-safe-attack">Ledger’s response</a>
+presented trusted hardware display and Clear Signing as the layer that should
+contain that failure mode.</p>
+
+<p>LEDGER_CLEAR_SIGNING_BYPASS reaches the same threat model through a different
+failure mode: a compromised frontend supplies the payload, and device-side
+Clear Signing produces a human-readable description that omits part of the
+signed authorization.</p>
+
+<h2 id="0x01---the-parser-bug">0x01 - The Parser Bug</h2>
+
+<p>The vulnerability was in the shared array machinery of Ledger’s Ethereum
+Generic Transaction Parser. The parser calculated an attacker-controlled array
+pass count as a 16-bit integer, then stored it in an 8-bit countdown:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint16_t</span> <span class="n">passes</span><span class="p">;</span>
+<span class="kt">uint8_t</span> <span class="n">passes_remaining</span><span class="p">[</span><span class="n">MAX_ARRAYS</span><span class="p">];</span>
+
+<span class="n">passes_remaining</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">passes</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>For a 257-element array, the narrowing conversion changes <code class="language-plaintext highlighter-rouge">257</code> to <code class="language-plaintext highlighter-rouge">1</code>:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>passes = 257
+(uint8_t)257 = 1
+</code></pre></div></div>
+
+<p>The parser then combines the full-width count with the truncated countdown to
+select the first element it will review:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>idx = start + (passes - passes_remaining)
+idx = 0 + (257 - 1)
+idx = 256
+</code></pre></div></div>
+
+<p>The same truncated value controls iteration. Instead of starting at element
+<code class="language-plaintext highlighter-rouge">0</code> and reviewing all 257 elements, the parser starts at element <code class="language-plaintext highlighter-rouge">256</code> and
+reviews one. Elements <code class="language-plaintext highlighter-rouge">0</code> through <code class="language-plaintext highlighter-rouge">255</code> remain in the signed calldata but never
+reach the trusted screen.</p>
+
+<p>The behavior generalizes for any non-zero remainder:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array length = N = 256q + k, where 1 &lt;= k &lt;= 255
+displayed    = final k elements = N mod 256
+omitted      = first 256q elements = N - (N mod 256)
+</code></pre></div></div>
+
+<p>The hidden prefix can contain different actions, mostly no-op calls surrounding
+one consequential operation, or any other valid execution sequence that fits
+the device’s constraints. The demonstrated Safe payload uses <code class="language-plaintext highlighter-rouge">q = 1</code> and
+<code class="language-plaintext highlighter-rouge">k = 1</code>: the screen reviews one call while the signature authorizes 257.</p>
+
+<h2 id="0x02---signed-metadata">0x02 - Signed Metadata</h2>
+
+<p>Clear Signing does not interpret every contract call generically. A transaction
+enters this parser path only when a host-side Context Module supplies matching,
+contract-specific metadata. That metadata tells the Ethereum app which intent,
+fields, labels, paths, and formatting to render.</p>
+
+<p>These Ledger-authorized descriptors make supported protocols legible on the
+device. They also define the attack surface wherever they direct the vulnerable
+parser through an attacker-controlled array.</p>
+
+<p>In our August 25 snapshot, Ledger’s
+<a href="https://crypto-assets-service.api.ledger.com/v1/dapps">production dapp descriptor service</a>
+exposed array-backed <code class="language-plaintext highlighter-rouge">CALLDATA</code> fields for these transaction shapes:</p>
+
+<div class="table-scroll" role="region" tabindex="0" aria-label="Table: Descriptor creator, Selector, Array field, Observed chains" data-columns="4">
+<p class="table-scroll-hint">Scroll horizontally to view all columns →</p>
+<table>
+  <thead>
+    <tr>
+      <th>Descriptor creator</th>
+      <th>Selector</th>
+      <th>Array field</th>
+      <th>Observed chains</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Safe</td>
+      <td>
+<code class="language-plaintext highlighter-rouge">0x1a833ee3</code> (<code class="language-plaintext highlighter-rouge">batchExecute</code>)</td>
+      <td>
+<code class="language-plaintext highlighter-rouge">Transaction</code> (<code class="language-plaintext highlighter-rouge">Call[]</code>)</td>
+      <td>Ethereum, Base, Optimism, Arbitrum, Polygon</td>
+    </tr>
+    <tr>
+      <td>Aave DAO</td>
+      <td>
+<code class="language-plaintext highlighter-rouge">0xac9650d8</code> (<code class="language-plaintext highlighter-rouge">multicall</code>)</td>
+      <td>
+<code class="language-plaintext highlighter-rouge">Call</code> (<code class="language-plaintext highlighter-rouge">bytes[]</code>)</td>
+      <td>Ethereum, Base, Optimism, Arbitrum, Polygon, Linea</td>
+    </tr>
+    <tr>
+      <td>Morpho DAO</td>
+      <td>
+<code class="language-plaintext highlighter-rouge">0x374f435d</code> (<code class="language-plaintext highlighter-rouge">multicall</code>)</td>
+      <td>
+<code class="language-plaintext highlighter-rouge">Action</code> (<code class="language-plaintext highlighter-rouge">bytes[]</code>)</td>
+      <td>Ethereum, Base</td>
+    </tr>
+    <tr>
+      <td>Morpho DAO</td>
+      <td>
+<code class="language-plaintext highlighter-rouge">0x803a7fba</code> (<code class="language-plaintext highlighter-rouge">reallocate</code>)</td>
+      <td>
+<code class="language-plaintext highlighter-rouge">Action</code> (<code class="language-plaintext highlighter-rouge">bytes[]</code>)</td>
+      <td>Ethereum, Base</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>We demonstrated three paths through this surface:</p>
+
+<div class="table-scroll" role="region" tabindex="0" aria-label="Table: Flow, Device displayed, Signature also authorized, Fork result" data-columns="4">
+<p class="table-scroll-hint">Scroll horizontally to view all columns →</p>
+<table>
+  <thead>
+    <tr>
+      <th>Flow</th>
+      <th>Device displayed</th>
+      <th>Signature also authorized</th>
+      <th>Fork result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Safe</td>
+      <td>Send 10 USDC</td>
+      <td>Maximum USDC allowance for the attacker</td>
+      <td>Safe accepted the authorization; the allowance was used to empty its remaining USDC balance</td>
+    </tr>
+    <tr>
+      <td>Aave</td>
+      <td>Supply 10 USDC</td>
+      <td>Withdraw the signer’s existing USDC supply position to the attacker</td>
+      <td>The exact affected-app transaction executed</td>
+    </tr>
+    <tr>
+      <td>Morpho</td>
+      <td>Supply 10 USDC</td>
+      <td>Withdraw the signer’s existing USDC position to the attacker</td>
+      <td>The exact affected-app transaction executed</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Safe is the main worked example because its array elements carry arbitrary
+nested calls and its multi-owner treasury workflow makes the organizational
+impact especially clear. Aave and Morpho extend the result beyond Safe and
+EIP-712 authorization.</p>
+
+<h2 id="0x03---safe">0x03 - Safe</h2>
+
+<p>Safe’s <code class="language-plaintext highlighter-rouge">BatchExecutor</code> provided a path from parser failure to treasury impact.
+Its <code class="language-plaintext highlighter-rouge">batchExecute(Call[])</code> entry point accepts an array whose elements contain a
+target, value, and arbitrary nested calldata. Ledger’s production Clear Signing
+infrastructure supplied the archived
+<a href="/assets/images/blog/clear-signing-considered-harmful/metadata/safe-batch-execute-ledger-signed-context.json"><code class="language-plaintext highlighter-rouge">batchExecute(Call[])</code> context</a>
+for that transaction shape.</p>
+
+<p>The operational threat is malicious JavaScript running inside an authorized
+Safe frontend. The frontend constructs one attacker-chosen <code class="language-plaintext highlighter-rouge">SafeTx</code>, obtains
+the accepted display context, and asks each required owner to sign the same
+hash.</p>
+
+<p>The attack path is:</p>
+
+<ol>
+  <li>Malicious JavaScript runs inside the transaction frontend trusted by the
+organization.</li>
+  <li>The browser presents a routine payment while sending an attacker-crafted
+EIP-712 <code class="language-plaintext highlighter-rouge">SafeTx</code> to each required owner.</li>
+  <li>Each affected Ledger displays only the final batch action and returns a
+valid signature over the complete hash.</li>
+  <li>Once the configured threshold is met, any relayer can submit the signed
+<code class="language-plaintext highlighter-rouge">SafeTx</code> to Safe.</li>
+  <li>The hidden maximum allowance survives the displayed payment and lets the
+approved spender transfer the remaining token balance.</li>
+</ol>
+
+<p>Safe still enforces its configured threshold and any independent guards or
+policy controls. The exploitable failure is correlated semantic review: if the
+owners rely on the same affected firmware and metadata path, every device can
+repeat the same incomplete interpretation while contributing a valid signature
+to the quorum.</p>
+
+<p>The execution-critical fields in our proof were:</p>
+
+<div class="table-scroll" role="region" tabindex="0" aria-label="Table: SafeTx field, Signed value" data-columns="2">
+<p class="table-scroll-hint">Scroll horizontally to view all columns →</p>
+<table>
+  <thead>
+    <tr>
+      <th>
+<code class="language-plaintext highlighter-rouge">SafeTx</code> field</th>
+      <th>Signed value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">to</code></td>
+      <td>Safe BatchExecutor</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">operation</code></td>
+      <td>
+<code class="language-plaintext highlighter-rouge">DELEGATECALL</code> (<code class="language-plaintext highlighter-rouge">1</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">data</code></td>
+      <td>Pointer-aliased <code class="language-plaintext highlighter-rouge">batchExecute(Call[257])</code>
+</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>The affected application identified a Safe transaction and its nested batch,
+displayed only the 10 USDC transfer, showed operation type <code class="language-plaintext highlighter-rouge">1</code>, and asked the
+user to sign. It never displayed the maximum allowance in <code class="language-plaintext highlighter-rouge">SafeTx.data</code>.</p>
+
+<p><img src="/assets/images/blog/clear-signing-considered-harmful/poc/safe-eip712-sequence.png" alt="Actual Safe EIP-712 review sequence from the executable LEDGER_CLEAR_SIGNING_BYPASS proof of concept" width="1600" height="1420" loading="lazy" decoding="async"></p>
+
+<p><em>Actual Ragger frames from the affected Apex P review. Surrounding labels and
+background are editorial.</em></p>
+
+<p>Safe’s own <code class="language-plaintext highlighter-rouge">getTransactionHash</code> matched the hash signed by the Ledger. An
+unrelated relayer submitted those fields and the recorded signature to a real
+Safe <code class="language-plaintext highlighter-rouge">1.4.1</code> proxy on a pinned, disposable mainnet fork. The fork installed the
+recovered Ledger address as the effective owner and set threshold <code class="language-plaintext highlighter-rouge">1</code>.</p>
+
+<p>Execution emitted 256 undisplayed USDC <code class="language-plaintext highlighter-rouge">Approval</code> events, the displayed 10 USDC
+<code class="language-plaintext highlighter-rouge">Transfer</code>, and <code class="language-plaintext highlighter-rouge">ExecutionSuccess</code>. The Safe nonce advanced and the attacker’s
+allowance became <code class="language-plaintext highlighter-rouge">uint256.max</code>. A second local transaction then acted as the
+approved spender and transferred the remaining USDC from the Safe.</p>
+
+<p>That run proves a signature produced after an incomplete device review was
+blockchain-usable.</p>
+
+<h2 id="0x04---aave">0x04 - Aave</h2>
+
+<p>Aave V3’s archived
+<a href="/assets/images/blog/clear-signing-considered-harmful/metadata/aave-v3-multicall-ledger-signed-context.json"><code class="language-plaintext highlighter-rouge">multicall(bytes[])</code> context</a>
+provides a direct-transaction path through the same shared array parser.</p>
+
+<p>A user opens a compromised frontend to supply 10 USDC to Aave. The browser
+sends a 257-entry multicall to the Ledger. Entry <code class="language-plaintext highlighter-rouge">0</code> withdraws the user’s
+existing USDC supply position to the attacker, entries <code class="language-plaintext highlighter-rouge">1</code> through <code class="language-plaintext highlighter-rouge">255</code>
+reference aliased filler calls, and entry <code class="language-plaintext highlighter-rouge">256</code> performs the expected 10 USDC
+supply.</p>
+
+<p>With Ethereum app <code class="language-plaintext highlighter-rouge">1.22.2</code>, the parser starts at entry <code class="language-plaintext highlighter-rouge">256</code>. The device
+displays the 10 USDC supply while its signature covers the complete multicall,
+including the withdrawal. We submitted that exact signed transaction to a
+pinned mainnet fork: the existing position moved to the attacker, and the
+displayed supply completed.</p>
+
+<p><img src="/assets/images/blog/clear-signing-considered-harmful/poc/aave-clear-signing-bypass.png" alt="Aave Clear Signing bypass: a 10 USDC supply displayed while an existing position is withdrawn" width="1600" height="900" loading="lazy" decoding="async"></p>
+
+<p><em>The affected app reviewed the final supply entry. The signed multicall also
+contained the preceding withdrawal.</em></p>
+
+<h2 id="0x05---morpho">0x05 - Morpho</h2>
+
+<p>Morpho’s archived Bundler3
+<a href="/assets/images/blog/clear-signing-considered-harmful/metadata/morpho-bundler3-multicall-ledger-signed-context.json"><code class="language-plaintext highlighter-rouge">multicall</code> context</a>
+supplied a second direct-transaction path through the vulnerable parser.</p>
+
+<p>A user opens a compromised frontend to supply 10 USDC to a Morpho market. The
+browser sends a 257-entry Bundler3 multicall to the Ledger. Entry <code class="language-plaintext highlighter-rouge">0</code> moves the
+expected 10 USDC into Morpho’s adapter, entry <code class="language-plaintext highlighter-rouge">1</code> withdraws the user’s complete
+existing USDC position to the attacker, entries <code class="language-plaintext highlighter-rouge">2</code> through <code class="language-plaintext highlighter-rouge">255</code> reference one
+aliased no-op call, and entry <code class="language-plaintext highlighter-rouge">256</code> performs the expected 10 USDC supply for the
+visible recipient.</p>
+
+<p>With Ethereum app <code class="language-plaintext highlighter-rouge">1.22.2</code>, the parser starts at entry <code class="language-plaintext highlighter-rouge">256</code>. The device
+displays the 10 USDC supply while its signature covers the complete multicall,
+including the withdrawal. We submitted that exact signed transaction to the
+pinned mainnet fork: the existing 100 USDC position moved to the attacker, the
+displayed supply completed, and no residual USDC remained in the adapter.</p>
+
+<p><img src="/assets/images/blog/clear-signing-considered-harmful/poc/morpho-clear-signing-bypass.png" alt="Morpho Clear Signing bypass: a 10 USDC supply displayed while an existing position is withdrawn" width="1600" height="900" loading="lazy" decoding="async"></p>
+
+<p><em>The affected app reviewed the final supply entry. The signed multicall also
+contained the preceding funding call, withdrawal, and aliased no-op calls.</em></p>
+
+<p>Aave and Morpho establish the same result through different transaction
+shapes: the screen reviewed a suffix while the signature authorized the whole
+array.</p>
+
+<h2 id="0x06---making-257-calls-fit">0x06 - Making 257 Calls Fit</h2>
+
+<p>Practical exploitation also had to satisfy the device’s memory constraints.</p>
+
+<p>A conventional <code class="language-plaintext highlighter-rouge">batchExecute(Call[257])</code> encoding repeats every dynamic tuple.
+For the demonstrated ERC-20 calls, that produces 65,860 bytes, far beyond the
+tested flow’s practical limit.</p>
+
+<p><a href="/assets/images/blog/clear-signing-considered-harmful/poc/abi-calldata-01-heap.svg"><img src="/assets/images/blog/clear-signing-considered-harmful/poc/abi-calldata-01-heap.png" alt="Same-scale comparison of the naive 65,860-byte ABI encoding, the 16 KiB heap limit, and the 8,740-byte aliased encoding" width="1600" height="900" loading="lazy" decoding="async"></a></p>
+
+<p><em>The conventional encoding does not fit. Reusing tuple bodies brings the same
+257 logical entries below the parser’s 16 KiB allocation.</em></p>
+
+<p>ABI dynamic offsets allow multiple array entries to point to the same tuple. We
+built an offset table in which the first 256 entries all point to one shared
+approval tuple while the final entry points to one transfer tuple:</p>
+
+<p><a href="/assets/images/blog/clear-signing-considered-harmful/poc/abi-calldata-02-offsets.svg"><img src="/assets/images/blog/clear-signing-considered-harmful/poc/abi-calldata-02-offsets.png" alt="ABI offset table showing 256 entries referencing hidden CALL_A and the final entry referencing displayed CALL_B" width="1600" height="900" loading="lazy" decoding="async"></a></p>
+
+<p><em>The offset table contains 257 entries, but the encoded payload stores only two
+tuple bodies.</em></p>
+
+<p>Aliasing reduced the calldata from <strong>65,860 bytes to 8,740 bytes</strong>, allowing it
+to fit the original 16 KiB parser allocator. The signature still commits to all
+257 logical array entries.</p>
+
+<p>At execution, Safe invokes tuple A 256 times. Those calls repeatedly set the
+same allowance, leaving one maximum approval. Tuple B performs the small
+payment shown by the device. The approved spender can then call <code class="language-plaintext highlighter-rouge">transferFrom</code>
+directly.</p>
+
+<p><a href="/assets/images/blog/clear-signing-considered-harmful/poc/abi-calldata-03-divergence.svg"><img src="/assets/images/blog/clear-signing-considered-harmful/poc/abi-calldata-03-divergence.png" alt="Comparison of the truncated device review with the complete Safe and EVM interpretation committed to by the signature" width="1600" height="900" loading="lazy" decoding="async"></a></p>
+
+<p><em>The device starts at entry 256 and reviews the transfer. Safe interprets the
+complete array, and the signature commits to both tuple bodies.</em></p>
+
+<p>The signed descriptor remains authentic. The calldata remains valid ABI. The
+signature remains cryptographically correct. The trusted interpretation omits
+signed actions.</p>
+
+<h2 id="0x07---research-evidence">0x07 - Research Evidence</h2>
+
+<p>The completed research evidence includes:</p>
+
+<ul>
+  <li>a standalone C proof of the truncation and index arithmetic;</li>
+  <li>62 Speculos tests covering every released Nano S Plus, Nano X, Flex, Stax,
+and Apex P package from Ethereum app <code class="language-plaintext highlighter-rouge">1.19.0</code> through <code class="language-plaintext highlighter-rouge">1.22.2</code>;</li>
+  <li>physical-device validation on Nano S Plus and Ledger Flex using
+production-signed descriptors;</li>
+  <li>exact affected-app signatures for the Safe, Aave, and Morpho demonstrations;</li>
+  <li>independent reconstruction of each signed transaction or authorization; and</li>
+  <li>execution of those artifacts on a pinned, disposable Anvil fork.</li>
+</ul>
+
+<p>Physical-device checks with production-signed metadata established the
+display/signature mismatch. The executable Safe authorization came from an
+affected Apex P <code class="language-plaintext highlighter-rouge">1.21.3</code> Speculos build with the original parser and unchanged
+16 KiB allocator. Test-only flags provisioned the controlled context without
+changing the parser logic or allocator capacity. We repeated the Aave and
+Morpho flows on an exact-source Nano S Plus <code class="language-plaintext highlighter-rouge">1.22.2</code> build.</p>
+
+<h3 id="hardware-proof-of-concept">Hardware Proof of Concept</h3>
+
+<p>The <a href="/poc/ledger-clear-signing-bypass/">hardware signing artifact wizard</a>
+presents the Safe, Aave, and Morpho proofs as three paths through one page. For
+each protocol it reconstructs the canonical 257-element payload, requests a
+fresh signature from a connected Ledger through WebHID, and verifies the
+signer against the complete payload.</p>
+
+<p>The page ships a frozen copy of the Ledger-signed production descriptors,
+token metadata, and device certificates used by the demonstrations. It does
+not query Ledger’s current metadata service and does not require a CAL origin
+token. This preserves the historical Clear Signing inputs if the hosted
+metadata changes or disappears.</p>
+
+<p>The page keeps the evidence chain explicit: <strong>Select</strong>, <strong>Capture</strong>, <strong>Inspect</strong>,
+and <strong>Export</strong>. Safe exports an EIP-712 owner authorization with every <code class="language-plaintext highlighter-rouge">SafeTx</code>
+field and the corresponding <code class="language-plaintext highlighter-rouge">Safe.execTransaction</code> calldata. Aave and Morpho
+export complete raw signed EIP-1559 transactions.</p>
+
+<p>The browser deliberately stops before execution. It has no RPC configuration
+and cannot broadcast. Instead, it generates commands that consume the exported
+artifact through independent Safe or DeFi runners on a pinned, disposable
+Anvil fork.</p>
+
+<p>The final result compares the device display, signed authorization, and local
+execution:</p>
+
+<ul class="summary-grid" role="list">
+  <li>
+<strong>Device display</strong>
+    <ul>
+      <li>Send 10 USDC</li>
+    </ul>
+  </li>
+  <li>
+<strong>Signed authorization</strong>
+    <ul>
+      <li>Transfer 10 USDC</li>
+      <li>Approve attacker: MAX</li>
+    </ul>
+  </li>
+  <li>
+<strong>Anvil result</strong>
+    <ul>
+      <li>Transfer completed</li>
+      <li>Allowance created</li>
+      <li>Safe balance: 0</li>
+    </ul>
+  </li>
+</ul>
+
+<p>A physical-device capture requires Chrome or Edge, an affected test device,
+and a disposable seed. The fixed Ethereum app rejects the malformed array. The
+page does not offer an archived-signature fallback and never broadcasts.</p>
+
+<h2 id="0x08---fix-and-release">0x08 - Fix and Release</h2>
+
+<p><strong>Source correction: May 5. Installable release: August 25.</strong></p>
+
+<p><a href="/assets/images/blog/clear-signing-considered-harmful/timeline.svg"><img src="/assets/images/blog/clear-signing-considered-harmful/timeline.png" alt="Remediation timeline showing the March report, May source correction, vulnerable 1.22.2 tag, and fixed 1.22.3 release" width="1600" height="900" loading="lazy" decoding="async"></a></p>
+
+<p>Ledger merged the root-cause correction into public <code class="language-plaintext highlighter-rouge">develop</code> on May 5. The
+security-relevant change was a three-line bounds check:</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">@@ -261,6 +261,9 @@</span> static bool path_array(const s_array_args *array,
+     *offset += 1;
+     if (arrays_info-&gt;index == arrays_info-&gt;depth) {
+         // new depth
+<span class="gi">+        if (passes &gt; UINT8_MAX) {
++            return false;
++        }
+</span>         arrays_info-&gt;passes_remaining[arrays_info-&gt;index] = passes;
+         arrays_info-&gt;depth += 1;
+     }
+</code></pre></div></div>
+
+<p>The diff entered public Git history on May 5. The first installable stable
+release containing the correction became available on August 25.</p>
+
+<p>On August 26, we gave only that patch hunk to a fresh, isolated Codex session
+running <code class="language-plaintext highlighter-rouge">gpt-5.6-sol</code>. We omitted the commit title, repository, report,
+surrounding declarations, and exploit details. Its first conclusion was:</p>
+
+<blockquote>
+  <p>An unchecked narrowing conversion when storing <code class="language-plaintext highlighter-rouge">passes</code> in
+<code class="language-plaintext highlighter-rouge">passes_remaining[]</code>.</p>
+</blockquote>
+
+<p>The model selected <code class="language-plaintext highlighter-rouge">256</code> as the first boundary test, identified <code class="language-plaintext highlighter-rouge">255</code> as the
+valid maximum, and warned that the old code could select the wrong element or
+stop traversal early. Reconstructing the complete exploit chain still required
+surrounding source and human analysis. This single triage run illustrates how
+the patch hunk alone enabled an agent to identify the bug class and critical
+input boundary.</p>
+
+<p>Source correction and user protection are separate milestones. GitHub’s
+<a href="https://docs.github.com/en/code-security/concepts/vulnerability-reporting-and-management/repository-security-advisories">repository security advisory workflow</a>
+supports private fix development, allowing a root-cause diff to remain private
+until an installable release is ready.</p>
+
+<p>Here, the correction entered public <code class="language-plaintext highlighter-rouge">develop</code> on May 5, then missed stable
+versions <code class="language-plaintext highlighter-rouge">1.22.1</code> and <code class="language-plaintext highlighter-rouge">1.22.2</code>. Version <code class="language-plaintext highlighter-rouge">1.22.2</code> carried the separate
+TestMachine signature-substitution hotfix while retaining this parser behavior.
+For most of the agreed disclosure period, the correction was visible in public
+Git history while users on the stable release remained affected.</p>
+
+<p>We notified Ledger that the original PoC still reproduced on the exact
+<code class="language-plaintext highlighter-rouge">1.22.2</code> tag. The fixed Ethereum app <code class="language-plaintext highlighter-rouge">1.22.3</code> became installable two days later,
+on August 25. We retested it immediately and confirmed that the same PoC was
+rejected. The full disclosure and remediation record is in the
+<a href="#appendix-disclosure-record">appendix</a>.</p>
+
+<p>We are publishing with fixed Ethereum app <code class="language-plaintext highlighter-rouge">1.22.3</code> available through Ledger’s
+normal application catalog.</p>
+
+<h2 id="conclusion-one-thing-well">Conclusion: One Thing Well</h2>
+
+<p>Version <code class="language-plaintext highlighter-rouge">1.22.3</code> removes this truncation. The harder question remains: what
+other bugs could emerge from the same firmware complexity?</p>
+
+<p>Ledger’s default flow gives trusted firmware two security-critical jobs:</p>
+
+<ol>
+  <li>protect and use the private key; and</li>
+  <li>interpret evolving smart-contract semantics for the user.</li>
+</ol>
+
+<p>The second job is substantial. A stateful C parser combines attacker-controlled
+calldata with evolving metadata, walks nested structures, manages parser state,
+formats values, and decides which facts deserve space on a small screen. Here,
+one unchecked narrowing conversion changed 257 reviews into one. Each protocol
+and display feature adds another opportunity for interpretation to diverge from
+authorization.</p>
+
+<p>Metadata signatures establish the provenance of rendering instructions.
+Completeness, correct firmware interpretation, and correspondence between the
+screen and every signed action remain separate security properties.</p>
+
+<p>For multisig custody, identical devices create a shared semantic control. A
+quorum can be cryptographically valid while every signer receives the same
+wrong interpretation from the same firmware and metadata path.</p>
+
+<p>Blind signing makes the absence of semantic verification visible. Incomplete
+Clear Signing can instead present a readable interpretation that omits actions
+covered by the signature.</p>
+
+<p>A narrower hardware signer would protect keys, display one stable commitment,
+and sign exactly that commitment. Decoding, simulation, policy evaluation, and
+human-readable views could run across independent, replaceable systems that
+bind their conclusions to the same hash.</p>
+
+<h2 id="appendix-disclosure-record">Appendix: Disclosure Record</h2>
+
+<p>Dates use <code class="language-plaintext highlighter-rouge">YYYY-MM-DD</code>. Times in the underlying correspondence are retained in
+<code class="language-plaintext highlighter-rouge">America/Argentina/Cordoba</code> (<code class="language-plaintext highlighter-rouge">ART</code>, UTC-3). The table records confirmed email
+exchanges and public GitHub or release activity.</p>
+
+<div class="table-scroll" role="region" tabindex="0" aria-label="Table: Date, Record, Event" data-columns="3">
+<p class="table-scroll-hint">Scroll horizontally to view all columns →</p>
+<table class="timeline-table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Record</th>
+      <th>Event</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2026-03-28</td>
+      <td>Email</td>
+      <td>Bitfinding submitted the encrypted report and PoC.</td>
+    </tr>
+    <tr>
+      <td>2026-03-31</td>
+      <td>Email</td>
+      <td>Ledger acknowledged receipt.</td>
+    </tr>
+    <tr>
+      <td>2026-04-22</td>
+      <td>Email</td>
+      <td>Bitfinding reported reproduction on Ethereum app <code class="language-plaintext highlighter-rouge">1.22.0</code>.</td>
+    </tr>
+    <tr>
+      <td>2026-04-23</td>
+      <td>Email</td>
+      <td>Ledger validated exploitability, classified the report High, and approved the maximum reward for the category. Bitfinding asked to publish the analysis and PoC after remediation and release.</td>
+    </tr>
+    <tr>
+      <td>2026-05-04</td>
+      <td>Email</td>
+      <td>Ledger agreed to post-remediation publication and requested a wait until early September. Bitfinding accepted.</td>
+    </tr>
+    <tr>
+      <td>2026-05-05</td>
+      <td>GitHub</td>
+      <td>
+<a href="https://github.com/LedgerHQ/app-ethereum/commit/2c3d93cc35788f464ef8c641c2dbd30c5194697c">Commit <code class="language-plaintext highlighter-rouge">2c3d93cc</code></a> merged the correction into public <code class="language-plaintext highlighter-rouge">develop</code> through PR #1017.</td>
+    </tr>
+    <tr>
+      <td>2026-05-27</td>
+      <td>GitHub</td>
+      <td>Public source tag <code class="language-plaintext highlighter-rouge">1.22.1</code> was finalized without the correction.</td>
+    </tr>
+    <tr>
+      <td>2026-08-10 to 2026-08-13</td>
+      <td>GitHub / production catalog</td>
+      <td>Ledger committed, tagged, and prepared the independent TestMachine hotfix in Ethereum app <code class="language-plaintext highlighter-rouge">1.22.2</code>.</td>
+    </tr>
+    <tr>
+      <td>2026-08-21</td>
+      <td>Public disclosure</td>
+      <td>TestMachine disclosed its independent signature-substitution finding.</td>
+    </tr>
+    <tr>
+      <td>2026-08-23</td>
+      <td>Email</td>
+      <td>Bitfinding reported that the correction was absent from <code class="language-plaintext highlighter-rouge">1.22.2</code> and <code class="language-plaintext highlighter-rouge">master</code>, requested the first installable fixed version, and reiterated first-week-of-September publication.</td>
+    </tr>
+    <tr>
+      <td>2026-08-24</td>
+      <td>Email / GitHub</td>
+      <td>Ledger confirmed that the correction had missed the release branch, treated the release-line feedback as a new bounty, offered EUR 500, and requested a delay to approximately mid-October. Bitfinding declined. A public <code class="language-plaintext highlighter-rouge">release/1.22.3</code> branch appeared with an equivalent backport.</td>
+    </tr>
+    <tr>
+      <td>2026-08-25</td>
+      <td>Email / GitHub / production catalog</td>
+      <td>Ledger described the original issue as partially fixed and requested Communications review. Fixed app <code class="language-plaintext highlighter-rouge">1.22.3</code> became available for Nano S Plus, Nano X, Stax, Flex, and Apex P. Bitfinding confirmed that the same PoC no longer reproduced.</td>
+    </tr>
+    <tr>
+      <td>2026-08-26</td>
+      <td>Email</td>
+      <td>Bitfinding supplied the planned September 1 advisory and September 8 technical extension, scheduled the device-ready WebHID PoC as a separate release, and requested specific factual or security concerns by August 28.</td>
+    </tr>
+    <tr>
+      <td>2026-08-27</td>
+      <td>Email</td>
+      <td>Ledger invited joint communications and requested the publication and social-media plan.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+  </div>
+</article>
+
+<section class="stay-connected" id="contact" aria-labelledby="connected-title">
+  <div class="content-shell narrow-section">
+    <h2 class="section-title" id="connected-title">Stay <span>Connected</span>
+</h2>
+    <div class="social-links">
+      <a href="https://x.com/bitfinding" target="_blank" rel="noopener noreferrer">
+        <span>Follow us on</span>
+        <span class="social-icon"><img src="/assets/images/x.svg" alt="X"></span>
+      </a>
+      <a href="https://github.com/BitFinding" target="_blank" rel="noopener noreferrer">
+        <span>Check our GitHub</span>
+        <span class="social-icon"><img src="/assets/images/github.svg" alt="GitHub"></span>
+      </a>
+      <a href="mailto:info@bitfinding.com">
+        <span>Drop us an email</span>
+        <img class="social-icon email-icon" src="/assets/images/email.svg" alt="Email">
+      </a>
+    </div>
+  </div>
+</section>
+
+
+    </main>
+    <footer class="site-footer">
+  <div class="footer-inner">
+    <span>Bitfinding © 2026.</span>
+    <a href="/" aria-label="Bitfinding home">
+      <img src="/assets/images/logo.svg" alt="Bitfinding">
+    </a>
+  </div>
+</footer>
+
+    <script src="/assets/js/site.js?v=1788795711" defer></script>
+  </body>
+</html>

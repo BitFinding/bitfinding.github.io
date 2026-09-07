@@ -1,0 +1,206 @@
+{
+  "schema": "ledger-clear-signing-context-snapshot/v1",
+  "protocol": "Safe",
+  "selector": "0x1a833ee3",
+  "captured_at_utc": "2026-08-22T04:31:07.155154+00:00",
+  "provenance": {
+    "capture_source": "https://app.multisig.ledger.com/",
+    "archive_sha256": "14412a6aa22d9239fc1fca3a4d52cafbbcb3cdd4dd4097b162ad6ae376131c12",
+    "descriptor_source": "https://github.com/ethereum/clear-signing-erc7730-registry/blob/d4f9e454067b6cd897d4ec68908bdd1836369cf3/registry/safe/calldata-BatchExecutor.json"
+  },
+  "context": {
+    "address": "0x2cc8475177918e8c4d840150b68815a4b6f0f5f3",
+    "chain_id": 1,
+    "enums": {},
+    "fields": [
+      {
+        "descriptor": "000101010b5472616e73616374696f6e020109036e0001010121000101010107031900010101020000030002030101010300010200020300040104022200010101010502011403170001010102000003000203010101030001020000040103052200010101010102012003170001010102000003000203010101030001020001040103",
+        "name": "Transaction",
+        "param": {
+          "amount": {
+            "abi_path": {
+              "absolute": true,
+              "elements": [
+                {
+                  "identifier": "calls",
+                  "type": "field"
+                },
+                {
+                  "type": "array"
+                },
+                {
+                  "identifier": "value",
+                  "type": "field"
+                }
+              ],
+              "type": "data"
+            },
+            "binary_path": {
+              "elements": [
+                {
+                  "offset": 0,
+                  "type": "TUPLE"
+                },
+                {
+                  "type": "REF"
+                },
+                {
+                  "type": "ARRAY",
+                  "weight": 1
+                },
+                {
+                  "type": "REF"
+                },
+                {
+                  "offset": 1,
+                  "type": "TUPLE"
+                },
+                {
+                  "leaf_type": "STATIC_LEAF",
+                  "type": "LEAF"
+                }
+              ],
+              "type": "DATA",
+              "version": 1
+            },
+            "type": "path",
+            "type_family": "UINT",
+            "type_size": 32,
+            "version": 1
+          },
+          "callee": {
+            "abi_path": {
+              "absolute": true,
+              "elements": [
+                {
+                  "identifier": "calls",
+                  "type": "field"
+                },
+                {
+                  "type": "array"
+                },
+                {
+                  "identifier": "to",
+                  "type": "field"
+                }
+              ],
+              "type": "data"
+            },
+            "binary_path": {
+              "elements": [
+                {
+                  "offset": 0,
+                  "type": "TUPLE"
+                },
+                {
+                  "type": "REF"
+                },
+                {
+                  "type": "ARRAY",
+                  "weight": 1
+                },
+                {
+                  "type": "REF"
+                },
+                {
+                  "offset": 0,
+                  "type": "TUPLE"
+                },
+                {
+                  "leaf_type": "STATIC_LEAF",
+                  "type": "LEAF"
+                }
+              ],
+              "type": "DATA",
+              "version": 1
+            },
+            "type": "path",
+            "type_family": "ADDRESS",
+            "type_size": 20,
+            "version": 1
+          },
+          "type": "CALLDATA",
+          "value": {
+            "abi_path": {
+              "absolute": true,
+              "elements": [
+                {
+                  "identifier": "calls",
+                  "type": "field"
+                },
+                {
+                  "type": "array"
+                },
+                {
+                  "identifier": "data",
+                  "type": "field"
+                }
+              ],
+              "type": "data"
+            },
+            "binary_path": {
+              "elements": [
+                {
+                  "offset": 0,
+                  "type": "TUPLE"
+                },
+                {
+                  "type": "REF"
+                },
+                {
+                  "type": "ARRAY",
+                  "weight": 1
+                },
+                {
+                  "type": "REF"
+                },
+                {
+                  "offset": 2,
+                  "type": "TUPLE"
+                },
+                {
+                  "type": "REF"
+                },
+                {
+                  "leaf_type": "DYNAMIC_LEAF",
+                  "type": "LEAF"
+                }
+              ],
+              "type": "DATA",
+              "version": 1
+            },
+            "type": "path",
+            "type_family": "BYTES",
+            "version": 1
+          },
+          "version": 1
+        },
+        "version": 1
+      }
+    ],
+    "network": "ethereum",
+    "selector": "0x1a833ee3",
+    "source": "https://github.com/ethereum/clear-signing-erc7730-registry/blob/d4f9e454067b6cd897d4ec68908bdd1836369cf3/registry/safe/calldata-BatchExecutor.json",
+    "transaction_info": {
+      "address": "0x2cc8475177918e8c4d840150b68815a4b6f0f5f3",
+      "chain_id": 1,
+      "contract_name": "BatchExecutor",
+      "creator_legal_name": "Ledger Multisig",
+      "creator_name": "Ledger Multisig",
+      "creator_url": "https://www.ledger.com",
+      "descriptor": {
+        "data": "0001010108000000000000000102142cc8475177918e8c4d840150b68815a4b6f0f5f303041a833ee30420a24d6bf2e0d156a2dbe403ab47cba04d099f6f234762f6b5176c261395e5643605124261746368207472616e73616374696f6e73060f4c6564676572204d756c7469736967070f4c6564676572204d756c7469736967081668747470733a2f2f7777772e6c65646765722e636f6d090d42617463684578656375746f72",
+        "signatures": {
+          "prod": "304402202b128aaa3c3eec089e3bcb0c87ffdfe7dd373af2631ab36312f19ef7494c016a0220472796e0aac92dd24d62c983f2a9be9f049363b21b803e187e58a25b124eaa97",
+          "test": "3045022100f0ae91edae8bfdbae368b3475fc3637b8c63e871921fc3f09e668de2b4f10a3402202fc58865df8217aa83d790309cf22ac691b061d43cf1e36f296f8a2c18f8ffb2"
+        }
+      },
+      "hash": "a24d6bf2e0d156a2dbe403ab47cba04d099f6f234762f6b5176c261395e56436",
+      "operation_type": "Batch transactions",
+      "selector": "0x1a833ee3",
+      "version": 1
+    },
+    "type": "calldata",
+    "version": "v1"
+  }
+}

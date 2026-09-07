@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#dedbd2" stroke-width="1" opacity="0.45"/>
+    </pattern>
+    <marker id="redArrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#c94138"/>
+    </marker>
+    <marker id="blueArrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#3f5faa"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#f5f3ed"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <style>
+    .sans { font-family: "Helvetica Neue", Helvetica, sans-serif; fill: #171a18; }
+    .mono { font-family: Menlo, Monaco, "Courier New", monospace; fill: #171a18; }
+    .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 2.2px; }
+    .title { font-size: 52px; font-weight: 700; letter-spacing: -1.6px; }
+    .subtitle { font-size: 22px; fill: #676b67; }
+    .label { font-size: 15px; font-weight: 700; letter-spacing: 1.2px; }
+    .body { font-size: 18px; }
+    .small { font-size: 14px; }
+    .muted { fill: #747873; }
+    .white { fill: #fffdf8; }
+    .red { fill: #c94138; }
+    .blue { fill: #3f5faa; }
+    .orange { fill: #b87018; }
+  </style>
+
+  <text x="70" y="45" class="mono eyebrow">LEDGER CLEAR SIGNING BYPASS / EXPLOIT MECHANICS / 02</text>
+  <text x="1530" y="45" text-anchor="end" class="mono eyebrow red">ABI OFFSETS ARE FOLLOWED, NOT CONSUMED</text>
+  <line x1="70" y1="64" x2="1530" y2="64" stroke="#bbb8b0"/>
+
+  <text x="70" y="135" class="sans title">257 entries. Two physical bodies.</text>
+  <text x="70" y="178" class="sans subtitle">The offset table repeats one address 256 times, then selects the displayed call once.</text>
+
+  <rect x="70" y="230" width="770" height="458" rx="8" fill="#eeece5" stroke="#a9aaa5" stroke-width="2"/>
+  <text x="95" y="266" class="mono label orange">OFFSET TABLE / 257 x 32-BYTE WORDS</text>
+  <text x="815" y="266" text-anchor="end" class="mono small muted">BASE = 0x0044</text>
+  <line x1="95" y1="282" x2="815" y2="282" stroke="#bcbab3"/>
+  <text x="105" y="312" class="mono small muted">INDEX</text>
+  <text x="240" y="312" class="mono small muted">ENCODED OFFSET</text>
+  <text x="525" y="312" class="mono small muted">ABSOLUTE TARGET</text>
+
+  <rect x="95" y="330" width="720" height="55" rx="4" fill="#f9f7f1"/>
+  <text x="105" y="364" class="mono body">calls[0]</text>
+  <text x="240" y="364" class="mono body red">0x2020</text>
+  <text x="525" y="364" class="mono body red">0x0044 + 0x2020 = 0x2064</text>
+
+  <rect x="95" y="391" width="720" height="55" rx="4" fill="#f9f7f1"/>
+  <text x="105" y="425" class="mono body">calls[1]</text>
+  <text x="240" y="425" class="mono body red">0x2020</text>
+  <text x="525" y="425" class="mono body red">0x0044 + 0x2020 = 0x2064</text>
+
+  <text x="105" y="478" class="mono body muted">...</text>
+  <text x="240" y="478" class="mono body red">0x2020</text>
+  <text x="525" y="478" class="mono body red">same destination</text>
+
+  <rect x="95" y="500" width="720" height="55" rx="4" fill="#f9f7f1"/>
+  <text x="105" y="534" class="mono body">calls[255]</text>
+  <text x="240" y="534" class="mono body red">0x2020</text>
+  <text x="525" y="534" class="mono body red">0x0044 + 0x2020 = 0x2064</text>
+
+  <rect x="95" y="575" width="720" height="75" rx="4" fill="#e8edf9" stroke="#3f5faa"/>
+  <text x="105" y="620" class="mono body">calls[256]</text>
+  <text x="240" y="620" class="mono body blue">0x2100</text>
+  <text x="525" y="620" class="mono body blue">0x0044 + 0x2100 = 0x2144</text>
+
+  <text x="1000" y="252" class="mono label muted">TUPLE DATA / TWO STORED BODIES</text>
+  <rect x="1000" y="300" width="500" height="155" rx="8" fill="#fae9e6" stroke="#c94138" stroke-width="2"/>
+  <text x="1025" y="334" class="mono label red">CALL_A @ 0x2064 / 224 BYTES</text>
+  <text x="1025" y="377" class="mono body">target   USDC</text>
+  <text x="1025" y="407" class="mono body">calldata approve(attacker, MAX)</text>
+  <text x="1475" y="437" text-anchor="end" class="mono label red">REFERENCED 256x</text>
+
+  <rect x="1000" y="515" width="500" height="155" rx="8" fill="#e7ecf8" stroke="#3f5faa" stroke-width="2"/>
+  <text x="1025" y="549" class="mono label blue">CALL_B @ 0x2144 / 224 BYTES</text>
+  <text x="1025" y="592" class="mono body">target   USDC</text>
+  <text x="1025" y="622" class="mono body">calldata transfer(recipient, 10 USDC)</text>
+  <text x="1475" y="652" text-anchor="end" class="mono label blue">REFERENCED 1x</text>
+
+  <path d="M 815 358 C 895 358, 910 374, 985 374" fill="none" stroke="#c94138" stroke-width="3" marker-end="url(#redArrow)"/>
+  <path d="M 815 419 C 875 419, 910 390, 985 390" fill="none" stroke="#c94138" stroke-width="2" opacity="0.65" marker-end="url(#redArrow)"/>
+  <path d="M 815 527 C 895 527, 900 408, 985 408" fill="none" stroke="#c94138" stroke-width="2" opacity="0.65" marker-end="url(#redArrow)"/>
+  <path d="M 815 612 C 895 612, 910 594, 985 594" fill="none" stroke="#3f5faa" stroke-width="3" marker-end="url(#blueArrow)"/>
+
+  <text x="70" y="740" class="mono label muted">PHYSICAL CALLDATA / 0x0000 - 0x2223</text>
+  <rect x="70" y="765" width="62" height="62" rx="3" fill="#272b28"/>
+  <rect x="138" y="765" width="100" height="62" rx="3" fill="#575d58"/>
+  <rect x="244" y="765" width="100" height="62" rx="3" fill="#737872"/>
+  <rect x="350" y="765" width="820" height="62" rx="3" fill="#e5b15e" stroke="#b87018"/>
+  <rect x="1176" y="765" width="167" height="62" rx="3" fill="#cf5148"/>
+  <rect x="1349" y="765" width="181" height="62" rx="3" fill="#4d6ec0"/>
+  <text x="101" y="802" text-anchor="middle" class="mono small white">SEL</text>
+  <text x="188" y="802" text-anchor="middle" class="mono small white">ROOT PTR</text>
+  <text x="294" y="802" text-anchor="middle" class="mono small white">LEN 257</text>
+  <text x="760" y="802" text-anchor="middle" class="mono body">OFFSET TABLE / 8,224 B</text>
+  <text x="1260" y="802" text-anchor="middle" class="mono body white">CALL_A</text>
+  <text x="1439" y="802" text-anchor="middle" class="mono body white">CALL_B</text>
+
+  <text x="70" y="865" class="mono small muted">THE TABLE IS 257 WORDS LONG; THE TAIL STORES ONLY THE TWO BODIES THOSE WORDS REFERENCE.</text>
+  <text x="1530" y="865" text-anchor="end" class="mono small muted">BITFINDING SECURITY RESEARCH</text>
+</svg>

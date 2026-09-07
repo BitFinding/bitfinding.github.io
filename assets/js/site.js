@@ -1,4 +1,20 @@
 (function () {
+  const tables = document.querySelectorAll('.table-scroll');
+  const syncTables = () => {
+    tables.forEach((wrapper) => {
+      const overflowing = wrapper.scrollWidth > wrapper.clientWidth;
+      wrapper.dataset.overflow = String(overflowing);
+      wrapper.tabIndex = overflowing ? 0 : -1;
+    });
+  };
+
+  if (tables.length) {
+    const tableObserver = new ResizeObserver(syncTables);
+    tables.forEach((wrapper) => tableObserver.observe(wrapper));
+    document.fonts.ready.then(syncTables);
+    syncTables();
+  }
+
   const toggle = document.querySelector('.menu-toggle');
   const menu = document.querySelector('.nav-links');
 

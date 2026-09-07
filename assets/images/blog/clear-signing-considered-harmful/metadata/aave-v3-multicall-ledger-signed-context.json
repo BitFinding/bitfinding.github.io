@@ -1,0 +1,138 @@
+{
+  "schema": "ledger-clear-signing-context-snapshot/v1",
+  "protocol": "Aave V3",
+  "selector": "0xac9650d8",
+  "captured_at_utc": "2026-08-28T01:00:01.886259+00:00",
+  "provenance": {
+    "capture_source": "https://crypto-assets-service.api.ledger.com/v1/dapps",
+    "capture_query": {
+      "chain_id": 1,
+      "output": "descriptors_calldata",
+      "ref": "branch:main"
+    },
+    "archive_sha256": "bb93536eaec12af6bbdf43424bab1817d505282bbf5d4bad22f9acc1639450ee",
+    "descriptor_source": "https://github.com/LedgerHQ/internal-erc7730-registry/blob/d4f9e454067b6cd897d4ec68908bdd1836369cf3/registry/aave/calldata-lpv3.json"
+  },
+  "context": {
+    "address": "0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2",
+    "chain_id": 1,
+    "enums": {
+      "0": {
+        "0": {
+          "data": "00010101080000000000000001021487870bca3f3fd6335c3f4ce8392d69350b4fa4e20304ac9650d804010005010006046e6f6e65",
+          "signatures": {
+            "prod": "3044022037ee35f7517c96b09939e546563393621dc9937844309f301ff2d7a27c85d922022016c8abc1b68c52f670657770020a0b8c093194932ea5555596099c7c4b80df00",
+            "test": "30440220395595e9375b2804718cef5fa8eba072bb831c75ad33763db9a06565ca85ddc20220387a9b6a19d446f09428aa55de4adf41a68298914b8c32d5e4c284b5cb15ab63"
+          }
+        },
+        "1": {
+          "data": "00010101080000000000000001021487870bca3f3fd6335c3f4ce8392d69350b4fa4e20304ac9650d8040100050101060a64657072656361746564",
+          "signatures": {
+            "prod": "3044022012200026bd437de79330fa636b7af29d5f67e6cc0376293dd1b6a9fb04a1327d02203f3fa54cd3f9818be0cb94777550835fcc7424c0e531ef1638c659a891642c18",
+            "test": "30450221009b29f473e06bd3692bea92f624565ab914d45e0be127a1fe50c8d82f768f97f4022020facf5841a694fccd0677184e66e2230998b870108c518df600d367d74e6f97"
+          }
+        },
+        "2": {
+          "data": "00010101080000000000000001021487870bca3f3fd6335c3f4ce8392d69350b4fa4e20304ac9650d804010005010206087661726961626c65",
+          "signatures": {
+            "prod": "304402201d6bdcea161f1c12197e57c739fae84a5b98f6a58123e01cde68ea59770e2de80220324a9d7a908adc2675c8e45961effda25e1e25842cdf1768ff80614f28cfd8f7",
+            "test": "304402200c3236620ecf3fcae8358c833ae29c2e81dec0bd6df4c77bd1cc2d33a86317f0022064c3853b7dde42fcbe25ab863c2d07334dfdfe32f58bc9445e93fce13f288b97"
+          }
+        }
+      }
+    },
+    "fields": [
+      {
+        "descriptor": "000101010443616c6c020109032e000101011b000101010107031300010101020000030002030101010300040104020c000101010105020114040101",
+        "name": "Call",
+        "param": {
+          "callee": {
+            "abi_path": {
+              "field": "to",
+              "type": "container"
+            },
+            "binary_path": {
+              "type": "CONTAINER",
+              "value": "TO",
+              "version": 1
+            },
+            "type": "path",
+            "type_family": "ADDRESS",
+            "type_size": 20,
+            "version": 1
+          },
+          "type": "CALLDATA",
+          "value": {
+            "abi_path": {
+              "absolute": true,
+              "elements": [
+                {
+                  "identifier": "data",
+                  "type": "field"
+                },
+                {
+                  "type": "array"
+                }
+              ],
+              "type": "data"
+            },
+            "binary_path": {
+              "elements": [
+                {
+                  "offset": 0,
+                  "type": "TUPLE"
+                },
+                {
+                  "type": "REF"
+                },
+                {
+                  "type": "ARRAY",
+                  "weight": 1
+                },
+                {
+                  "type": "REF"
+                },
+                {
+                  "leaf_type": "DYNAMIC_LEAF",
+                  "type": "LEAF"
+                }
+              ],
+              "type": "DATA",
+              "version": 1
+            },
+            "type": "path",
+            "type_family": "BYTES",
+            "version": 1
+          },
+          "version": 1
+        },
+        "version": 1
+      }
+    ],
+    "network": "ethereum",
+    "selector": "0xac9650d8",
+    "source": "https://github.com/LedgerHQ/internal-erc7730-registry/blob/d4f9e454067b6cd897d4ec68908bdd1836369cf3/registry/aave/calldata-lpv3.json",
+    "transaction_info": {
+      "address": "0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2",
+      "chain_id": 1,
+      "contract_name": "PoolInstance",
+      "creator_legal_name": "Aave DAO",
+      "creator_name": "Aave DAO",
+      "creator_url": "https://aave.com",
+      "deploy_date": "2024-10-09T21:46:47Z",
+      "descriptor": {
+        "data": "00010101080000000000000001021487870bca3f3fd6335c3f4ce8392d69350b4fa4e20304ac9650d80420bcfed52bfcd033fac00a6c63e56a9e0b3dc7bd174563bc81d02040cb2f88d6a905094d756c746963616c6c0608416176652044414f0708416176652044414f081068747470733a2f2f616176652e636f6d090c506f6f6c496e7374616e63650a046706f9c7",
+        "signatures": {
+          "prod": "30450221008b58459990023dd7f3182db81cff2429c4b0be8dc7ef129fd3f3fa7fd0968efd02202ca053741652b71a5db13d783f88726dc48d0dd5fff0fdd9bc398c41623c741b",
+          "test": "3045022100a2fe953743957dafdf06962a9bb04919ddb5bb5eb175f232a193aadcf0f8212d02205ceb2d9db3c4f13fc42c874735149219198030dd1b0fc97a19d848ecdd7225a1"
+        }
+      },
+      "hash": "bcfed52bfcd033fac00a6c63e56a9e0b3dc7bd174563bc81d02040cb2f88d6a9",
+      "operation_type": "Multicall",
+      "selector": "0xac9650d8",
+      "version": 1
+    },
+    "type": "calldata",
+    "version": "v1"
+  }
+}

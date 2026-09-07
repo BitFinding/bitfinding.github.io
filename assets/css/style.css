@@ -179,7 +179,7 @@ textarea {
   line-height: 28px;
   text-decoration: none;
   border: 1px solid transparent;
-  border-radius: 999px;
+  border-radius: 15px;
   transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
 }
 
@@ -279,7 +279,7 @@ textarea {
   font-weight: 400;
   line-height: 28px;
   text-decoration: none;
-  border-radius: 999px;
+  border-radius: 15px;
   transition: color 160ms ease, background 160ms ease, transform 160ms ease;
 }
 
@@ -366,7 +366,7 @@ textarea {
   letter-spacing: normal;
   line-height: 60px;
   border: 1px solid rgba(0, 255, 21, 0.6);
-  border-radius: 999px;
+  border-radius: 15px;
   background: rgba(0, 255, 21, 0.08);
 }
 
@@ -677,6 +677,79 @@ textarea {
   margin-top: 0;
 }
 
+.post-narrow {
+  --prose-width: 42rem;
+}
+
+.post-narrow .post-header h1,
+.post-narrow .post-meta-large {
+  max-width: var(--prose-width);
+  margin-inline: auto;
+}
+
+.post-narrow .post-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, var(--prose-width)) minmax(0, 1fr);
+}
+
+.post-narrow .post-content > * {
+  grid-column: 2;
+  min-width: 0;
+}
+
+.post-narrow .post-content > :is(table, figure, .table-scroll, .summary-grid, .comparison-grid, .video-embed, .highlighter-rouge),
+.post-narrow .post-content > p:has(img) {
+  grid-column: 1 / -1;
+}
+
+.post-narrow .post-content :is(h2, h3) {
+  scroll-margin-top: 112px;
+}
+
+.post-narrow .post-content h3 {
+  font-size: 28px;
+  line-height: 36px;
+}
+
+.post-toc {
+  margin-top: 32px;
+  padding-block: 20px;
+  border-block: 1px solid rgba(75, 88, 110, 0.5);
+}
+
+.post-content .post-toc-title {
+  margin: 0;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.post-content .post-toc ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 24px;
+  margin-top: 12px;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+  line-height: 24px;
+}
+
+.post-content .post-toc li {
+  margin: 0;
+}
+
+.post-toc a {
+  display: block;
+  padding-block: 3px;
+}
+
+@media (max-width: 600px) {
+  .post-content .post-toc ul {
+    grid-template-columns: 1fr;
+  }
+}
+
 .post-description {
   margin: 0;
   color: var(--body);
@@ -707,7 +780,8 @@ textarea {
   max-height: none;
 }
 
-.post-content p > img:only-child {
+.post-content p > img:only-child,
+.post-content p > a:only-child > img:only-child {
   display: block;
   max-width: 100%;
   height: auto;
@@ -716,11 +790,13 @@ textarea {
   object-fit: contain;
 }
 
-.post-content p:has(> img:only-child) {
+.post-content p:has(> img:only-child),
+.post-content p:has(> a:only-child > img:only-child) {
   margin-top: 32px;
 }
 
-.post-content p > img:only-child:not(.sized-image) {
+.post-content p > img:only-child:not(.sized-image),
+.post-content p > a:only-child > img:only-child:not(.sized-image) {
   width: auto;
 }
 
@@ -875,12 +951,88 @@ textarea {
   color: #c5e2f5;
 }
 
+.post-content .summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-block: 24px;
+  padding: 0;
+  list-style: none;
+}
+
+.post-content .summary-grid > li {
+  min-width: 0;
+  margin: 0;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--secondary-blue);
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(110deg, rgba(36, 162, 238, 0.1), rgba(21, 30, 43, 0.5));
+}
+
+.summary-grid > li > strong {
+  display: block;
+  font-size: 16px;
+}
+
+@media (max-width: 900px) {
+  .post-content .summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.table-scroll {
+  max-width: 100%;
+  margin: 1.6em 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.table-scroll:focus-visible {
+  outline: 2px solid var(--secondary-blue);
+  outline-offset: 4px;
+}
+
+.post-content .table-scroll-hint {
+  position: sticky;
+  left: 0;
+  margin: 0 0 10px;
+  color: var(--secondary-blue);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.table-scroll[data-overflow="false"] .table-scroll-hint {
+  display: none;
+}
+
 .post-content table {
   width: 100%;
   max-width: 100%;
   margin: 1.6em 0;
   border-collapse: collapse;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+}
+
+.post-content .table-scroll table {
+  min-width: 42rem;
+  margin: 0;
+}
+
+.post-content .table-scroll[data-columns="2"] table {
+  min-width: 30rem;
+}
+
+.post-content .table-scroll[data-columns="4"] table {
+  min-width: 48rem;
+}
+
+.post-content .table-scroll .timeline-table {
+  min-width: 52rem;
+}
+
+.table-scroll :is(th, td) {
+  vertical-align: top;
 }
 
 .post-content th,

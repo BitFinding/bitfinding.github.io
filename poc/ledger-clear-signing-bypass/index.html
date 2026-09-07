@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Ledger Clear Signing Bypass — Signing Artifact Wizard</title>
+    <script type="module" crossorigin src="./assets/index-BT3I-i8e.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CpdrKMGQ.css">
+  </head>
+  <body>
+    <div class="local-ribbon">
+      <span>BITFINDING / CONTROLLED RESEARCH</span>
+      <strong id="modeRibbon">CHECKING HARDWARE ACCESS</strong>
+    </div>
+
+    <main>
+      <header class="hero">
+        <div>
+          <p class="eyebrow">LEDGER CLEAR SIGNING BYPASS / PROOF WIZARD</p>
+          <h1>One parser.<br />Three attack paths.</h1>
+          <p class="lede">
+            Ask the trusted screen to review one action, capture what the device
+            actually signs, and inspect the difference. Execution is deliberately
+            left to an isolated local fork.
+          </p>
+        </div>
+        <dl class="hero-facts">
+          <div><dt>Flows</dt><dd>Safe / Aave / Morpho</dd></div>
+          <div><dt>Array</dt><dd class="red">257 elements</dd></div>
+          <div><dt>Device review</dt><dd class="blue">1 element</dd></div>
+          <div><dt>Network action</dt><dd class="green">None</dd></div>
+        </dl>
+      </header>
+
+      <section class="warning" id="safetyWarning" data-mode="blocked" aria-label="Safety warning">
+        <span class="warning-mark">!</span>
+        <div>
+          <strong id="safetyTitle">Checking WebHID availability.</strong>
+          <p id="safetyCopy">The wizard remains locked until its WebHID safety boundary is established.</p>
+        </div>
+      </section>
+
+      <ol class="evidence-chain" aria-label="Wizard stages">
+        <li id="stepSelect" data-state="complete">
+          <span>01</span><strong>Select</strong><small>Protocol flow</small>
+        </li>
+        <li id="stepCapture" data-state="ready">
+          <span>02</span><strong>Capture</strong><small>Ledger signature</small>
+        </li>
+        <li id="stepInspect" data-state="locked">
+          <span>03</span><strong>Inspect</strong><small>Displayed vs signed</small>
+        </li>
+        <li id="stepExport" data-state="locked">
+          <span>04</span><strong>Export</strong><small>Local reproduction</small>
+        </li>
+      </ol>
+
+      <section class="workspace-card protocol-card">
+        <div class="section-heading">
+          <div>
+            <p class="section-number">01 / SELECT AN ATTACK PATH</p>
+            <h2>Same parser failure, different authorization</h2>
+          </div>
+          <p>
+            Each profile reconstructs a byte-for-byte validated payload and uses
+            the signing method expected by that protocol.
+          </p>
+        </div>
+
+        <div class="protocol-grid" role="group" aria-label="Protocol selection">
+          <button class="protocol-option" type="button" data-protocol="safe" aria-pressed="true">
+            <span class="protocol-index">01</span>
+            <strong>Safe</strong>
+            <small>EIP-712 owner authorization</small>
+            <span class="protocol-result">payment → approvals</span>
+          </button>
+          <button class="protocol-option" type="button" data-protocol="aave" aria-pressed="false">
+            <span class="protocol-index">02</span>
+            <strong>Aave V3</strong>
+            <small>Signed type-2 transaction</small>
+            <span class="protocol-result">supply → withdrawal</span>
+          </button>
+          <button class="protocol-option" type="button" data-protocol="morpho" aria-pressed="false">
+            <span class="protocol-index">03</span>
+            <strong>Morpho</strong>
+            <small>Signed type-2 transaction</small>
+            <span class="protocol-result">supply → withdrawal</span>
+          </button>
+        </div>
+
+        <div class="selected-protocol">
+          <div>
+            <p class="section-number" id="protocolEyebrow"></p>
+            <h3 id="protocolTitle"></h3>
+          </div>
+          <dl class="selected-facts">
+            <div><dt>Artifact</dt><dd id="protocolKind"></dd></div>
+            <div><dt>Target</dt><dd id="protocolTarget"></dd></div>
+            <div><dt>Calldata</dt><dd id="protocolBytes"></dd></div>
+            <div><dt>Parser omission</dt><dd id="protocolHidden" class="red"></dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="comparison" aria-label="Displayed and signed scopes">
+        <article class="comparison-panel display-panel">
+          <p class="panel-label">TRUSTED SCREEN</p>
+          <p class="scope-marker">DISPLAYED</p>
+          <h2 id="displayedAction"></h2>
+          <p class="panel-note" id="displayedDetail"></p>
+        </article>
+        <article class="comparison-panel signed-panel">
+          <p class="panel-label">CRYPTOGRAPHIC AUTHORIZATION</p>
+          <p class="scope-marker">SIGNED</p>
+          <h2 id="signedAction"></h2>
+          <p class="panel-note" id="signedConsequence"></p>
+        </article>
+      </section>
+
+      <section class="workspace-card capture-card">
+        <div class="section-heading">
+          <div>
+            <p class="section-number" id="captureNumber">02 / CAPTURE</p>
+            <h2 id="captureTitle">Capture a signed artifact</h2>
+          </div>
+          <p id="captureDescription">Connect an affected test device and verify its signature against the complete payload.</p>
+        </div>
+
+        <div class="runtime-mode" id="runtimeMode" data-mode="blocked">
+          <strong id="runtimeModeLabel">HARDWARE ACCESS CHECK</strong>
+          <p id="runtimeModeDescription">Checking browser support before enabling WebHID.</p>
+        </div>
+
+        <div id="hardwareControls" hidden>
+          <div class="config-grid">
+            <label id="safeFields">
+              <span>Safe proxy</span>
+              <input id="safeAddress" autocomplete="off" spellcheck="false" readonly />
+              <small>Pinned to the documented disposable-fork proof.</small>
+            </label>
+            <label>
+              <span id="nonceLabel">Nonce</span>
+              <input id="signingNonce" type="number" min="0" step="1" value="0" />
+            </label>
+            <div class="wide-field archive-field">
+              <span>Clear Signing context</span>
+              <strong>Frozen Ledger-signed archive</strong>
+              <small>The page sends bundled historical descriptors and certificates. It does not query Ledger's current metadata service.</small>
+            </div>
+          </div>
+
+          <label class="consent">
+            <input id="labConsent" type="checkbox" />
+            <span>
+              I am using an affected test device with a disposable seed. I will not
+              submit the exported artifact to a public network.
+            </span>
+          </label>
+        </div>
+
+        <div class="button-row capture-actions">
+          <button class="button primary" id="signButton" type="button" hidden>Connect Ledger and sign Safe</button>
+        </div>
+        <p id="status" class="status" role="status"></p>
+      </section>
+
+      <section class="workspace-card log-card">
+        <div class="section-heading compact">
+          <div>
+            <p class="section-number">CAPTURE RECORD</p>
+            <h2>Verification log</h2>
+          </div>
+        </div>
+        <pre id="log" data-empty="true">Protocol selection, SDK state, hashes, and signer recovery appear here.</pre>
+      </section>
+
+      <section class="workspace-card result-card" id="artifactCard" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="section-number">03 / VERIFIED ARTIFACT</p>
+            <h2>What the signature authorizes</h2>
+          </div>
+          <p>
+            The signature has been recovered against the canonical complete
+            payload, not merely the action shown by the device.
+          </p>
+        </div>
+        <dl class="result-strip">
+          <div><dt>Protocol</dt><dd id="artifactProtocol"></dd></div>
+          <div><dt>Artifact</dt><dd id="artifactKind"></dd></div>
+          <div><dt>Recovered signer</dt><dd id="artifactSigner"></dd></div>
+          <div><dt>Signing hash</dt><dd id="artifactHash"></dd></div>
+          <div><dt>Parsed calldata</dt><dd id="artifactBytes"></dd></div>
+        </dl>
+
+        <div class="raw-artifact">
+          <p class="panel-label" id="artifactRawLabel"></p>
+          <pre id="artifactRaw"></pre>
+        </div>
+
+        <details>
+          <summary>Inspect the complete normalized artifact</summary>
+          <pre id="artifactResult"></pre>
+        </details>
+        <div class="button-row">
+          <button class="button secondary" id="copyArtifactButton" type="button">Copy artifact</button>
+          <button class="button primary" id="downloadArtifactButton" type="button">Download signed artifact</button>
+        </div>
+      </section>
+
+      <section class="workspace-card instructions-card" id="instructionsCard" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="section-number">04 / REPRODUCE LOCALLY</p>
+            <h2>Take the proof to Anvil</h2>
+          </div>
+          <p>
+            The browser stops here. The commands below consume the exported
+            artifact only through a pinned, disposable localhost fork.
+          </p>
+        </div>
+
+        <div class="command-step">
+          <div class="command-heading">
+            <span>01</span>
+            <div><strong>Start the pinned fork</strong><small>Requires an archive-capable Ethereum RPC.</small></div>
+          </div>
+          <pre>anvil \
+  --fork-url "$MAINNET_RPC_URL" \
+  --fork-block-number 25808274 \
+  --chain-id 1 \
+  --host 127.0.0.1 \
+  --port 8545</pre>
+        </div>
+
+        <div class="command-step">
+          <div class="command-heading">
+            <span>02</span>
+            <div><strong>Use the verified protocol runner</strong><small>Prepares fork-only state, submits the artifact, and checks impact.</small></div>
+          </div>
+          <pre id="runnerCommand"></pre>
+          <div class="command-actions">
+            <a class="text-button" id="runnerDownloadLink" download>Download runner</a>
+            <button class="text-button" id="copyRunnerButton" type="button">Copy runner command</button>
+          </div>
+        </div>
+
+        <div class="command-step secondary-command">
+          <div class="command-heading">
+            <span>03</span>
+            <div><strong>Low-level relay with cast</strong><small>Use only after preparing equivalent fork state.</small></div>
+          </div>
+          <pre id="castCommand"></pre>
+          <button class="text-button" id="copyCastButton" type="button">Copy cast command</button>
+        </div>
+
+        <div class="button-row footer-buttons">
+          <button class="button primary" id="downloadBundleButton" type="button">Download signed artifact</button>
+          <button class="button ghost" id="resetButton" type="button">Start another flow</button>
+        </div>
+      </section>
+
+      <footer class="page-footer">
+        <span>LEDGER_CLEAR_SIGNING_BYPASS</span>
+        <span>No transaction leaves this page.</span>
+      </footer>
+    </main>
+  </body>
+</html>
