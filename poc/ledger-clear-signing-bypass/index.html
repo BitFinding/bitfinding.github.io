@@ -6,7 +6,7 @@
     <meta name="color-scheme" content="light" />
     <meta name="robots" content="noindex, nofollow" />
     <title>Ledger Clear Signing Bypass — Signing Artifact Wizard</title>
-    <script type="module" crossorigin src="./assets/index-BT3I-i8e.js"></script>
+    <script type="module" crossorigin src="./assets/index-CeCrZfbE.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-CpdrKMGQ.css">
   </head>
   <body>
@@ -22,23 +22,22 @@
           <h1>One parser.<br />Three attack paths.</h1>
           <p class="lede">
             Ask the trusted screen to review one action, capture what the device
-            actually signs, and inspect the difference. Execution is deliberately
-            left to an isolated local fork.
+            actually signs, and inspect the difference.
           </p>
         </div>
         <dl class="hero-facts">
           <div><dt>Flows</dt><dd>Safe / Aave / Morpho</dd></div>
           <div><dt>Array</dt><dd class="red">257 elements</dd></div>
           <div><dt>Device review</dt><dd class="blue">1 element</dd></div>
-          <div><dt>Network action</dt><dd class="green">None</dd></div>
+          <div><dt>Test wallet</dt><dd>Disposable seed only</dd></div>
         </dl>
       </header>
 
       <section class="warning" id="safetyWarning" data-mode="blocked" aria-label="Safety warning">
         <span class="warning-mark">!</span>
         <div>
-          <strong id="safetyTitle">Checking WebHID availability.</strong>
-          <p id="safetyCopy">The wizard remains locked until its WebHID safety boundary is established.</p>
+          <strong id="safetyTitle">Use a separate test device with a new, disposable seed phrase and no real funds.</strong>
+          <p id="safetyCopy">This page produces signatures that can authorize real transactions. Treat the page and its outputs as untrusted. Never use your everyday wallet or reuse its recovery phrase. Never enter a seed phrase into this page or any website.</p>
         </div>
       </section>
 
@@ -154,8 +153,9 @@
           <label class="consent">
             <input id="labConsent" type="checkbox" />
             <span>
-              I am using an affected test device with a disposable seed. I will not
-              submit the exported artifact to a public network.
+              I am using a separate test device with a new, disposable seed phrase
+              and no real funds. I will treat this page and its outputs as untrusted
+              and keep all testing in an isolated environment.
             </span>
           </label>
         </div>
@@ -264,7 +264,7 @@
 
       <footer class="page-footer">
         <span>LEDGER_CLEAR_SIGNING_BYPASS</span>
-        <span>No transaction leaves this page.</span>
+        <span>Disposable test wallet only. No real funds.</span>
       </footer>
     </main>
   </body>

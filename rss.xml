@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://bitfinding.com/rss.xml" rel="self" type="application/atom+xml" /><link href="https://bitfinding.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-09-07T16:33:39-03:00</updated><id>https://bitfinding.com/rss.xml</id><title type="html">Bitfinding</title><subtitle>Bitfinding builds advanced security for decentralized systems with a focus on integrity, resilience, and trust.</subtitle><entry><title type="html">Signature overflow attacks on Ledger</title><link href="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/" rel="alternate" type="text/html" title="Signature overflow attacks on Ledger" /><published>2026-09-07T00:00:00-03:00</published><updated>2026-09-07T00:00:00-03:00</updated><id>https://bitfinding.com/blog/signature-overflow-attacks-on-ledger</id><content type="html" xml:base="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/"><![CDATA[<p>A Ledger Clear Signing bug let an affected device display one action while
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://bitfinding.com/rss.xml" rel="self" type="application/atom+xml" /><link href="https://bitfinding.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-09-07T16:43:09-03:00</updated><id>https://bitfinding.com/rss.xml</id><title type="html">Bitfinding</title><subtitle>Bitfinding builds advanced security for decentralized systems with a focus on integrity, resilience, and trust.</subtitle><entry><title type="html">Signature overflow attacks on Ledger</title><link href="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/" rel="alternate" type="text/html" title="Signature overflow attacks on Ledger" /><published>2026-09-07T00:00:00-03:00</published><updated>2026-09-07T00:00:00-03:00</updated><id>https://bitfinding.com/blog/signature-overflow-attacks-on-ledger</id><content type="html" xml:base="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/"><![CDATA[<p>A Ledger Clear Signing bug let an affected device display one action while
 its signature authorized 257. A signer could approve what looked like a routine
 transaction without seeing the other actions covered by the signature.</p>
 
@@ -364,6 +364,13 @@ signed actions.</p>
 
 <h2 id="8-proof-of-concept">8. Proof of Concept</h2>
 
+<blockquote>
+  <p><strong>Before testing:</strong> Treat the PoC page and its outputs as untrusted. Use a
+separate test device with a new, disposable seed phrase and no real funds.
+Never use your everyday wallet or reuse its recovery phrase. Never enter a
+seed phrase into the PoC page or any website.</p>
+</blockquote>
+
 <p>The <a href="/poc/ledger-clear-signing-bypass/">hardware signing artifact wizard</a>
 presents the Safe, Aave, and Morpho proofs as three paths through one page. For
 each protocol it reconstructs the canonical 257-element payload, requests a
@@ -381,9 +388,8 @@ and <strong>Export</strong>. Safe exports an EIP-712 owner authorization with ev
 field and the corresponding <code class="language-plaintext highlighter-rouge">Safe.execTransaction</code> calldata. Aave and Morpho
 export complete raw signed EIP-1559 transactions.</p>
 
-<p>The browser deliberately stops before execution. It has no RPC configuration
-and cannot broadcast. Instead, it generates commands that consume the exported
-artifact through independent Safe or DeFi runners on a pinned, disposable
+<p>The page generates commands that consume the exported artifact through
+independent Safe or DeFi runners on a pinned, disposable
 Anvil fork.</p>
 
 <p>The final result compares the device display, signed authorization, and local
@@ -412,7 +418,7 @@ execution:</p>
 
 <p>A physical-device capture requires Chrome or Edge, an affected test device,
 and a disposable seed. The fixed Ethereum app rejects the malformed array. The
-page does not offer an archived-signature fallback and never broadcasts.</p>
+page does not offer an archived-signature fallback.</p>
 
 <h2 id="9-fix-and-release">9. Fix and Release</h2>
 

@@ -42,7 +42,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/css/style.css?v=1788809619">
+  <link rel="stylesheet" href="/assets/css/style.css?v=1788810189">
 </head>
 
   <body class="layout-post section-blog">
@@ -471,6 +471,13 @@ signed actions.</p>
 
 <h2 id="proof-of-concept"><a class="section-link" href="#proof-of-concept" title="Link to this section">8. Proof of Concept</a></h2>
 
+<blockquote>
+  <p><strong>Before testing:</strong> Treat the PoC page and its outputs as untrusted. Use a
+separate test device with a new, disposable seed phrase and no real funds.
+Never use your everyday wallet or reuse its recovery phrase. Never enter a
+seed phrase into the PoC page or any website.</p>
+</blockquote>
+
 <p>The <a href="/poc/ledger-clear-signing-bypass/">hardware signing artifact wizard</a>
 presents the Safe, Aave, and Morpho proofs as three paths through one page. For
 each protocol it reconstructs the canonical 257-element payload, requests a
@@ -488,9 +495,8 @@ and <strong>Export</strong>. Safe exports an EIP-712 owner authorization with ev
 field and the corresponding <code class="language-plaintext highlighter-rouge">Safe.execTransaction</code> calldata. Aave and Morpho
 export complete raw signed EIP-1559 transactions.</p>
 
-<p>The browser deliberately stops before execution. It has no RPC configuration
-and cannot broadcast. Instead, it generates commands that consume the exported
-artifact through independent Safe or DeFi runners on a pinned, disposable
+<p>The page generates commands that consume the exported artifact through
+independent Safe or DeFi runners on a pinned, disposable
 Anvil fork.</p>
 
 <p>The final result compares the device display, signed authorization, and local
@@ -522,7 +528,7 @@ execution:</p>
 
 <p>A physical-device capture requires Chrome or Edge, an affected test device,
 and a disposable seed. The fixed Ethereum app rejects the malformed array. The
-page does not offer an archived-signature fallback and never broadcasts.</p>
+page does not offer an archived-signature fallback.</p>
 
 <h2 id="fix-and-release"><a class="section-link" href="#fix-and-release" title="Link to this section">9. Fix and Release</a></h2>
 
@@ -739,6 +745,6 @@ exchanges and public GitHub or release activity.</p>
   </div>
 </footer>
 
-    <script src="/assets/js/site.js?v=1788809619" defer></script>
+    <script src="/assets/js/site.js?v=1788810189" defer></script>
   </body>
 </html>
