@@ -42,7 +42,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/css/style.css?v=1788806579">
+  <link rel="stylesheet" href="/assets/css/style.css?v=1788806934">
 </head>
 
   <body class="layout-post section-blog">
@@ -103,7 +103,7 @@ guidance.</p>
 
 <p><img src="/assets/images/blog/signature-overflow-attacks-on-ledger/hero.png" alt="Signature overflow attacks on Ledger: one call displayed, 257 calls signed" width="1600" height="900" loading="lazy" decoding="async"></p>
 
-<h2 id="0x00---the-threat-model">1. The Threat Model</h2>
+<h2 id="0x00---the-threat-model"><a class="section-link" href="#0x00---the-threat-model" title="Link to this section">1. The Threat Model</a></h2>
 
 <p>Ledger’s security premise is sound: the computer and transaction interface may
 be compromised. Its
@@ -142,7 +142,7 @@ Clear Signing produces a human-readable description that omits part of the
 signed authorization.</p>
 </blockquote>
 
-<h2 id="0x01---the-parser-bug">2. The Parser Bug</h2>
+<h2 id="0x01---the-parser-bug"><a class="section-link" href="#0x01---the-parser-bug" title="Link to this section">2. The Parser Bug</a></h2>
 
 <p>The vulnerability was in the shared array machinery of Ledger’s Ethereum
 Generic Transaction Parser. The parser calculated an attacker-controlled array
@@ -187,7 +187,7 @@ the device’s constraints. The demonstrated Safe payload uses <code class="lang
 
 <p>The original fix is <a href="https://github.com/LedgerHQ/app-ethereum/commit/2c3d93cc35788f464ef8c641c2dbd30c5194697c">commit <code class="language-plaintext highlighter-rouge">2c3d93cc</code> — “Fix array iteration truncation”</a>.</p>
 
-<h2 id="0x02---signed-metadata">3. Signed Metadata</h2>
+<h2 id="0x02---signed-metadata"><a class="section-link" href="#0x02---signed-metadata" title="Link to this section">3. Signed Metadata</a></h2>
 
 <p>Clear Signing does not interpret every contract call generically. A transaction
 enters this parser path only when a host-side Context Module supplies matching,
@@ -291,7 +291,7 @@ nested calls and its multi-owner treasury workflow makes the organizational
 impact especially clear. Aave and Morpho extend the result beyond Safe and
 EIP-712 authorization.</p>
 
-<h2 id="0x03---safe">4. Safe</h2>
+<h2 id="0x03---safe"><a class="section-link" href="#0x03---safe" title="Link to this section">4. Safe</a></h2>
 
 <p>Safe’s <code class="language-plaintext highlighter-rouge">BatchExecutor</code> provided a path from parser failure to treasury impact.
 Its <code class="language-plaintext highlighter-rouge">batchExecute(Call[])</code> entry point accepts an array whose elements contain a
@@ -379,7 +379,7 @@ approved spender and transferred the remaining USDC from the Safe.</p>
 <p>That run proves a signature produced after an incomplete device review was
 blockchain-usable.</p>
 
-<h2 id="0x04---aave">5. Aave</h2>
+<h2 id="0x04---aave"><a class="section-link" href="#0x04---aave" title="Link to this section">5. Aave</a></h2>
 
 <p>Aave V3’s archived
 <a href="/assets/images/blog/clear-signing-considered-harmful/metadata/aave-v3-multicall-ledger-signed-context.json"><code class="language-plaintext highlighter-rouge">multicall(bytes[])</code> context</a>
@@ -402,7 +402,7 @@ displayed supply completed.</p>
 <p><em>The affected app reviewed the final supply entry. The signed multicall also
 contained the preceding withdrawal.</em></p>
 
-<h2 id="0x05---morpho">6. Morpho</h2>
+<h2 id="0x05---morpho"><a class="section-link" href="#0x05---morpho" title="Link to this section">6. Morpho</a></h2>
 
 <p>Morpho’s archived Bundler3
 <a href="/assets/images/blog/clear-signing-considered-harmful/metadata/morpho-bundler3-multicall-ledger-signed-context.json"><code class="language-plaintext highlighter-rouge">multicall</code> context</a>
@@ -430,7 +430,7 @@ contained the preceding funding call, withdrawal, and aliased no-op calls.</em><
 shapes: the screen reviewed a suffix while the signature authorized the whole
 array.</p>
 
-<h2 id="0x06---making-257-calls-fit">7. Making 257 Calls Fit</h2>
+<h2 id="0x06---making-257-calls-fit"><a class="section-link" href="#0x06---making-257-calls-fit" title="Link to this section">7. Making 257 Calls Fit</a></h2>
 
 <p>Practical exploitation also had to satisfy the device’s memory constraints.</p>
 
@@ -470,7 +470,7 @@ complete array, and the signature commits to both tuple bodies.</em></p>
 signature remains cryptographically correct. The trusted interpretation omits
 signed actions.</p>
 
-<h2 id="0x07---research-evidence">8. Research Evidence</h2>
+<h2 id="0x07---research-evidence"><a class="section-link" href="#0x07---research-evidence" title="Link to this section">8. Research Evidence</a></h2>
 
 <p>The completed research evidence includes:</p>
 
@@ -492,7 +492,7 @@ affected Apex P <code class="language-plaintext highlighter-rouge">1.21.3</code>
 changing the parser logic or allocator capacity. We repeated the Aave and
 Morpho flows on an exact-source Nano S Plus <code class="language-plaintext highlighter-rouge">1.22.2</code> build.</p>
 
-<h3 id="hardware-proof-of-concept">Hardware Proof of Concept</h3>
+<h3 id="hardware-proof-of-concept"><a class="section-link" href="#hardware-proof-of-concept" title="Link to this section">Hardware Proof of Concept</a></h3>
 
 <p>The <a href="/poc/ledger-clear-signing-bypass/">hardware signing artifact wizard</a>
 presents the Safe, Aave, and Morpho proofs as three paths through one page. For
@@ -547,7 +547,7 @@ execution:</p>
 and a disposable seed. The fixed Ethereum app rejects the malformed array. The
 page does not offer an archived-signature fallback and never broadcasts.</p>
 
-<h2 id="0x08---fix-and-release">9. Fix and Release</h2>
+<h2 id="0x08---fix-and-release"><a class="section-link" href="#0x08---fix-and-release" title="Link to this section">9. Fix and Release</a></h2>
 
 <p><strong>Source correction: May 5. Installable release: August 25.</strong></p>
 
@@ -607,7 +607,7 @@ rejected. The full disclosure and remediation record is in the
 <p>We are publishing with fixed Ethereum app <code class="language-plaintext highlighter-rouge">1.22.3</code> available through Ledger’s
 normal application catalog.</p>
 
-<h2 id="conclusion-one-thing-well">10. Conclusion: One Thing Well</h2>
+<h2 id="conclusion-one-thing-well"><a class="section-link" href="#conclusion-one-thing-well" title="Link to this section">10. Conclusion: One Thing Well</a></h2>
 
 <p>Version <code class="language-plaintext highlighter-rouge">1.22.3</code> removes this truncation. The harder question remains: what
 other bugs could emerge from the same firmware complexity?</p>
@@ -643,7 +643,7 @@ and sign exactly that commitment. Decoding, simulation, policy evaluation, and
 human-readable views could run across independent, replaceable systems that
 bind their conclusions to the same hash.</p>
 
-<h2 id="appendix-disclosure-record">11. Appendix: Disclosure Record</h2>
+<h2 id="appendix-disclosure-record"><a class="section-link" href="#appendix-disclosure-record" title="Link to this section">11. Appendix: Disclosure Record</a></h2>
 
 <p>Dates use <code class="language-plaintext highlighter-rouge">YYYY-MM-DD</code>. Times in the underlying correspondence are retained in
 <code class="language-plaintext highlighter-rouge">America/Argentina/Cordoba</code> (<code class="language-plaintext highlighter-rouge">ART</code>, UTC-3). The table records confirmed email
@@ -765,6 +765,6 @@ exchanges and public GitHub or release activity.</p>
   </div>
 </footer>
 
-    <script src="/assets/js/site.js?v=1788806579" defer></script>
+    <script src="/assets/js/site.js?v=1788806934" defer></script>
   </body>
 </html>

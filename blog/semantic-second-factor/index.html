@@ -42,7 +42,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/css/style.css?v=1788806579">
+  <link rel="stylesheet" href="/assets/css/style.css?v=1788806934">
 </head>
 
   <body class="layout-post section-blog">
@@ -99,7 +99,7 @@
 
 <p><img src="/assets/images/blog/semantic-second-factor/1.svg" alt="Compromised device" width="891" height="640" loading="lazy" decoding="async"></p>
 
-<h2 id="whats-wrong-with-the-hardware-wallet-threat-model">What’s wrong with the hardware wallet threat model</h2>
+<h2 id="whats-wrong-with-the-hardware-wallet-threat-model"><a class="section-link" href="#whats-wrong-with-the-hardware-wallet-threat-model" title="Link to this section">What’s wrong with the hardware wallet threat model</a></h2>
 
 <p>Hardware wallets excel at safeguarding users’ seed phrases, making mnemonic exfiltration nearly impossible while allowing users to sign transactions and messages. However, they were primarily designed for simpler protocols, like Bitcoin, which did not require users to verify the parameters of more complex transactions. <strong>Blackhats know this</strong>.</p>
 
@@ -109,7 +109,7 @@
 
 <p>Emulating transactions on a computer isn’t a silver bullet either. <strong>Any attestation or verification mechanism running on a compromised device is fundamentally untrustworthy</strong>. Attackers can emulate hardware wallet interactions, mask UI elements, and even display fraudulent confirmations to trick users into signing dangerous transactions. It creates an “interactive movie” scenario where everything seen and interacted with is controlled by the attacker, leading users to sign fraudulent messages.</p>
 
-<h2 id="clear-signing-alone-isnt-enough">Clear signing alone isn’t enough</h2>
+<h2 id="clear-signing-alone-isnt-enough"><a class="section-link" href="#clear-signing-alone-isnt-enough" title="Link to this section">Clear signing alone isn’t enough</a></h2>
 
 <p>To address this issue, hardware wallets have started implementing more advanced decoding of messages and calldata during the signing process, often referred to as clear signing. These are baby steps in the right direction, allowing users to better understand what they are signing.</p>
 
@@ -140,7 +140,7 @@
 
 <p><img src="/assets/images/blog/semantic-second-factor/4.svg" alt="Different states, different execution" width="458" height="125" loading="lazy" decoding="async"></p>
 
-<h2 id="not-everything-is-bad-current-industry-recommendation">Not everything is bad: current industry recommendation</h2>
+<h2 id="not-everything-is-bad-current-industry-recommendation"><a class="section-link" href="#not-everything-is-bad-current-industry-recommendation" title="Link to this section">Not everything is bad: current industry recommendation</a></h2>
 
 <p>SEAL provides an extensive list of measures users can take to protect themselves against sophisticated attacks <a href="https://www.securityalliance.org/news/2025-02-dprk-advisory">here</a>.</p>
 
@@ -157,7 +157,7 @@
 
 <p>However, this doesn’t account for the scenario where this is run in the same device that could be compromised. <strong>We need something else</strong>.</p>
 
-<h2 id="enter-web3-semantic-second-factor">Enter Web3 Semantic Second Factor</h2>
+<h2 id="enter-web3-semantic-second-factor"><a class="section-link" href="#enter-web3-semantic-second-factor" title="Link to this section">Enter Web3 Semantic Second Factor</a></h2>
 
 <p>To mitigate the risks of compromised devices and blind signing, we propose a second-factor semantic attestation system using an independent device. This helps ensure the integrity of both transactions and messages.</p>
 
@@ -195,7 +195,7 @@
   <p><em>One of the key advantages of this security model is its seamless integration into existing security workflows. Since both wallets and hardware wallets already support the necessary features, this approach enhances protection without expanding the attack surface of the systems.</em></p>
 </blockquote>
 
-<h2 id="seriously-stop-blind-signing">Seriously, Stop Blind Signing</h2>
+<h2 id="seriously-stop-blind-signing"><a class="section-link" href="#seriously-stop-blind-signing" title="Link to this section">Seriously, Stop Blind Signing</a></h2>
 
 <p>We believe that combining hardware wallets, robust security operations, and second-factor semantic verification can enhance the security of the signing workflow. At BitFinding, we’ve been working on a comprehensive solution that not only strengthens the current security model but also enhances transaction emulation outcomes using smart account modules.</p>
 
@@ -236,6 +236,6 @@
   </div>
 </footer>
 
-    <script src="/assets/js/site.js?v=1788806579" defer></script>
+    <script src="/assets/js/site.js?v=1788806934" defer></script>
   </body>
 </html>

@@ -42,7 +42,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/css/style.css?v=1788806579">
+  <link rel="stylesheet" href="/assets/css/style.css?v=1788806934">
 </head>
 
   <body class="layout-post section-blog">
@@ -93,7 +93,7 @@
 
 <p>This problem only gets worse now that Pectra has enabled multiple batch of calls in a single transaction making simulations far more complex.</p>
 
-<h2 id="core-problem-state-divergence">Core Problem: State Divergence</h2>
+<h2 id="core-problem-state-divergence"><a class="section-link" href="#core-problem-state-divergence" title="Link to this section">Core Problem: State Divergence</a></h2>
 
 <p>The central challenge is <strong>state divergence</strong>: critical smart contract states can change organically or adversarially between the time you simulate your transaction and when it’s actually mined on the blockchain.</p>
 
@@ -113,7 +113,7 @@ exec(s0) != exec(s1)
 <strong>Oracle Value Update:</strong> Many DeFi protocols use oracles for price feeds (e.g., ETH/USD). You simulate borrowing against collateral, and the oracle price at simulation time is favorable. If the oracle updates with a lower price for your collateral right before execution, due to market volatility or manipulation, your transaction might fail or put you at immediate risk of liquidation.</li>
 </ol>
 
-<h2 id="attacking-simulation-reliance">Attacking Simulation Reliance</h2>
+<h2 id="attacking-simulation-reliance"><a class="section-link" href="#attacking-simulation-reliance" title="Link to this section">Attacking Simulation Reliance</a></h2>
 
 <p>Wallets and security tools are increasingly relying on transaction simulations to protect users. By previewing the outcome of complex smart contract interactions, simulations aim to prevent users from signing malicious transactions. However, this reliance introduces its own set of challenges and potential vulnerabilities.</p>
 
@@ -123,7 +123,7 @@ exec(s0) != exec(s1)
 
 <p>This underscores that while simulations enhance security, they can also create a deceptive safety net if their limitations are not understood and addressed. <strong>The integrity of the simulation environment itself becomes a target for sophisticated attackers</strong>.</p>
 
-<h2 id="enter-state-constraints">Enter State Constraints</h2>
+<h2 id="enter-state-constraints"><a class="section-link" href="#enter-state-constraints" title="Link to this section">Enter State Constraints</a></h2>
 
 <p>To bridge this simulation-to-execution gap more robustly, we propose that transactions carry not just their execution data (the “what to do”) but also a compact set of <strong>state constraints</strong> (the “under these conditions”). These constraints act as on-chain guards: the transaction asserts them before proceeding, reverting early if the underlying assumptions from your simulation no longer hold.</p>
 
@@ -161,7 +161,7 @@ exec(s0) != exec(s1)
 
 <p>At runtime, these constraint checks are performed first. <strong>If all pass, the main transaction logic proceeds. If any fails, the entire transaction reverts, preventing unintended outcomes</strong>.</p>
 
-<h2 id="step-by-step-from-simulation-to-trusted-execution">Step by Step: From Simulation to Trusted Execution</h2>
+<h2 id="step-by-step-from-simulation-to-trusted-execution"><a class="section-link" href="#step-by-step-from-simulation-to-trusted-execution" title="Link to this section">Step by Step: From Simulation to Trusted Execution</a></h2>
 
 <p>Let’s walk through how this works, using our DEX trade and proxy upgrade examples.</p>
 
@@ -216,7 +216,7 @@ MarketProxyAddress.implementation() == $GOOD_CONTRACT_V1
 
 <p>When executed: pre-checks compare current on-chain state against your constraints. For example, if DEX reserves shifted too much or the proxy changed, a constraint fails. If any violation occurs, the transaction reverts <em>before</em> main logic runs. If all pass, main logic executes, followed by post-condition checks.</p>
 
-<h2 id="why-this-works-better-now">Why This Works (Better Now)</h2>
+<h2 id="why-this-works-better-now"><a class="section-link" href="#why-this-works-better-now" title="Link to this section">Why This Works (Better Now)</a></h2>
 
 <p>This approach of embedding state constraints becomes particularly powerful and user-friendly due to recent Ethereum improvements, offering several key advantages:</p>
 
@@ -235,7 +235,7 @@ MarketProxyAddress.implementation() == $GOOD_CONTRACT_V1
   </li>
 </ul>
 
-<h2 id="the-dream-low-level-storage-checks">The Dream: Low-Level Storage Checks</h2>
+<h2 id="the-dream-low-level-storage-checks"><a class="section-link" href="#the-dream-low-level-storage-checks" title="Link to this section">The Dream: Low-Level Storage Checks</a></h2>
 
 <p>Currently, state checks often rely on public <code class="language-plaintext highlighter-rouge">getter</code> functions. This is limited because the contract must expose the state via a truthful getter, and cross-contract calls can be gas-intensive. For example, if a proxy doesn’t expose the implementation() function, we can’t check it!</p>
 
@@ -252,7 +252,7 @@ MarketProxyAddress.implementation() == $GOOD_CONTRACT_V1
 
 <p>While still a contract call, standardization would improve efficiency. Native EVM support would be the ultimate goal.</p>
 
-<h2 id="takeaways--whats-next">Takeaways &amp; What’s Next</h2>
+<h2 id="takeaways--whats-next"><a class="section-link" href="#takeaways--whats-next" title="Link to this section">Takeaways &amp; What’s Next</a></h2>
 
 <p>Enforcing transaction simulation integrity is crucial for user safety in the dynamic world of blockchain.</p>
 
@@ -303,6 +303,6 @@ MarketProxyAddress.implementation() == $GOOD_CONTRACT_V1
   </div>
 </footer>
 
-    <script src="/assets/js/site.js?v=1788806579" defer></script>
+    <script src="/assets/js/site.js?v=1788806934" defer></script>
   </body>
 </html>
