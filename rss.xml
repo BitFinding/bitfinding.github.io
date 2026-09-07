@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://bitfinding.com/rss.xml" rel="self" type="application/atom+xml" /><link href="https://bitfinding.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-09-07T16:04:21-03:00</updated><id>https://bitfinding.com/rss.xml</id><title type="html">Bitfinding</title><subtitle>Bitfinding builds advanced security for decentralized systems with a focus on integrity, resilience, and trust.</subtitle><entry><title type="html">Signature overflow attacks on Ledger</title><link href="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/" rel="alternate" type="text/html" title="Signature overflow attacks on Ledger" /><published>2026-09-07T00:00:00-03:00</published><updated>2026-09-07T00:00:00-03:00</updated><id>https://bitfinding.com/blog/signature-overflow-attacks-on-ledger</id><content type="html" xml:base="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/"><![CDATA[<p>A Ledger Clear Signing bug let an affected device display one action while
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://bitfinding.com/rss.xml" rel="self" type="application/atom+xml" /><link href="https://bitfinding.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-09-07T16:07:26-03:00</updated><id>https://bitfinding.com/rss.xml</id><title type="html">Bitfinding</title><subtitle>Bitfinding builds advanced security for decentralized systems with a focus on integrity, resilience, and trust.</subtitle><entry><title type="html">Signature overflow attacks on Ledger</title><link href="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/" rel="alternate" type="text/html" title="Signature overflow attacks on Ledger" /><published>2026-09-07T00:00:00-03:00</published><updated>2026-09-07T00:00:00-03:00</updated><id>https://bitfinding.com/blog/signature-overflow-attacks-on-ledger</id><content type="html" xml:base="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/"><![CDATA[<p>A Ledger Clear Signing bug let an affected device display one action while
 its signature authorized 257. A signer could approve what looked like a routine
 transaction without seeing the other actions covered by the signature.</p>
 
@@ -434,8 +434,8 @@ security-relevant change was a three-line bounds check:</p>
      }
 </code></pre></div></div>
 
-<p>The diff entered public Git history on May 5. The first installable stable
-release containing the correction became available on August 25.</p>
+<p>The first installable stable release containing the correction became available
+on August 25.</p>
 
 <p>On August 26, we gave only that patch hunk to a fresh, isolated Codex session
 running <code class="language-plaintext highlighter-rouge">gpt-5.6-sol</code>. We omitted the commit title, repository, report,
@@ -458,8 +458,8 @@ input boundary.</p>
 supports private fix development, allowing a root-cause diff to remain private
 until an installable release is ready.</p>
 
-<p>Here, the correction entered public <code class="language-plaintext highlighter-rouge">develop</code> on May 5, then missed stable
-versions <code class="language-plaintext highlighter-rouge">1.22.1</code> and <code class="language-plaintext highlighter-rouge">1.22.2</code>. Version <code class="language-plaintext highlighter-rouge">1.22.2</code> carried the separate
+<p>The correction missed stable versions <code class="language-plaintext highlighter-rouge">1.22.1</code> and <code class="language-plaintext highlighter-rouge">1.22.2</code>.
+Version <code class="language-plaintext highlighter-rouge">1.22.2</code> carried the separate
 TestMachine signature-substitution hotfix while retaining this parser behavior.
 For most of the agreed disclosure period, the correction was visible in public
 Git history while users on the stable release remained affected.</p>

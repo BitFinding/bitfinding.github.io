@@ -42,7 +42,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/css/style.css?v=1788807861">
+  <link rel="stylesheet" href="/assets/css/style.css?v=1788808046">
 </head>
 
   <body class="layout-post section-blog">
@@ -544,8 +544,8 @@ security-relevant change was a three-line bounds check:</p>
      }
 </code></pre></div></div>
 
-<p>The diff entered public Git history on May 5. The first installable stable
-release containing the correction became available on August 25.</p>
+<p>The first installable stable release containing the correction became available
+on August 25.</p>
 
 <p>On August 26, we gave only that patch hunk to a fresh, isolated Codex session
 running <code class="language-plaintext highlighter-rouge">gpt-5.6-sol</code>. We omitted the commit title, repository, report,
@@ -568,8 +568,8 @@ input boundary.</p>
 supports private fix development, allowing a root-cause diff to remain private
 until an installable release is ready.</p>
 
-<p>Here, the correction entered public <code class="language-plaintext highlighter-rouge">develop</code> on May 5, then missed stable
-versions <code class="language-plaintext highlighter-rouge">1.22.1</code> and <code class="language-plaintext highlighter-rouge">1.22.2</code>. Version <code class="language-plaintext highlighter-rouge">1.22.2</code> carried the separate
+<p>The correction missed stable versions <code class="language-plaintext highlighter-rouge">1.22.1</code> and <code class="language-plaintext highlighter-rouge">1.22.2</code>.
+Version <code class="language-plaintext highlighter-rouge">1.22.2</code> carried the separate
 TestMachine signature-substitution hotfix while retaining this parser behavior.
 For most of the agreed disclosure period, the correction was visible in public
 Git history while users on the stable release remained affected.</p>
@@ -741,6 +741,6 @@ exchanges and public GitHub or release activity.</p>
   </div>
 </footer>
 
-    <script src="/assets/js/site.js?v=1788807861" defer></script>
+    <script src="/assets/js/site.js?v=1788808046" defer></script>
   </body>
 </html>
