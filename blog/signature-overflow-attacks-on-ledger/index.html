@@ -42,7 +42,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/css/style.css?v=1788806934">
+  <link rel="stylesheet" href="/assets/css/style.css?v=1788807165">
 </head>
 
   <body class="layout-post section-blog">
@@ -470,29 +470,7 @@ complete array, and the signature commits to both tuple bodies.</em></p>
 signature remains cryptographically correct. The trusted interpretation omits
 signed actions.</p>
 
-<h2 id="0x07---research-evidence"><a class="section-link" href="#0x07---research-evidence" title="Link to this section">8. Research Evidence</a></h2>
-
-<p>The completed research evidence includes:</p>
-
-<ul>
-  <li>a standalone C proof of the truncation and index arithmetic;</li>
-  <li>62 Speculos tests covering every released Nano S Plus, Nano X, Flex, Stax,
-and Apex P package from Ethereum app <code class="language-plaintext highlighter-rouge">1.19.0</code> through <code class="language-plaintext highlighter-rouge">1.22.2</code>;</li>
-  <li>physical-device validation on Nano S Plus and Ledger Flex using
-production-signed descriptors;</li>
-  <li>exact affected-app signatures for the Safe, Aave, and Morpho demonstrations;</li>
-  <li>independent reconstruction of each signed transaction or authorization; and</li>
-  <li>execution of those artifacts on a pinned, disposable Anvil fork.</li>
-</ul>
-
-<p>Physical-device checks with production-signed metadata established the
-display/signature mismatch. The executable Safe authorization came from an
-affected Apex P <code class="language-plaintext highlighter-rouge">1.21.3</code> Speculos build with the original parser and unchanged
-16 KiB allocator. Test-only flags provisioned the controlled context without
-changing the parser logic or allocator capacity. We repeated the Aave and
-Morpho flows on an exact-source Nano S Plus <code class="language-plaintext highlighter-rouge">1.22.2</code> build.</p>
-
-<h3 id="hardware-proof-of-concept"><a class="section-link" href="#hardware-proof-of-concept" title="Link to this section">Hardware Proof of Concept</a></h3>
+<h2 id="0x07---research-evidence"><a class="section-link" href="#0x07---research-evidence" title="Link to this section">8. Proof of Concept</a></h2>
 
 <p>The <a href="/poc/ledger-clear-signing-bypass/">hardware signing artifact wizard</a>
 presents the Safe, Aave, and Morpho proofs as three paths through one page. For
@@ -548,8 +526,6 @@ and a disposable seed. The fixed Ethereum app rejects the malformed array. The
 page does not offer an archived-signature fallback and never broadcasts.</p>
 
 <h2 id="0x08---fix-and-release"><a class="section-link" href="#0x08---fix-and-release" title="Link to this section">9. Fix and Release</a></h2>
-
-<p><strong>Source correction: May 5. Installable release: August 25.</strong></p>
 
 <p><a href="/assets/images/blog/clear-signing-considered-harmful/timeline.svg"><img src="/assets/images/blog/clear-signing-considered-harmful/timeline.png" alt="Remediation timeline showing the March report, May source correction, vulnerable 1.22.2 tag, and fixed 1.22.3 release" width="1600" height="900" loading="lazy" decoding="async"></a></p>
 
@@ -765,6 +741,6 @@ exchanges and public GitHub or release activity.</p>
   </div>
 </footer>
 
-    <script src="/assets/js/site.js?v=1788806934" defer></script>
+    <script src="/assets/js/site.js?v=1788807165" defer></script>
   </body>
 </html>

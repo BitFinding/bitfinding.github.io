@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://bitfinding.com/rss.xml" rel="self" type="application/atom+xml" /><link href="https://bitfinding.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-09-07T15:48:54-03:00</updated><id>https://bitfinding.com/rss.xml</id><title type="html">Bitfinding</title><subtitle>Bitfinding builds advanced security for decentralized systems with a focus on integrity, resilience, and trust.</subtitle><entry><title type="html">Signature overflow attacks on Ledger</title><link href="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/" rel="alternate" type="text/html" title="Signature overflow attacks on Ledger" /><published>2026-09-07T00:00:00-03:00</published><updated>2026-09-07T00:00:00-03:00</updated><id>https://bitfinding.com/blog/signature-overflow-attacks-on-ledger</id><content type="html" xml:base="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/"><![CDATA[<p>A Ledger Clear Signing bug let an affected device display one action while
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://bitfinding.com/rss.xml" rel="self" type="application/atom+xml" /><link href="https://bitfinding.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-09-07T15:52:45-03:00</updated><id>https://bitfinding.com/rss.xml</id><title type="html">Bitfinding</title><subtitle>Bitfinding builds advanced security for decentralized systems with a focus on integrity, resilience, and trust.</subtitle><entry><title type="html">Signature overflow attacks on Ledger</title><link href="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/" rel="alternate" type="text/html" title="Signature overflow attacks on Ledger" /><published>2026-09-07T00:00:00-03:00</published><updated>2026-09-07T00:00:00-03:00</updated><id>https://bitfinding.com/blog/signature-overflow-attacks-on-ledger</id><content type="html" xml:base="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/"><![CDATA[<p>A Ledger Clear Signing bug let an affected device display one action while
 its signature authorized 257. A signer could approve what looked like a routine
 transaction without seeing the other actions covered by the signature.</p>
 
@@ -363,29 +363,7 @@ complete array, and the signature commits to both tuple bodies.</em></p>
 signature remains cryptographically correct. The trusted interpretation omits
 signed actions.</p>
 
-<h2 id="8-research-evidence">8. Research Evidence</h2>
-
-<p>The completed research evidence includes:</p>
-
-<ul>
-  <li>a standalone C proof of the truncation and index arithmetic;</li>
-  <li>62 Speculos tests covering every released Nano S Plus, Nano X, Flex, Stax,
-and Apex P package from Ethereum app <code class="language-plaintext highlighter-rouge">1.19.0</code> through <code class="language-plaintext highlighter-rouge">1.22.2</code>;</li>
-  <li>physical-device validation on Nano S Plus and Ledger Flex using
-production-signed descriptors;</li>
-  <li>exact affected-app signatures for the Safe, Aave, and Morpho demonstrations;</li>
-  <li>independent reconstruction of each signed transaction or authorization; and</li>
-  <li>execution of those artifacts on a pinned, disposable Anvil fork.</li>
-</ul>
-
-<p>Physical-device checks with production-signed metadata established the
-display/signature mismatch. The executable Safe authorization came from an
-affected Apex P <code class="language-plaintext highlighter-rouge">1.21.3</code> Speculos build with the original parser and unchanged
-16 KiB allocator. Test-only flags provisioned the controlled context without
-changing the parser logic or allocator capacity. We repeated the Aave and
-Morpho flows on an exact-source Nano S Plus <code class="language-plaintext highlighter-rouge">1.22.2</code> build.</p>
-
-<h3 id="hardware-proof-of-concept">Hardware Proof of Concept</h3>
+<h2 id="8-proof-of-concept">8. Proof of Concept</h2>
 
 <p>The <a href="/poc/ledger-clear-signing-bypass/">hardware signing artifact wizard</a>
 presents the Safe, Aave, and Morpho proofs as three paths through one page. For
@@ -438,8 +416,6 @@ and a disposable seed. The fixed Ethereum app rejects the malformed array. The
 page does not offer an archived-signature fallback and never broadcasts.</p>
 
 <h2 id="9-fix-and-release">9. Fix and Release</h2>
-
-<p><strong>Source correction: May 5. Installable release: August 25.</strong></p>
 
 <p><a href="/assets/images/blog/clear-signing-considered-harmful/timeline.svg"><img src="/assets/images/blog/clear-signing-considered-harmful/timeline.png" alt="Remediation timeline showing the March report, May source correction, vulnerable 1.22.2 tag, and fixed 1.22.3 release" /></a></p>
 
