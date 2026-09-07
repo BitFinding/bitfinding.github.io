@@ -11,9 +11,9 @@
   <meta name="theme-color" content="#0b1017">
   
     <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Clear Signing Considered Harmful | Bitfinding</title>
+<title>Signature overflow attacks on Ledger | Bitfinding</title>
 <meta name="generator" content="Jekyll v3.10.0">
-<meta property="og:title" content="Clear Signing Considered Harmful">
+<meta property="og:title" content="Signature overflow attacks on Ledger">
 <meta name="author" content="Bitfinding Research Team">
 <meta property="og:locale" content="en">
 <meta name="description" content="A Ledger Clear Signing parser bug let an affected device display one action while signing 257. We examine the Safe, Aave, and Morpho attack paths, practical exploitation, and the architectural implications.">
@@ -21,20 +21,20 @@
 <link rel="canonical" href="https://bitfinding.com/blog/clear-signing-considered-harmful/">
 <meta property="og:url" content="https://bitfinding.com/blog/clear-signing-considered-harmful/">
 <meta property="og:site_name" content="Bitfinding">
-<meta property="og:image" content="https://bitfinding.com/assets/images/blog/clear-signing-considered-harmful/social.png">
+<meta property="og:image" content="https://bitfinding.com/assets/images/blog/signature-overflow-attacks-on-ledger/social.png">
 <meta property="og:image:height" content="630">
 <meta property="og:image:width" content="1200">
-<meta property="og:image:alt" content="Clear Signing Considered Harmful: one call displayed and 257 calls signed">
+<meta property="og:image:alt" content="Signature overflow attacks on Ledger: one call displayed and 257 calls signed">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2026-09-07T00:00:00-03:00">
 <meta name="twitter:card" content="summary_large_image">
-<meta property="twitter:image" content="https://bitfinding.com/assets/images/blog/clear-signing-considered-harmful/social.png">
-<meta name="twitter:image:alt" content="Clear Signing Considered Harmful: one call displayed and 257 calls signed">
-<meta property="twitter:title" content="Clear Signing Considered Harmful">
+<meta property="twitter:image" content="https://bitfinding.com/assets/images/blog/signature-overflow-attacks-on-ledger/social.png">
+<meta name="twitter:image:alt" content="Signature overflow attacks on Ledger: one call displayed and 257 calls signed">
+<meta property="twitter:title" content="Signature overflow attacks on Ledger">
 <meta name="twitter:site" content="@bitfinding">
 <meta name="twitter:creator" content="@bitfinding">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Bitfinding Research Team"},"dateModified":"2026-09-07T00:00:00-03:00","datePublished":"2026-09-07T00:00:00-03:00","description":"A Ledger Clear Signing parser bug let an affected device display one action while signing 257. We examine the Safe, Aave, and Morpho attack paths, practical exploitation, and the architectural implications.","headline":"Clear Signing Considered Harmful","image":{"width":1200,"height":630,"alt":"Clear Signing Considered Harmful: one call displayed and 257 calls signed","url":"https://bitfinding.com/assets/images/blog/clear-signing-considered-harmful/social.png","@type":"imageObject"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://bitfinding.com/blog/clear-signing-considered-harmful/"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://bitfinding.com/assets/images/logo.svg"},"name":"Bitfinding Research Team"},"url":"https://bitfinding.com/blog/clear-signing-considered-harmful/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Bitfinding Research Team"},"dateModified":"2026-09-07T00:00:00-03:00","datePublished":"2026-09-07T00:00:00-03:00","description":"A Ledger Clear Signing parser bug let an affected device display one action while signing 257. We examine the Safe, Aave, and Morpho attack paths, practical exploitation, and the architectural implications.","headline":"Signature overflow attacks on Ledger","image":{"width":1200,"height":630,"alt":"Signature overflow attacks on Ledger: one call displayed and 257 calls signed","url":"https://bitfinding.com/assets/images/blog/signature-overflow-attacks-on-ledger/social.png","@type":"imageObject"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://bitfinding.com/blog/clear-signing-considered-harmful/"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://bitfinding.com/assets/images/logo.svg"},"name":"Bitfinding Research Team"},"url":"https://bitfinding.com/blog/clear-signing-considered-harmful/"}</script>
 <!-- End Jekyll SEO tag -->
 
   
@@ -42,7 +42,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/css/style.css?v=1788801972">
+  <link rel="stylesheet" href="/assets/css/style.css?v=1788803857">
 </head>
 
   <body class="layout-post section-blog">
@@ -75,7 +75,7 @@
   
   <header class="post-header content-shell article-shell">
     <div class="post-header-glow" aria-hidden="true"></div>
-    <h1>Clear Signing Considered Harmful</h1>
+    <h1>Signature overflow attacks on Ledger</h1>
     <div class="post-meta post-meta-large">
       <time datetime="2026-09-07T00:00:00-03:00">Sep 7, 2026</time>
       <span aria-hidden="true">|</span>
@@ -101,7 +101,7 @@ firmware. See the advisory for the affected-version matrix and verification
 guidance.</p>
 </blockquote>
 
-<p><img src="/assets/images/blog/clear-signing-considered-harmful/hero.png" alt="LEDGER_CLEAR_SIGNING_BYPASS: one call displayed, 257 calls signed" width="1600" height="900" loading="lazy" decoding="async"></p>
+<p><img src="/assets/images/blog/signature-overflow-attacks-on-ledger/hero.png" alt="Signature overflow attacks on Ledger: one call displayed, 257 calls signed" width="1600" height="900" loading="lazy" decoding="async"></p>
 
 <nav class="post-toc" aria-label="Contents"><p class="post-toc-title">Contents</p>
 <ul>
@@ -733,7 +733,7 @@ exchanges and public GitHub or release activity.</p>
     <tr>
       <td>2026-09-07</td>
       <td>Publication</td>
-      <td>Bitfinding published this document, <em>Clear Signing Considered Harmful</em>.</td>
+      <td>Bitfinding published this document, <em>Signature overflow attacks on Ledger</em>.</td>
     </tr>
   </tbody>
 </table>
@@ -774,6 +774,6 @@ exchanges and public GitHub or release activity.</p>
   </div>
 </footer>
 
-    <script src="/assets/js/site.js?v=1788801972" defer></script>
+    <script src="/assets/js/site.js?v=1788803857" defer></script>
   </body>
 </html>
