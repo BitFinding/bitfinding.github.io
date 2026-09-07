@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://bitfinding.com/rss.xml" rel="self" type="application/atom+xml" /><link href="https://bitfinding.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-09-07T16:27:20-03:00</updated><id>https://bitfinding.com/rss.xml</id><title type="html">Bitfinding</title><subtitle>Bitfinding builds advanced security for decentralized systems with a focus on integrity, resilience, and trust.</subtitle><entry><title type="html">Signature overflow attacks on Ledger</title><link href="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/" rel="alternate" type="text/html" title="Signature overflow attacks on Ledger" /><published>2026-09-07T00:00:00-03:00</published><updated>2026-09-07T00:00:00-03:00</updated><id>https://bitfinding.com/blog/signature-overflow-attacks-on-ledger</id><content type="html" xml:base="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/"><![CDATA[<p>A Ledger Clear Signing bug let an affected device display one action while
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://bitfinding.com/rss.xml" rel="self" type="application/atom+xml" /><link href="https://bitfinding.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-09-07T16:31:37-03:00</updated><id>https://bitfinding.com/rss.xml</id><title type="html">Bitfinding</title><subtitle>Bitfinding builds advanced security for decentralized systems with a focus on integrity, resilience, and trust.</subtitle><entry><title type="html">Signature overflow attacks on Ledger</title><link href="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/" rel="alternate" type="text/html" title="Signature overflow attacks on Ledger" /><published>2026-09-07T00:00:00-03:00</published><updated>2026-09-07T00:00:00-03:00</updated><id>https://bitfinding.com/blog/signature-overflow-attacks-on-ledger</id><content type="html" xml:base="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/"><![CDATA[<p>A Ledger Clear Signing bug let an affected device display one action while
 its signature authorized 257. A signer could approve what looked like a routine
 transaction without seeing the other actions covered by the signature.</p>
 
@@ -577,6 +577,11 @@ exchanges and public GitHub or release activity.</p>
       <td>2026-08-25</td>
       <td>Email / GitHub / production catalog</td>
       <td>Ledger described the original issue as partially fixed and requested Communications review. Fixed app <code class="language-plaintext highlighter-rouge">1.22.3</code> became available for Nano S Plus, Nano X, Stax, Flex, and Apex P. Bitfinding confirmed that the same PoC no longer reproduced.</td>
+    </tr>
+    <tr>
+      <td>2026-08-27</td>
+      <td>Public disclosure</td>
+      <td>Ledger published <a href="https://donjon.ledger.com/lsb/024/">Security Bulletin 024</a>, describing the Clear Signing bug and its fix in Ethereum app <code class="language-plaintext highlighter-rouge">1.22.3</code>.</td>
     </tr>
     <tr>
       <td>2026-09-07</td>
