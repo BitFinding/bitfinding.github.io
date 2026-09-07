@@ -42,7 +42,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/css/style.css?v=1788805335">
+  <link rel="stylesheet" href="/assets/css/style.css?v=1788805512">
 </head>
 
   <body class="layout-post section-blog">
@@ -184,6 +184,8 @@ omitted      = first 256q elements = N - (N mod 256)
 one consequential operation, or any other valid execution sequence that fits
 the device’s constraints. The demonstrated Safe payload uses <code class="language-plaintext highlighter-rouge">q = 1</code> and
 <code class="language-plaintext highlighter-rouge">k = 1</code>: the screen reviews one call while the signature authorizes 257.</p>
+
+<p>The original fix is <a href="https://github.com/LedgerHQ/app-ethereum/commit/2c3d93cc35788f464ef8c641c2dbd30c5194697c">commit <code class="language-plaintext highlighter-rouge">2c3d93cc</code> — “Fix array iteration truncation”</a>.</p>
 
 <h2 id="0x02---signed-metadata">3. Signed Metadata</h2>
 
@@ -763,6 +765,6 @@ exchanges and public GitHub or release activity.</p>
   </div>
 </footer>
 
-    <script src="/assets/js/site.js?v=1788805335" defer></script>
+    <script src="/assets/js/site.js?v=1788805512" defer></script>
   </body>
 </html>
