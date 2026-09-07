@@ -677,40 +677,6 @@ textarea {
   margin-top: 0;
 }
 
-.post-narrow {
-  --prose-width: 42rem;
-}
-
-.post-narrow .post-header h1,
-.post-narrow .post-meta-large {
-  max-width: var(--prose-width);
-  margin-inline: auto;
-}
-
-.post-narrow .post-content {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, var(--prose-width)) minmax(0, 1fr);
-}
-
-.post-narrow .post-content > * {
-  grid-column: 2;
-  min-width: 0;
-}
-
-.post-narrow .post-content > :is(table, figure, .table-scroll, .summary-grid, .comparison-grid, .video-embed, .highlighter-rouge),
-.post-narrow .post-content > p:has(img) {
-  grid-column: 1 / -1;
-}
-
-.post-narrow .post-content :is(h2, h3) {
-  scroll-margin-top: 112px;
-}
-
-.post-narrow .post-content h3 {
-  font-size: 28px;
-  line-height: 36px;
-}
-
 .post-toc {
   margin-top: 32px;
   padding-block: 20px;
@@ -859,6 +825,7 @@ textarea {
 .post-content h3,
 .post-content h4 {
   margin: 32px 0 0;
+  scroll-margin-top: 112px;
   color: var(--body);
   font-family: var(--title-font);
   font-weight: 300;
