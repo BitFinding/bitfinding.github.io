@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://bitfinding.com/rss.xml" rel="self" type="application/atom+xml" /><link href="https://bitfinding.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-09-07T14:57:37-03:00</updated><id>https://bitfinding.com/rss.xml</id><title type="html">Bitfinding</title><subtitle>Bitfinding builds advanced security for decentralized systems with a focus on integrity, resilience, and trust.</subtitle><entry><title type="html">Signature overflow attacks on Ledger</title><link href="https://bitfinding.com/blog/clear-signing-considered-harmful/" rel="alternate" type="text/html" title="Signature overflow attacks on Ledger" /><published>2026-09-07T00:00:00-03:00</published><updated>2026-09-07T00:00:00-03:00</updated><id>https://bitfinding.com/blog/clear-signing-considered-harmful</id><content type="html" xml:base="https://bitfinding.com/blog/clear-signing-considered-harmful/"><![CDATA[<p>A Ledger Clear Signing bug let an affected device display one action while
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://bitfinding.com/rss.xml" rel="self" type="application/atom+xml" /><link href="https://bitfinding.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-09-07T15:08:28-03:00</updated><id>https://bitfinding.com/rss.xml</id><title type="html">Bitfinding</title><subtitle>Bitfinding builds advanced security for decentralized systems with a focus on integrity, resilience, and trust.</subtitle><entry><title type="html">Signature overflow attacks on Ledger</title><link href="https://bitfinding.com/blog/clear-signing-considered-harmful/" rel="alternate" type="text/html" title="Signature overflow attacks on Ledger" /><published>2026-09-07T00:00:00-03:00</published><updated>2026-09-07T00:00:00-03:00</updated><id>https://bitfinding.com/blog/clear-signing-considered-harmful</id><content type="html" xml:base="https://bitfinding.com/blog/clear-signing-considered-harmful/"><![CDATA[<p>A Ledger Clear Signing bug let an affected device display one action while
 its signature authorized 257. A signer could approve what looked like a routine
 transaction without seeing the other actions covered by the signature.</p>
 
@@ -16,7 +16,7 @@ guidance.</p>
 
 <p><img src="/assets/images/blog/signature-overflow-attacks-on-ledger/hero.png" alt="Signature overflow attacks on Ledger: one call displayed, 257 calls signed" /></p>
 
-<h2 id="0x00---the-threat-model">0x00 - The Threat Model</h2>
+<h2 id="00---the-threat-model">00 - The Threat Model</h2>
 
 <p>Ledger’s security premise is sound: the computer and transaction interface may
 be compromised. Its
@@ -53,7 +53,7 @@ failure mode: a compromised frontend supplies the payload, and device-side
 Clear Signing produces a human-readable description that omits part of the
 signed authorization.</p>
 
-<h2 id="0x01---the-parser-bug">0x01 - The Parser Bug</h2>
+<h2 id="01---the-parser-bug">01 - The Parser Bug</h2>
 
 <p>The vulnerability was in the shared array machinery of Ledger’s Ethereum
 Generic Transaction Parser. The parser calculated an attacker-controlled array
@@ -96,7 +96,7 @@ one consequential operation, or any other valid execution sequence that fits
 the device’s constraints. The demonstrated Safe payload uses <code class="language-plaintext highlighter-rouge">q = 1</code> and
 <code class="language-plaintext highlighter-rouge">k = 1</code>: the screen reviews one call while the signature authorizes 257.</p>
 
-<h2 id="0x02---signed-metadata">0x02 - Signed Metadata</h2>
+<h2 id="02---signed-metadata">02 - Signed Metadata</h2>
 
 <p>Clear Signing does not interpret every contract call generically. A transaction
 enters this parser path only when a host-side Context Module supplies matching,
@@ -186,7 +186,7 @@ nested calls and its multi-owner treasury workflow makes the organizational
 impact especially clear. Aave and Morpho extend the result beyond Safe and
 EIP-712 authorization.</p>
 
-<h2 id="0x03---safe">0x03 - Safe</h2>
+<h2 id="03---safe">03 - Safe</h2>
 
 <p>Safe’s <code class="language-plaintext highlighter-rouge">BatchExecutor</code> provided a path from parser failure to treasury impact.
 Its <code class="language-plaintext highlighter-rouge">batchExecute(Call[])</code> entry point accepts an array whose elements contain a
@@ -268,7 +268,7 @@ approved spender and transferred the remaining USDC from the Safe.</p>
 <p>That run proves a signature produced after an incomplete device review was
 blockchain-usable.</p>
 
-<h2 id="0x04---aave">0x04 - Aave</h2>
+<h2 id="04---aave">04 - Aave</h2>
 
 <p>Aave V3’s archived
 <a href="/assets/images/blog/clear-signing-considered-harmful/metadata/aave-v3-multicall-ledger-signed-context.json"><code class="language-plaintext highlighter-rouge">multicall(bytes[])</code> context</a>
@@ -291,7 +291,7 @@ displayed supply completed.</p>
 <p><em>The affected app reviewed the final supply entry. The signed multicall also
 contained the preceding withdrawal.</em></p>
 
-<h2 id="0x05---morpho">0x05 - Morpho</h2>
+<h2 id="05---morpho">05 - Morpho</h2>
 
 <p>Morpho’s archived Bundler3
 <a href="/assets/images/blog/clear-signing-considered-harmful/metadata/morpho-bundler3-multicall-ledger-signed-context.json"><code class="language-plaintext highlighter-rouge">multicall</code> context</a>
@@ -319,7 +319,7 @@ contained the preceding funding call, withdrawal, and aliased no-op calls.</em><
 shapes: the screen reviewed a suffix while the signature authorized the whole
 array.</p>
 
-<h2 id="0x06---making-257-calls-fit">0x06 - Making 257 Calls Fit</h2>
+<h2 id="06---making-257-calls-fit">06 - Making 257 Calls Fit</h2>
 
 <p>Practical exploitation also had to satisfy the device’s memory constraints.</p>
 
@@ -359,7 +359,7 @@ complete array, and the signature commits to both tuple bodies.</em></p>
 signature remains cryptographically correct. The trusted interpretation omits
 signed actions.</p>
 
-<h2 id="0x07---research-evidence">0x07 - Research Evidence</h2>
+<h2 id="07---research-evidence">07 - Research Evidence</h2>
 
 <p>The completed research evidence includes:</p>
 
@@ -433,7 +433,7 @@ execution:</p>
 and a disposable seed. The fixed Ethereum app rejects the malformed array. The
 page does not offer an archived-signature fallback and never broadcasts.</p>
 
-<h2 id="0x08---fix-and-release">0x08 - Fix and Release</h2>
+<h2 id="08---fix-and-release">08 - Fix and Release</h2>
 
 <p><strong>Source correction: May 5. Installable release: August 25.</strong></p>
 
@@ -493,7 +493,7 @@ rejected. The full disclosure and remediation record is in the
 <p>We are publishing with fixed Ethereum app <code class="language-plaintext highlighter-rouge">1.22.3</code> available through Ledger’s
 normal application catalog.</p>
 
-<h2 id="0x09---conclusion-one-thing-well">0x09 - Conclusion: One Thing Well</h2>
+<h2 id="09---conclusion-one-thing-well">09 - Conclusion: One Thing Well</h2>
 
 <p>Version <code class="language-plaintext highlighter-rouge">1.22.3</code> removes this truncation. The harder question remains: what
 other bugs could emerge from the same firmware complexity?</p>
@@ -529,7 +529,7 @@ and sign exactly that commitment. Decoding, simulation, policy evaluation, and
 human-readable views could run across independent, replaceable systems that
 bind their conclusions to the same hash.</p>
 
-<h2 id="0x0a---appendix-disclosure-record">0x0A - Appendix: Disclosure Record</h2>
+<h2 id="10---appendix-disclosure-record">10 - Appendix: Disclosure Record</h2>
 
 <p>Dates use <code class="language-plaintext highlighter-rouge">YYYY-MM-DD</code>. Times in the underlying correspondence are retained in
 <code class="language-plaintext highlighter-rouge">America/Argentina/Cordoba</code> (<code class="language-plaintext highlighter-rouge">ART</code>, UTC-3). The table records confirmed email
