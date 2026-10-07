@@ -1,0 +1,5 @@
+metric,value_percent,denominator,source
+slot_zero_orphan_rate,1.17,slot_zero_blocks,https://ethresear.ch/t/is-the-slot-0-reorg-cost-fixable-epbs-attestation-deadline-study/25338
+other_positions_orphan_rate,0.16,blocks_at_positions_1_to_31,https://ethresear.ch/t/is-the-slot-0-reorg-cost-fixable-epbs-attestation-deadline-study/25338
+upbit_slot_zero_orphan_share,18,all_slot_zero_orphans,https://ethresear.ch/t/is-the-slot-0-reorg-cost-fixable-epbs-attestation-deadline-study/25338
+other_slot_zero_orphan_share,82,all_slot_zero_orphans_complement_of_rounded_upbit_share,https://ethresear.ch/t/is-the-slot-0-reorg-cost-fixable-epbs-attestation-deadline-study/25338

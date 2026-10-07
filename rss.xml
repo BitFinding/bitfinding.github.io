@@ -1,4 +1,315 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://bitfinding.com/rss.xml" rel="self" type="application/atom+xml" /><link href="https://bitfinding.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-09-07T16:43:09-03:00</updated><id>https://bitfinding.com/rss.xml</id><title type="html">Bitfinding</title><subtitle>Bitfinding builds advanced security for decentralized systems with a focus on integrity, resilience, and trust.</subtitle><entry><title type="html">Signature overflow attacks on Ledger</title><link href="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/" rel="alternate" type="text/html" title="Signature overflow attacks on Ledger" /><published>2026-09-07T00:00:00-03:00</published><updated>2026-09-07T00:00:00-03:00</updated><id>https://bitfinding.com/blog/signature-overflow-attacks-on-ledger</id><content type="html" xml:base="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/"><![CDATA[<p>A Ledger Clear Signing bug let an affected device display one action while
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://bitfinding.com/rss.xml" rel="self" type="application/atom+xml" /><link href="https://bitfinding.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-10-07T15:46:39-03:00</updated><id>https://bitfinding.com/rss.xml</id><title type="html">Bitfinding</title><subtitle>Bitfinding builds advanced security for decentralized systems with a focus on integrity, resilience, and trust.</subtitle><entry><title type="html">The orphan (blocks) blowing up bridges</title><link href="https://bitfinding.com/blog/the-orphan-blocks-blowing-up-bridges/" rel="alternate" type="text/html" title="The orphan (blocks) blowing up bridges" /><published>2026-10-07T00:00:00-03:00</published><updated>2026-10-07T00:00:00-03:00</updated><id>https://bitfinding.com/blog/the-orphan-blocks-blowing-up-bridges</id><content type="html" xml:base="https://bitfinding.com/blog/the-orphan-blocks-blowing-up-bridges/"><![CDATA[<p>A bridge deposit appeared on Ethereum. Relayers paid out on another chain.
+Then Ethereum removed the block containing the deposit.</p>
+
+<p>The payments stayed.</p>
+
+<p>In a bounded mainnet experiment, we observed three distinct Across relayers
+deliver <strong>2.9986275 WETH across 15 fills</strong> for deposits first recorded in
+Ethereum blocks that later lost their place in the chain. Each reorg was only
+one block deep. The destination payments survived independently.</p>
+
+<p>This is what happens when a fast bridge spends money on the strength of a
+block that is still provisional. To understand the failure, we need to follow
+the same event through three systems: Ethereum consensus, an RPC feed, and a
+relayer willing to advance capital.</p>
+
+<p><img src="/assets/images/blog/the-orphan-blocks-blowing-up-bridges/hero.png" alt="A coral source block dissolves beneath a bridge while blue destination blocks still hold the tokens that crossed" /></p>
+
+<h2 id="what-is-an-orphan-block">What is an orphan block?</h2>
+
+<p>A blockchain’s recent history can change. Two valid blocks may compete, or a
+late block may arrive after many validators have already voted for another
+head. Ethereum’s <strong>fork choice</strong> decides which branch the network follows,
+using the weight of validator votes, called <em>attestations</em>.</p>
+
+<p>An <strong>orphan block</strong>, as we use the term here, is a block that was observed and
+may briefly have been accepted as the head, but was later excluded from the
+canonical chain: the history the network ultimately keeps. You may also see
+these called <em>stale</em> or <em>reorged</em> blocks. This usage differs from the older
+meaning of an orphan as a block whose parent is unknown.</p>
+
+<p>The block can be perfectly valid. Its transactions executed correctly against
+its parent. Losing fork choice removes those state changes and events from
+canonical history. A successful receipt from that temporary branch therefore
+does not establish that the payment will survive.</p>
+
+<p>Ethereum distinguishes its changing head from <strong>finality</strong>, which is backed
+by votes representing at least two-thirds of staked ETH. Reverting finalized
+history requires a major consensus failure and slashable stake. Ordinary head
+reorgs happen before that protection applies. See
+<a href="https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/">Ethereum’s consensus documentation</a>.</p>
+
+<p><img src="/assets/images/blog/the-orphan-blocks-blowing-up-bridges/orphan-flow.png" alt="A deposit appears in a provisional Ethereum block, triggers a destination payment, and then disappears when Ethereum chooses a replacement branch; the destination payment remains" /></p>
+
+<p><em>Two chains make separate decisions. Replacing a source block does not undo a
+payment already committed on the destination.</em></p>
+
+<h2 id="your-rpc-will-show-you-the-block-that-disappears">Your RPC will show you the block that disappears</h2>
+
+<p>An RPC is the interface applications use to read a node’s view of the chain.
+When an application asks for the latest block, subscribes to new heads, or
+listens for contract events, it receives information about that node’s current
+head. That head can later be replaced.</p>
+
+<p><strong>RPCs distribute blocks and events that will later be orphaned.</strong> They do not
+know the future when they send them. Returning a block says that the node has
+accepted it in its present view; it does not promise permanent inclusion.</p>
+
+<p>Geth documents this explicitly: a head subscription can emit different
+headers at the same height, and a log subscription resends events from a
+discarded branch with <code class="language-plaintext highlighter-rouge">removed: true</code>.
+<a href="https://geth.ethereum.org/docs/interacting-with-geth/rpc/pubsub">Geth’s subscription documentation</a>
+describes these as normal reorg behavior.</p>
+
+<p>For an indexer, a removal can undo a database row. For a relayer that has
+already paid on another chain, the notification arrives after the consequential
+decision. Ethereum cannot reverse that destination transaction.</p>
+
+<p>Reading the same block from several RPC providers improves resilience to
+individual provider faults. It does not create consensus confirmation: all
+of those providers can report the same temporary branch.</p>
+
+<h2 id="the-bridge-pays-before-settlement-catches-up">The bridge pays before settlement catches up</h2>
+
+<p>Across is an intent bridge. The user deposits on the source chain, and a
+relayer supplies its own tokens on the destination chain. A later settlement
+process verifies the fill against the corresponding source deposit and
+repays eligible relayers. That separation is how users receive tokens quickly.
+<a href="https://docs.across.to/guides/concepts/intent-lifecycle">Across’s lifecycle documentation</a>
+explains the three phases.</p>
+
+<p>The critical question is how much source confirmation the relayer requires
+before spending its inventory. In our experiment, responding relayers acted
+on deposits in the provisional Ethereum head without waiting for another
+source block to establish their survival. Across itself
+<a href="https://docs.across.to/introduction/actors">documents finality risk for relayers</a>.</p>
+
+<p>The first batch is visible in three public records:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Record</th>
+      <th>What it shows</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://etherscan.io/block/25658830/f">Ethereum block 25,658,830</a></td>
+      <td>A retained fork block labeled <strong>Reorged Block</strong></td>
+    </tr>
+    <tr>
+      <td><a href="https://etherscan.io/tx/0xa8d0eb890f3505fdbf7e2dd710d678b3e6726266e905944d7b065502ef2758e2">Source transaction</a></td>
+      <td>Five deposits in that branch; the explorer now labels the transaction <strong>Dropped &amp; Replaced</strong></td>
+    </tr>
+    <tr>
+      <td><a href="https://robinhoodchain.blockscout.com/tx/0x6433c672ad58ca12742e68b6e303a0594d085fa17b6cea795a4d004567b7426f">Destination fill</a></td>
+      <td>One of five successful, matching payments on Robinhood Chain</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The <a href="https://etherscan.io/tx/0x8de391d339fc746d60b02c7ecc28ef51bbe3aae6c5be367a06d41d76ccf06340">canonical replacement transaction</a>
+contains none of those deposits. Across’s later accounting needs a matching
+canonical deposit; the orphan’s event cannot supply one.</p>
+
+<p>We observed six five-deposit batches on losing source branches. Three were
+fully filled, two received no fills, and one transaction was later included
+in canonical Ethereum, received no fills, and was
+<a href="https://etherscan.io/tx/0x6e93a67803193c2700e0c903a3fb9d27775e3f855cdd9d7295a70be6851475e2">refunded</a>.</p>
+
+<p><img src="/assets/images/blog/the-orphan-blocks-blowing-up-bridges/experiment-results.png" alt="Six losing-branch batches, each with five deposits: batches 1, 2, and 4 received five fills each; batches 3, 5, and 6 received none. Total output was 2.9986275 WETH" /></p>
+
+<p><em>The six branches are the units of observation. Five deposits in one batch
+shared one source transaction and one fork outcome. All six batches are
+conditioned on an initial source reorg; this is not a success-rate estimate.</em></p>
+
+<p>We call the <strong>2.9986275 WETH gross orphan exposure</strong>, plus destination gas.
+Public receipts do not establish the final unrecovered loss after any private
+reimbursement or recovery. They also do not establish a drain of Across’s
+settlement pools. The observed money came from relayer inventory.</p>
+
+<p>There is a forensic trap here too. A reorg can roll back a deposit counter,
+allowing an unrelated canonical deposit to reuse the same number. Settlement
+must compare the complete order parameters. Matching a numeric deposit ID
+alone can make an orphan fill appear backed by the wrong deposit.</p>
+
+<h2 id="why-upbit-kept-appearing-in-the-investigation">Why Upbit kept appearing in the investigation</h2>
+
+<p>Ethereum groups 12-second slots into 32-slot epochs. Slot 0 is the first slot
+of an epoch. A
+<a href="https://ethresear.ch/t/is-the-slot-0-reorg-cost-fixable-epbs-attestation-deadline-study/25338">21-month study published on Ethereum Research</a>
+found a <strong>1.17%</strong> orphan rate there, versus <strong>0.16%</strong> across other positions.</p>
+
+<p>A cluster labeled Upbit orphaned <strong>31% of its own slot-0 proposals</strong> and
+accounted for approximately <strong>18% of all slot-0 orphans</strong>. Around <strong>97%</strong> of
+its orphaned slot-0 blocks were locally built. These are historical
+statistics and public operator labels, rather than a prediction or proof of
+legal ownership.</p>
+
+<p><img src="/assets/images/blog/the-orphan-blocks-blowing-up-bridges/reorg-pattern.png" alt="Slot 0 had a 1.17 percent orphan rate versus 0.16 percent elsewhere; Upbit-associated proposals accounted for approximately 18 percent of slot-0 orphans, leaving approximately 82 percent elsewhere" /></p>
+
+<p><em>Rounded figures from the linked study. The left panel compares orphan rates;
+the right compares shares of slot-0 orphans. Their denominators differ.</em></p>
+
+<p>The resulting <strong>Upbit heuristic</strong> is an observation about risk: epoch-boundary
+proposals, late arrival, and local building appeared together unusually often.
+It gives investigators a pattern to examine; it cannot certify that a block
+will disappear.</p>
+
+<p>There is a plausible link to block-building policy. MEV-Boost lets validators
+obtain blocks through builder relays. Its
+<a href="https://github.com/flashbots/mev-boost#setting-a-minimum-bid-value-with--min-bid">minimum-bid setting</a>
+rejects builder bids below an operator’s chosen floor. When none qualifies,
+the validator falls back to building locally. An earlier
+<a href="https://hackmd.io/9xcOW2mbR_-6T8WOsdDNTw">Data Always analysis</a>
+inferred Upbit’s use of this policy from payment distributions, while warning
+that the result was a market-dependent snapshot.</p>
+
+<p>Waiting for bids and then taking a slower local path could contribute to late
+publication. That is an interaction hypothesis, not a confirmed explanation
+for every block. MEV-Boost’s builder relays and a bridge’s payment relayers
+also have different jobs; the shared word does not make them the same system.</p>
+
+<h2 id="a-transaction-can-lose-its-chance-to-succeed">A transaction can lose its chance to succeed</h2>
+
+<p>After a reorg, a transaction may return to the pending pool and be included
+again. A disappearing block therefore does not guarantee a permanently
+disappearing deposit.</p>
+
+<p>But a transaction’s execution can depend on time. Solidity exposes the
+source block’s onchain clock as
+<a href="https://docs.soliditylang.org/en/latest/units-and-global-variables.html#block-and-transaction-properties"><code class="language-plaintext highlighter-rouge">block.timestamp</code></a>.
+A contract may accept an operation while its validity window is open and
+revert the same call once that window has expired. If the next block is
+outside that window, re-execution cannot recreate the successful deposit.</p>
+
+<p>This is the distinction behind “making the transaction invalid in the next
+block.” The signed transaction can remain valid under Ethereum’s transaction
+rules; <strong>the contract operation fails at the later timestamp</strong>. It may still
+consume gas if included. A source execution deadline is also distinct from a
+bridge’s destination fill deadline: expiring one does not undo a payment on
+the other chain.</p>
+
+<p>For defenders, the implication is direct. “It will probably be included again”
+is an unsafe basis for credit. Time-sensitive operations may never recreate
+the event that justified the payout. Our linked experiment used canonical
+replacement transactions; this timestamp case explains an additional
+failure mode, rather than claiming a separately demonstrated result.</p>
+
+<h2 id="fast-confirmation-can-close-much-of-this-gap">Fast confirmation can close much of this gap</h2>
+
+<p>Waiting for finality offers strong protection, but it takes roughly 13 minutes
+under normal conditions. Fast bridges compete on seconds. There is a useful
+intermediate approach: Ethereum’s <strong>Fast Confirmation Rule</strong>, or <strong>FCR</strong>.</p>
+
+<p>FCR uses validator attestations to decide whether a block has sufficient
+support to remain in the eventual finalized chain under its assumptions.
+It evaluates the fork-choice view, including competing branches and vote
+weight. That adds consensus evidence before the application releases money.</p>
+
+<p>The rule runs locally in a consensus client and does not require a hard fork.
+Its guarantees assume timely communication and less than 25% adversarial
+stake. It provides a different guarantee from slashable-stake finality;
+extreme network conditions can still produce a reorg. The
+<a href="https://fastconfirm.it/">FCR project documentation</a>
+explains those assumptions and fallback behavior.</p>
+
+<p><img src="/assets/images/blog/the-orphan-blocks-blowing-up-bridges/confirmation-policies.png" alt="Three source policies: latest-head observation may expose a temporary branch; Fast Confirmation Rule waits for sufficient validator support under network assumptions; finalized-state settlement waits for Ethereum's finality" /></p>
+
+<p><em>Confirmation policy determines when destination capital becomes eligible to
+move. A fast path needs a waiting path when its evidence is insufficient.</em></p>
+
+<p>The measured evidence is encouraging. EthPandaOps’ March 2026
+<a href="https://investigations.ethpandaops.io/2026-03/fast-confirmation-rule/">mainnet investigation</a>
+examined 1,074,543 slots using a same-slot vote-ratio proxy. At approximately
+95% committee support, 96.9% of slots qualified. None of 1,900 observed orphan
+blocks reached that threshold. A separate 372-slot live sample crossed it at
+a median of about 8.1 seconds after slot start.</p>
+
+<p>Those numbers describe a simplified proxy, rather than the full algorithm.
+The later
+<a href="https://ethpandaops.io/posts/fcr-simulator/">12-month replay across four client implementations</a>
+tested the actual implementations: across 5.15 million slot evaluations, it
+reported zero false confirmations. Roughly 96% of slots in the comparable
+window confirmed within 12 seconds. Client differences and imperfect replay
+data remain reasons to validate the implementation and observation path.</p>
+
+<p>For a bridge relayer, the policy is straightforward: make the exact source
+block eligible for a fill only after the confirmation check accepts it.
+Insufficient or inconsistent evidence should keep the order waiting for a
+stronger source state. An RPC quorum or an elapsed timer cannot substitute
+for that check. Operators using a provider’s <code class="language-plaintext highlighter-rouge">safe</code> tag should establish what
+that provider actually means by it, since FCR deployment can change its
+semantics.</p>
+
+<p>FCR could help reject the weak branches behind this class of incident while
+preserving fast settlement for well-supported blocks. The published studies
+support that direction; they do not prove that an untested relayer integration
+would have prevented every fill in our experiment.</p>
+
+<h2 id="upbit-is-a-warning-not-the-boundary-of-the-problem">Upbit is a warning, not the boundary of the problem</h2>
+
+<p>The same study places approximately <strong>82% of slot-0 orphans outside the
+Upbit-associated cluster</strong>. Reorgs also occur at other epoch positions.
+Fixing one operator’s setup would reduce one concentration of failures;
+applications would still need to handle provisional source state.</p>
+
+<p>A rare reorg can remain economically attractive to abuse because the actor
+benefiting from it need not pay to reorganize Ethereum. The network can
+produce the branch change through ordinary operation. The economic question
+then becomes whether occasional unmatched destination payments outweigh the
+costs incurred along the way. Rarity alone does not settle that question.</p>
+
+<p>For a relayer, this creates an uneven trade: many ordinary fills earn small
+fees, while one orphaned batch can put the entire advanced principal at risk.
+Five orders in the same source block share that risk. Exposure limits should
+therefore account for their common block and route, as well as each order’s
+size. A low average orphan rate can coexist with an unacceptable loss tail.</p>
+
+<p>Our experiment establishes the possibility of early payments surviving a
+source reorg. It does not establish a general attack probability, profitable
+scale, or behavior across other bridge protocols. Each system’s confirmation
+policy, acceptance limits, liquidity, costs, and recovery paths change the
+economics. Across was the protocol tested here.</p>
+
+<p>The architectural lesson is that a source event is still provisional until
+the application’s confirmation policy has accepted the block containing it.
+Crossing to another chain makes that distinction expensive: the deposit can
+disappear after the money has already arrived.</p>
+
+<h2 id="sources-and-public-receipts">Sources and public receipts</h2>
+
+<ul>
+  <li><a href="https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/">Ethereum proof of stake, fork choice, and finality</a></li>
+  <li><a href="https://geth.ethereum.org/docs/interacting-with-geth/rpc/pubsub">Geth head and log subscriptions, including reorg notifications</a></li>
+  <li><a href="https://docs.across.to/guides/concepts/intent-lifecycle">Across intent lifecycle</a> and <a href="https://docs.across.to/introduction/actors">relayer risks</a></li>
+  <li><a href="https://ethresear.ch/t/is-the-slot-0-reorg-cost-fixable-epbs-attestation-deadline-study/25338">Slot-0 reorg study and discussion</a></li>
+  <li><a href="https://github.com/flashbots/mev-boost#setting-a-minimum-bid-value-with--min-bid">MEV-Boost minimum-bid and local fallback behavior</a></li>
+  <li><a href="https://hackmd.io/9xcOW2mbR_-6T8WOsdDNTw">Data Always: Supplementing Censorship Resistance Today</a></li>
+  <li><a href="https://docs.soliditylang.org/en/latest/units-and-global-variables.html#block-and-transaction-properties">Solidity block and transaction properties</a></li>
+  <li><a href="https://fastconfirm.it/">Fast Confirmation Rule documentation</a>, <a href="https://investigations.ethpandaops.io/2026-03/fast-confirmation-rule/">March mainnet proxy study</a>, and <a href="https://ethpandaops.io/posts/fcr-simulator/">May multi-client replay</a></li>
+</ul>
+
+<p>The three filled losing branches were
+<a href="https://etherscan.io/block/25658830/f">25,658,830</a>,
+<a href="https://etherscan.io/block/25661477/f">25,661,477</a>, and
+<a href="https://etherscan.io/block/25666169/f">25,666,169</a>. Representative destination
+receipts for the latter two are
+<a href="https://robinhoodchain.blockscout.com/tx/0x13f0ec7696d3d1e368f08570efa82e801c639694d469e43e84387b0c2500b080">batch 2</a>
+and
+<a href="https://robinhoodchain.blockscout.com/tx/0x3076f1bbaf7d6c19bef97cf69f37d9f700de90a5897b42601f4efc305ab63bd4">batch 4</a>.
+The unfilled losing branches were
+<a href="https://etherscan.io/block/25662177/f">25,662,177</a> and
+<a href="https://etherscan.io/block/25666327/f">25,666,327</a>. The later-canonical control
+first appeared in
+<a href="https://etherscan.io/block/25667155/f">25,667,155</a>; its
+<a href="https://etherscan.io/tx/0x5b5ff6e0e6bd13a977ff77378da7eb866564074cc4257be1e215a265696aac0d">source transaction</a>
+and refund are linked above.</p>
+
+<p>The chart’s <a href="/assets/images/blog/the-orphan-blocks-blowing-up-bridges/batches.csv">batch data</a>
+and <a href="/assets/images/blog/the-orphan-blocks-blowing-up-bridges/reorg-pattern.csv">published reorg figures</a>
+are available alongside the images.</p>]]></content><author><name>Bitfinding Research Team</name></author><summary type="html"><![CDATA[A one-block Ethereum reorg erased bridge deposits while destination payments survived. We explain orphan blocks, RPC feeds, the Upbit pattern, and how the Fast Confirmation Rule can help relayers.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://bitfinding.com/assets/images/blog/the-orphan-blocks-blowing-up-bridges/social.png" /><media:content medium="image" url="https://bitfinding.com/assets/images/blog/the-orphan-blocks-blowing-up-bridges/social.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Signature overflow attacks on Ledger</title><link href="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/" rel="alternate" type="text/html" title="Signature overflow attacks on Ledger" /><published>2026-09-07T00:00:00-03:00</published><updated>2026-09-07T00:00:00-03:00</updated><id>https://bitfinding.com/blog/signature-overflow-attacks-on-ledger</id><content type="html" xml:base="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/"><![CDATA[<p>A Ledger Clear Signing bug let an affected device display one action while
 its signature authorized 257. A signer could approve what looked like a routine
 transaction without seeing the other actions covered by the signature.</p>
 

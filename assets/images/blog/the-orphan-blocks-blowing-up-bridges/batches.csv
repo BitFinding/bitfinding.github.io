@@ -1,0 +1,7 @@
+batch,orphan_execution_height,deposits,destination_fills,output_weth,source_outcome
+1,25658830,5,5,0.9995425,replaced
+2,25661477,5,5,0.9995425,replaced
+3,25662177,5,0,0,replaced
+4,25666169,5,5,0.9995425,replaced
+5,25666327,5,0,0,replaced
+6,25667155,5,0,0,reincluded_unfilled_refunded
