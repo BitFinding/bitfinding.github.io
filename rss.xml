@@ -1,4 +1,106 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://bitfinding.com/rss.xml" rel="self" type="application/atom+xml" /><link href="https://bitfinding.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-10-07T16:37:23-03:00</updated><id>https://bitfinding.com/rss.xml</id><title type="html">Bitfinding</title><subtitle>Bitfinding builds advanced security for decentralized systems with a focus on integrity, resilience, and trust.</subtitle><entry><title type="html">Signature overflow attacks on Ledger</title><link href="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/" rel="alternate" type="text/html" title="Signature overflow attacks on Ledger" /><published>2026-09-07T00:00:00-03:00</published><updated>2026-09-07T00:00:00-03:00</updated><id>https://bitfinding.com/blog/signature-overflow-attacks-on-ledger</id><content type="html" xml:base="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/"><![CDATA[<p>A Ledger Clear Signing bug let an affected device display one action while
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://bitfinding.com/rss.xml" rel="self" type="application/atom+xml" /><link href="https://bitfinding.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-11-17T15:22:16-03:00</updated><id>https://bitfinding.com/rss.xml</id><title type="html">Bitfinding</title><subtitle>Bitfinding builds advanced security for decentralized systems with a focus on integrity, resilience, and trust.</subtitle><entry><title type="html">How to hack bridges with orphan blocks</title><link href="https://bitfinding.com/blog/the-orphan-blocks-blowing-up-bridges/" rel="alternate" type="text/html" title="How to hack bridges with orphan blocks" /><published>2026-11-18T00:00:00-03:00</published><updated>2026-11-18T00:00:00-03:00</updated><id>https://bitfinding.com/blog/the-orphan-blocks-blowing-up-bridges</id><content type="html" xml:base="https://bitfinding.com/blog/the-orphan-blocks-blowing-up-bridges/"><![CDATA[<p>We got bridge relayers to pay recipients on Robinhood Chain for deposits that later disappeared from Ethereum during naturally occurring reorgs.</p>
+
+<p>We found this while looking into running relayers for our latest MEV project. We tested Across, Relay, and LI.FI Intents.</p>
+
+<p><img src="/assets/images/blog/the-orphan-blocks-blowing-up-bridges/hero.png" alt="Ink-wash illustration of a wooden bridge burning over a river" /></p>
+
+<h2 id="why-relayers-pay-before-settlement">Why relayers pay before settlement</h2>
+
+<p>In the flows we tested, a user deposits assets on one chain and specifies what they want to receive on another. A relayer, sometimes called a solver, sees the deposit event and pays the recipient from its own funds. That payment is the <strong>fill</strong>. The user chooses the recipient, so they can have the fill sent to a wallet they control. The relayer gets repaid later, through <strong>settlement</strong>.</p>
+
+<p>For <a href="https://docs.across.to/guides/concepts/intent-lifecycle">Across</a>, settlement matches the destination fill against the source deposit and checks that their parameters agree. A fill needs a matching deposit to qualify for repayment. <a href="https://docs.relay.link/references/protocol/components/depository">Relay</a> and <a href="https://docs.li.fi/lifi-intents/architecture/settlement">LI.FI Intents</a> have different contracts and repayment rules, but the flows we tested also let a relayer pay before the source block is final.</p>
+
+<p><img src="/assets/images/blog/the-orphan-blocks-blowing-up-bridges/across-relayer-bridge-flow.png" alt="A user deposits into the Ethereum SpokePool. The relayer observes the event and spends its own funds to pay the recipient through the Robinhood Chain SpokePool. Across later checks the source deposit and destination fill before repaying the relayer." width="1314" /></p>
+
+<p><em>Figure 1. Simplified Across flow. Repayment depends on a matching deposit in the canonical source-chain history.</em></p>
+
+<p>When several relayers can fill an order, the first one gets the fee. Some orders give one relayer exclusive rights for a while. For the rest, waiting can mean losing the fee to someone faster. Ethereum <a href="https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/#finality">finality</a> takes minutes; a relayer completing transfers in seconds has to pay sooner.</p>
+
+<h2 id="what-happens-if-there-is-a-reorg">What happens if there is a reorg?</h2>
+
+<p>A node’s <strong>canonical chain</strong> is the branch it currently follows under Ethereum’s fork-choice rule. The node can accept a valid block, execute its transactions, and later switch to a different branch. That’s a chain reorganization, or <strong>reorg</strong>. A block dropped from the canonical chain is commonly called an orphan block. Its state changes and events no longer belong to the history the node follows.</p>
+
+<p>That means a relayer can get a successful receipt and a real deposit event from its RPC, then discover that the block containing them has been orphaned. Asking several RPC providers doesn’t settle this. Their nodes can agree on a block and then all switch to another branch.</p>
+
+<p>An Ethereum <code class="language-plaintext highlighter-rouge">logs</code> subscription can report the old event again with <code class="language-plaintext highlighter-rouge">removed: true</code>, as <a href="https://geth.ethereum.org/docs/interacting-with-geth/rpc/pubsub">Geth documents</a>. An indexer can use that correction to delete a database row. A relayer cannot use it to undo money already sent on another chain.</p>
+
+<p>The fill spends the relayer’s existing funds in a separate destination transaction. Removing the source deposit doesn’t automatically reverse it.</p>
+
+<h2 id="what-our-experiment-showed">What our experiment showed</h2>
+
+<p>We ran successful experiments on Across, Relay, and LI.FI Intents. In each, relayers paid recipients even though Ethereum later removed the source deposits. We’ll use Across as an example below.</p>
+
+<p>A reorg alone isn’t enough. Ethereum may include the original transaction again, recreating the deposit and allowing the relayer to be repaid. We needed to prevent that.</p>
+
+<p>Our Across source transaction created five deposits totaling 1 ETH. The transaction used nonce 15. The orders were filled on Robinhood Chain; one of those fills paid 0.1999085 WETH to the recipient. Ethereum then orphaned the block containing the deposits.</p>
+
+<p>The canonical chain included a different transaction from the same sender, also using nonce 15: a successful 0 ETH transfer back to the sender’s own address, with empty calldata. It made no deposit.</p>
+
+<p>The original transaction had consumed nonce 15 on the discarded branch. On the surviving branch, the self-transfer consumed it instead. The original signed transaction could no longer be included there, so it couldn’t recreate the five deposits.</p>
+
+<p><a href="/assets/images/blog/the-orphan-blocks-blowing-up-bridges/across-transaction-evidence.png"><img src="/assets/images/blog/the-orphan-blocks-blowing-up-bridges/across-transaction-evidence.png" alt="Across batch 1: the original Ethereum deposit at 08:29:11 UTC was removed with its orphaned block. A successful 0 ETH self-transfer at 08:29:23 replaced it using the same sender and nonce 15. One of five destination fills paid 0.1999085 WETH on Robinhood Chain at 08:29:16 and remained successful. All three block timestamps are circled." width="1200" /></a></p>
+
+<p><em>Figure 2. The deposit disappears, its replacement creates no deposit, and the destination fill survives. Records: <a href="https://eth.blockscout.com/tx/0xa8d0eb890f3505fdbf7e2dd710d678b3e6726266e905944d7b065502ef2758e2">deposit</a>, <a href="https://eth.blockscout.com/tx/0x8de391d339fc746d60b02c7ecc28ef51bbe3aae6c5be367a06d41d76ccf06340">replacement</a>, <a href="https://robinhoodchain.blockscout.com/tx/0x6433c672ad58ca12742e68b6e303a0594d085fa17b6cea795a4d004567b7426f">fill</a>.</em></p>
+
+<p>Block timestamps don’t tell us exactly when a relayer received the event or detected the reorg.</p>
+
+<p>The source funds were no longer locked by those deposits. The fills on Robinhood Chain remained, but they had no matching deposits to qualify for repayment under Across’s settlement rules.</p>
+
+<h2 id="other-ways-a-deposit-can-fail-to-return">Other ways a deposit can fail to return</h2>
+
+<p>Depending on the deposit contract, a transaction that gets included again can also fail to recreate the order the relayer filled.</p>
+
+<p>One possibility is a deadline checked by the source deposit call. The call succeeds in the original block, but reverts if it’s included after that deadline. It then creates no deposit event. This requires a check on the source call; a deadline for filling the order on the destination chain doesn’t do the same thing.</p>
+
+<p>Another is a deposit ID assigned from a contract’s counter. Suppose a deposit receives ID 42 in the original block. After a reorg, another deposit executes first, and the same call receives ID 43. The relayer’s earlier fill still refers to the old order. Across’s settlement checks the other order parameters too, so another deposit receiving ID 42 doesn’t automatically make that fill valid.</p>
+
+<p>Across has <a href="https://www.openzeppelin.com/news/across-protocol-erc-3009-and-deterministic-depositids-audit">deterministic IDs for some signature-authorized deposits</a>, which avoid IDs changing with execution order. They don’t guarantee that the deposit itself will survive a reorg.</p>
+
+<h2 id="some-blocks-are-more-likely-to-be-orphaned">Some blocks are more likely to be orphaned</h2>
+
+<p>We kept seeing orphaned blocks at slot 0, the first of the 32 slots in an Ethereum epoch. A <a href="https://ethresear.ch/t/is-the-slot-0-reorg-cost-fixable-epbs-attestation-deadline-study/25338">21-month study</a>, covering September 2024 through May 2026, found the same pattern: 1.17% of slot-0 proposals were orphaned, compared with 0.16% across the other positions combined. Slot-0 proposals were about seven times as likely to be orphaned.</p>
+
+<p><img src="/assets/images/blog/the-orphan-blocks-blowing-up-bridges/slot-orphan-shares.png" alt="Ring chart showing the share of orphaned blocks across all 32 epoch positions. Slots 0, 1, and 2 are highlighted. Below it, a comparison shows slot 0 with 142,021 proposals, 1,660 orphaned blocks, and a 1.17% orphan rate; slots 1–31 combined have 4,431,585 proposals, 7,254 orphaned blocks, and a 0.16% orphan rate." /></p>
+
+<p><em>Figure 3. Each slice shows one slot’s share of the study’s 8,914 orphaned blocks. The comparison below the ring shows how often proposals were orphaned. <a href="https://github.com/CPerezz/articles/blob/1c33e6a7cc36a96df8497453b2c762a5612067fa/slot0-epoch-reorgs/data/orphan_by_position_scale.json">Source data</a>.</em></p>
+
+<p>We also checked <a href="https://etherscan.io/blocks_forked">Etherscan’s forked-block list</a>. The same fee recipient, <code class="language-plaintext highlighter-rouge">0x7e2a2FA2a064F693f0a55C5639476d913Ff12D05</code>, kept appearing.</p>
+
+<p><a href="/assets/images/blog/the-orphan-blocks-blowing-up-bridges/screen_reorgs_etherscan.png"><img src="/assets/images/blog/the-orphan-blocks-blowing-up-bridges/screen_reorgs_etherscan.png" alt="Etherscan's forked-block list, with repeated occurrences of fee recipient 0x7e2a2FA2a064F693f0a55C5639476d913Ff12D05 highlighted." /></a></p>
+
+<p><em>Figure 4. Etherscan’s forked-block list. The highlighted fee recipient appears repeatedly.</em></p>
+
+<p>The study also found large differences between operators. About 31% of the Upbit-labeled cluster’s own slot-0 proposals were orphaned. That cluster accounted for roughly 18% of all slot-0 orphans in the dataset. Many of the orphaned blocks in the study arrived late, often after being built locally by the proposer, leaving less time for validators to see them before voting.</p>
+
+<p>These observations helped us narrow down our attempts. We still needed a relayer to pay before the reorg, and the matching deposit had to stay gone.</p>
+
+<h2 id="fast-confirmation">Fast confirmation</h2>
+
+<p>So what should a relayer check before paying?</p>
+
+<p>Ethereum’s <strong>Fast Confirmation Rule (FCR)</strong> uses validator votes to confirm blocks before finality. It runs in a consensus client and doesn’t require a hard fork.</p>
+
+<p>FCR <a href="https://fastconfirm.it/">assumes</a> that attackers control less than 25% of the stake and that validator votes arrive on time. The <a href="https://ethereum.github.io/consensus-specs/specs/phase0/fast-confirmation/">specification</a> requires attestations from honest validators to arrive by the end of the slot in which they’re sent. If that assumption breaks, a fast-confirmed block can still be reorged, even without an attacker or slashable behavior. Full finality gives stronger guarantees.</p>
+
+<p><img src="/assets/images/blog/the-orphan-blocks-blowing-up-bridges/fast-confirmation-rule.png" alt="The same block B is shown when proposed, fast-confirmed, and finalized. FCR checks validator votes in the consensus client. Fast confirmation typically takes 12–24 seconds under normal conditions; full finality follows later." width="1100" /></p>
+
+<p><em>Figure 5. FCR confirms blocks before full finality, under its stake and network assumptions. Times are typical, and the timeline is schematic.</em></p>
+
+<p>EthPandaOps <a href="https://ethpandaops.io/posts/fcr-simulator/">replayed mainnet data through four FCR implementations</a> and reported zero false confirmations across 5.15 million client-slot evaluations. In the period covered by all four clients, roughly 96% of slots would have confirmed within 12 seconds. The replay used a reconstructed view of attestations, which doesn’t exactly match what an individual node would have received.</p>
+
+<h3 id="using-fcr">Using FCR</h3>
+
+<p><a href="https://github.com/sigp/lighthouse/releases/tag/v8.3.0">Lighthouse v8.3.0</a> supports FCR, disabled by default. When enabled, it makes the confirmed execution block available through the <code class="language-plaintext highlighter-rouge">safe</code> tag. The release notes recommend enabling it only on non-validating beacon nodes. If you use a hosted RPC, check what its provider returns for <code class="language-plaintext highlighter-rouge">safe</code>.</p>
+
+<p>Before paying, a relayer should save the block hash from the deposit log and wait until that block is fast-confirmed or is an ancestor of the fast-confirmed block. Compare block hashes, since a different block can replace the deposit’s block at the same height.</p>
+
+<p>Waiting still has a cost. A faster relayer can fill the order before you do. FCR reduces that wait compared with finality, but an operator still has to decide whether its assumptions are acceptable for the transfers it handles.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The relayers in our tests paid for deposits that Ethereum later removed. In the Across case, a same-nonce replacement prevented the original transaction from recreating them.</p>
+
+<p>For relayers handling Ethereum deposits, we recommend checking the deposit block with FCR before filling an order. If FCR’s stake and network assumptions aren’t acceptable, wait for finality.</p>]]></content><author><name>Bitfinding Research Team</name></author><summary type="html"><![CDATA[Our experiments worked on Across, Relay, and LI.FI Intents. Using Across as an example, we explain how relayers paid for deposits that disappeared during reorgs and what to check before paying.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://bitfinding.com/assets/images/blog/the-orphan-blocks-blowing-up-bridges/social.png" /><media:content medium="image" url="https://bitfinding.com/assets/images/blog/the-orphan-blocks-blowing-up-bridges/social.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Signature overflow attacks on Ledger</title><link href="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/" rel="alternate" type="text/html" title="Signature overflow attacks on Ledger" /><published>2026-09-07T00:00:00-03:00</published><updated>2026-09-07T00:00:00-03:00</updated><id>https://bitfinding.com/blog/signature-overflow-attacks-on-ledger</id><content type="html" xml:base="https://bitfinding.com/blog/signature-overflow-attacks-on-ledger/"><![CDATA[<p>A Ledger Clear Signing bug let an affected device display one action while
 its signature authorized 257. A signer could approve what looked like a routine
 transaction without seeing the other actions covered by the signature.</p>
 

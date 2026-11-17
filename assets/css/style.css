@@ -747,7 +747,9 @@ textarea {
 }
 
 .post-content p > img:only-child,
-.post-content p > a:only-child > img:only-child {
+.post-content p > a:only-child > img:only-child,
+.post-content p > picture:only-child > img,
+.post-content p > a:only-child > picture:only-child > img {
   display: block;
   max-width: 100%;
   height: auto;
@@ -756,7 +758,9 @@ textarea {
 }
 
 .post-content p:has(> img:only-child),
-.post-content p:has(> a:only-child > img:only-child) {
+.post-content p:has(> a:only-child > img:only-child),
+.post-content p:has(> picture:only-child),
+.post-content p:has(> a:only-child > picture:only-child) {
   margin-top: 32px;
 }
 
