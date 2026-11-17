@@ -51,7 +51,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/css/style.css?v=1794939736">
+  <link rel="stylesheet" href="/assets/css/style.css?v=1794941041">
 </head>
 
   <body class="layout-post section-blog">
@@ -106,7 +106,7 @@
 <li><a href="#your-rpc-will-show-you-the-block-that-disappears">What happens if there is a reorg?</a></li>
 <li><a href="#a-transaction-can-lose-its-chance-to-succeed">What our experiment showed</a></li>
 <li><a href="#other-ways-a-deposit-can-fail-to-return">Other ways a deposit can fail to return</a></li>
-<li><a href="#why-upbit-kept-appearing-in-the-investigation">Some blocks are more likely to be orphaned</a></li>
+<li><a href="#why-upbit-kept-appearing-in-the-investigation">Optimizing the attack: predicting orphan blocks</a></li>
 <li><a href="#fast-confirmation-can-close-much-of-this-gap">Fast confirmation</a></li>
 <li><a href="#confirmation-belongs-in-the-payment-decision">Conclusion</a></li>
 </ul></nav><h2 id="the-bridge-pays-before-settlement-catches-up"><a class="section-link" href="#the-bridge-pays-before-settlement-catches-up" title="Link to this section">Why relayers pay before settlement</a></h2>
@@ -161,7 +161,7 @@
 
 <p>Across has <a href="https://www.openzeppelin.com/news/across-protocol-erc-3009-and-deterministic-depositids-audit">deterministic IDs for some signature-authorized deposits</a>, which avoid IDs changing with execution order. They don’t guarantee that the deposit itself will survive a reorg.</p>
 
-<h2 id="why-upbit-kept-appearing-in-the-investigation"><a class="section-link" href="#why-upbit-kept-appearing-in-the-investigation" title="Link to this section">Some blocks are more likely to be orphaned</a></h2>
+<h2 id="why-upbit-kept-appearing-in-the-investigation"><a class="section-link" href="#why-upbit-kept-appearing-in-the-investigation" title="Link to this section">Optimizing the attack: predicting orphan blocks</a></h2>
 
 <p>We kept seeing orphaned blocks at slot 0, the first of the 32 slots in an Ethereum epoch. A <a href="https://ethresear.ch/t/is-the-slot-0-reorg-cost-fixable-epbs-attestation-deadline-study/25338">21-month study</a>, covering September 2024 through May 2026, found the same pattern: 1.17% of slot-0 proposals were orphaned, compared with 0.16% across the other positions combined. Slot-0 proposals were about seven times as likely to be orphaned.</p>
 
@@ -242,6 +242,6 @@
   </div>
 </footer>
 
-    <script src="/assets/js/site.js?v=1794939736" defer></script>
+    <script src="/assets/js/site.js?v=1794941041" defer></script>
   </body>
 </html>
